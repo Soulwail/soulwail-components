@@ -1,0 +1,25 @@
+<svg width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" clip-rule="evenodd"
+        d="M24.2447 10.2664C25.2927 9.51028 26.7073 9.51028 27.7553 10.2664L42.2224 20.7043C43.2812 21.4682 43.7244 22.8292 43.3184 24.0701L37.8009 40.9329C37.3975 42.166 36.2471 43 34.9497 43H17.0503C15.7529 43 14.6025 42.166 14.199 40.9329L8.68164 24.0701C8.27563 22.8292 8.71879 21.4682 9.77759 20.7043L24.2447 10.2664Z"
+        fill="#e0e9ff"></path>
+  <path d="M26 28L26 10" stroke="#c2d4ff" stroke-width="0.5" stroke-linecap="round"></path>
+  <path d="M26 28L43 22.5" stroke="#c2d4ff" stroke-width="0.5" stroke-linecap="round"></path>
+  <path d="M26 28L36.5 42" stroke="#c2d4ff" stroke-width="0.5" stroke-linecap="round"></path>
+  <path d="M26 28L15.5 42" stroke="#c2d4ff" stroke-width="0.5" stroke-linecap="round"></path>
+  <path d="M26 28L9 22.5" stroke="#c2d4ff" stroke-width="0.5" stroke-linecap="round"></path>
+  <path
+    d="M32.4163 34.8556C32.1737 35.5225 31.497 35.9281 30.7945 35.8278L22.2983 34.614C21.7998 34.5428 21.3703 34.2263 21.1548 33.7713L17.4976 26.0508C17.2046 25.4324 17.3673 24.6942 17.893 24.2562L25.0904 18.2594C25.6245 17.8144 26.3944 17.7947 26.9506 18.2119L35.1111 24.333C35.6396 24.7294 35.8465 25.4249 35.6207 26.0457L32.4163 34.8556Z"
+    fill="#5083fb"></path>
+  <mask id="mask0_486_28400" maskUnits="userSpaceOnUse" x="17" y="17" width="19" height="19" style="mask-type: alpha;">
+    <path
+      d="M32.4163 34.8556C32.1737 35.5225 31.497 35.9281 30.7945 35.8278L22.2983 34.614C21.7998 34.5428 21.3703 34.2263 21.1548 33.7713L17.4975 26.0507C17.2046 25.4324 17.3673 24.6941 17.893 24.2561L25.0903 18.2594C25.6245 17.8143 26.3944 17.7947 26.9506 18.2118L35.1111 24.333C35.6396 24.7293 35.8465 25.4248 35.6207 26.0456L32.4163 34.8556Z"
+      fill="#5083fb"></path>
+  </mask>
+  <g mask="url(#mask0_486_28400)">
+    <path d="M26 28L26 10" stroke="var(--B350)" stroke-width="0.5" stroke-linecap="round"></path>
+    <path d="M26 28L43 22.5" stroke="var(--B350)" stroke-width="0.5" stroke-linecap="round"></path>
+    <path d="M26 28L36.5 42" stroke="var(--B350)" stroke-width="0.5" stroke-linecap="round"></path>
+    <path d="M26 28L15.5 42" stroke="var(--B350)" stroke-width="0.5" stroke-linecap="round"></path>
+    <path d="M26 28L9 22.5" stroke="var(--B350)" stroke-width="0.5" stroke-linecap="round"></path>
+  </g>
+</svg>
