@@ -1,7 +1,7 @@
 import { Checkbox, Col, Form, Row, Segmented, Select, Typography } from 'antd';
 import React, { useContext } from 'react';
 import VisualizeContext from '../../context';
-import { PieChartTypes } from '../../utils/collections';
+// import { PieChartTypes } from '../../utils/collections';
 import { KeywordSearch } from '../';
 
 const { Text } = Typography;
@@ -25,19 +25,19 @@ const PieVis: React.FC = () => {
                     </Form.Item>
                 </Col>
 
-                <Form.Item dependencies={['chartType']} noStyle>
-                    {({ getFieldValue }) => {
-                        const [, subType] = getFieldValue('chartType').split('_');
+                {/*<Form.Item dependencies={['chartType']} noStyle>*/}
+                {/*    {({ getFieldValue }) => {*/}
+                {/*        const [, subType] = getFieldValue('chartType').split('_');*/}
 
-                        return subType === PieChartTypes.RING ? (
-                            <Col span={12}>
-                                <Form.Item name="showTotal" noStyle valuePropName="checked">
-                                    <Checkbox>总数</Checkbox>
-                                </Form.Item>
-                            </Col>
-                        ) : null;
-                    }}
-                </Form.Item>
+                {/*        return subType === PieChartTypes.RING ? (*/}
+                {/*            <Col span={12}>*/}
+                {/*                <Form.Item name="showTotal" noStyle valuePropName="checked">*/}
+                {/*                    <Checkbox>总数</Checkbox>*/}
+                {/*                </Form.Item>*/}
+                {/*            </Col>*/}
+                {/*        ) : null;*/}
+                {/*    }}*/}
+                {/*</Form.Item>*/}
             </Row>
 
             <Form.Item

@@ -1,4 +1,24 @@
 /**
+ * - 数值转换
+ * @param num
+ */
+const transformNumber = (num) => {
+    if (isNaN(Number(num))) {
+        return num;
+    } else {
+        const value = Number(num);
+
+        if (value < 10 ** 4) {
+            return value; // 小于 10000，直接显示
+        } else if (value >= 10 ** 4 && value < 10 ** 8) {
+            return `${(value / 10 ** 4).toFixed(2)}万`; // 10000 - 100000000 之间，显示为万
+        } else {
+            return `${(value / 10 ** 8).toFixed(2)}亿`; // 大于等于 100000000，显示为亿
+        }
+    }
+};
+
+/**
  * - 图例数据转换
  * @param options
  * @param showLegend
@@ -34,6 +54,7 @@ const transformLabel = (options: Record<string, any>, showLabel: boolean) => {
  */
 const transformAxis = (options: Record<string, any>, showAxis: boolean) => {
     if (showAxis) {
+        Reflect.set(options.axis.y, 'labelFormatter', (val: number) => transformNumber(val));
     } else {
         // 未开启坐标轴，删除对应的坐标轴显示
         Reflect.set(options.axis.x, 'label', false);
@@ -109,4 +130,5 @@ export {
     transformGrid,
     transformLabel,
     transformLegend,
+    transformNumber,
 };
