@@ -1,0 +1,13 @@
+# dependencies
+node_modules
+# production
+dist
+/.vscode
+/.idea
+lib
+es
+.umi
+.github
+scripts
+webpack.config.js
+server
