@@ -1,24 +1,7 @@
 import { Chart, Data } from '@antv/g2';
-import {
-    Button,
-    Col,
-    Empty,
-    Form,
-    FormInstance,
-    FormProps,
-    Row,
-    Tabs,
-} from 'antd';
+import { Button, Col, Empty, Form, FormInstance, FormProps, Row, SelectProps, Tabs } from 'antd';
 import { cloneDeep, defaultsDeep } from 'lodash';
-import {
-    forwardRef,
-    useEffect,
-    useImperativeHandle,
-    useLayoutEffect,
-    useMemo,
-    useRef,
-    useState,
-} from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { EditConfig, VisConfig } from './components';
 import VisualizeContext, { VisualizeContextProps } from './context';
 import { VisTypeDefinitionProps, visualizations } from './typeVislib';
@@ -29,6 +12,8 @@ type Operate = (values: Record<string, any>, options: Chart['options']) => void;
 export interface VisualizeProps {
     /** - 数据来源 */
     dataSource: any[];
+    /** - 数据来源是否多选 */
+    dataSourceMode?: SelectProps['mode'];
     /** - 内容展示高度 */
     height?: number;
     /** - 初始值 */
@@ -61,6 +46,7 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
         height = 680,
         initialValues = {},
         dataSource = [],
+        dataSourceMode,
         categoryList = [],
         onValueChange,
         onGenerate,
@@ -74,8 +60,7 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
     const chartType = Form.useWatch('chartType', form);
     const x = Form.useWatch(['encode', 'x'], form);
 
-    const [visTypeDefinition, setVisTypeDefinition] =
-        useState<VisTypeDefinitionProps>(); // 不同图形的可视化配置
+    const [visTypeDefinition, setVisTypeDefinition] = useState<VisTypeDefinitionProps>(); // 不同图形的可视化配置
     const [prevChartVisType, setPrevChartVisType] = useState<string>('');
     const [chartVisType, setChartVisType] = useState<string>('');
     const [isEmpty, setIsEmpty] = useState<boolean>(true); // chart data 是否为空
@@ -106,12 +91,8 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
      */
     const renderChart = (options: Chart['options'] & Data) => {
         if (
-            (options?.data &&
-                Array.isArray(options.data) &&
-                options.data.length > 0) ||
-            (options.data?.value &&
-                Array.isArray(options.data.value) &&
-                options.data.value.length > 0)
+            (options?.data && Array.isArray(options.data) && options.data.length > 0) ||
+            (options.data?.value && Array.isArray(options.data.value) && options.data.value.length > 0)
         ) {
             setIsEmpty(false);
         } else {
@@ -190,10 +171,7 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
             setPrevChartVisType(type);
 
             // 将默认配置与传入的初始配置进行覆盖合并，得到新的配置值
-            const values = defaultsDeep(
-                initialValues,
-                definition.visConfig.defaults,
-            );
+            const values = defaultsDeep(initialValues, definition.visConfig.defaults);
 
             // 设置表单初始值
             form.setFieldsValue(values);
@@ -209,22 +187,11 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
             console.log('allValues', allValues);
 
             // 切换到柱状图或条形图
-            if (
-                chartVisType === ChartTypes.INTERVAL ||
-                chartVisType === ChartTypes.HORIZONTAL_BAR
-            ) {
+            if (chartVisType === ChartTypes.INTERVAL || chartVisType === ChartTypes.HORIZONTAL_BAR) {
                 // 如果上一次是折线图或面积图
-                if (
-                    prevChartVisType === ChartTypes.LINE ||
-                    prevChartVisType === ChartTypes.AREA
-                ) {
+                if (prevChartVisType === ChartTypes.LINE || prevChartVisType === ChartTypes.AREA) {
                     // 判断是否开启分组聚合，如果开启了，则设置值，否则不设置
-                    form.setFieldValue(
-                        ['encode', 'color'],
-                        allValues.encodeColor
-                            ? colorCategoryList[0]?.value
-                            : null,
-                    );
+                    form.setFieldValue(['encode', 'color'], allValues.encodeColor ? colorCategoryList[0]?.value : null);
                 }
 
                 // 设置排序默认值
@@ -233,15 +200,9 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
                         form.setFieldValue(['transform', 'sortX', 'by'], 'x');
                     }
                 }
-            } else if (
-                chartVisType === ChartTypes.LINE ||
-                chartVisType === ChartTypes.AREA
-            ) {
+            } else if (chartVisType === ChartTypes.LINE || chartVisType === ChartTypes.AREA) {
                 // 如果切换到折线图或面积图
-                if (
-                    prevChartVisType === ChartTypes.INTERVAL ||
-                    prevChartVisType === ChartTypes.AREA
-                ) {
+                if (prevChartVisType === ChartTypes.INTERVAL || prevChartVisType === ChartTypes.AREA) {
                     // form.setFieldValue(['encode', 'x'], allValues.encode.x);
                 }
 
@@ -276,17 +237,12 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
     /**
      * - 监听值变化
      */
-    const onValuesChange = (
-        value: Record<string, any>,
-        allValues: Record<string, any>,
-    ) => {
+    const onValuesChange = (value: Record<string, any>, allValues: Record<string, any>) => {
         console.log(444, value);
 
         if (Reflect.has(value, 'chartType')) {
             const chartTypeArr = value.chartType.split('_');
-            const definition = visualizations.find(
-                (item) => item.name === chartTypeArr[0],
-            );
+            const definition = visualizations.find((item) => item.name === chartTypeArr[0]);
 
             // console.log('definition', definition);
             // 获取图表的配置
@@ -311,7 +267,8 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
      */
     const buildChartDataAndOptions = async (formInstance: FormInstance) => {
         try {
-            await formInstance.validateFields();
+            // TODO:
+            // await formInstance.validateFields();
 
             const values = formInstance.getFieldsValue(true);
             const newValues = cloneDeep(values);
@@ -324,10 +281,7 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
                 console.log('chart options', options);
 
                 // 取值转换
-                if (
-                    chartType === ChartTypes.LINE ||
-                    chartType === ChartTypes.AREA
-                ) {
+                if (chartType === ChartTypes.LINE || chartType === ChartTypes.AREA) {
                     // TODO:
                 } else if (chartType === ChartTypes.PIE) {
                     Reflect.set(newValues.encode, 'color', null);
@@ -350,9 +304,7 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
      */
     const handleGenerate = async (formInstance: FormInstance) => {
         try {
-            const { values, options } = await buildChartDataAndOptions(
-                formInstance,
-            );
+            const { values, options } = await buildChartDataAndOptions(formInstance);
 
             onGenerate?.(values, options);
         } catch (err) {}
@@ -364,9 +316,7 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
      */
     const handleSave = async (formInstance: FormInstance) => {
         try {
-            const { values, options } = await buildChartDataAndOptions(
-                formInstance,
-            );
+            const { values, options } = await buildChartDataAndOptions(formInstance);
 
             onSave?.(values, options);
         } catch (err) {}
@@ -376,9 +326,7 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
      * - 操作按钮配置
      * @param formInstance
      */
-    const chartOptionsRender: VisualizeContextProps['chartOptionsRender'] = (
-        formInstance,
-    ) => {
+    const chartOptionsRender: VisualizeContextProps['chartOptionsRender'] = (formInstance) => {
         return optionsRender
             ? optionsRender(formInstance)
             : [
@@ -388,7 +336,7 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
                           handleGenerate(formInstance);
                       }}
                   >
-                      生成
+                      预览
                   </Button>,
                   <Button
                       key="save"
@@ -428,11 +376,7 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
                     <div ref={chartRef} style={{ height: contentHeight }} />
                 </Col>
                 <Col flex="340px">
-                    <Form
-                        form={form}
-                        layout="vertical"
-                        onValuesChange={onValuesChange}
-                    >
+                    <Form form={form} layout="vertical" onValuesChange={onValuesChange}>
                         <Tabs
                             centered
                             items={[
@@ -440,9 +384,7 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
                                     key: 'vis',
                                     label: '类型与数据',
                                     forceRender: true,
-                                    children: (
-                                        <VisConfig dataSource={dataSource} />
-                                    ),
+                                    children: <VisConfig dataSource={dataSource} dataSourceMode={dataSourceMode} />,
                                 },
                                 {
                                     key: 'editor',
