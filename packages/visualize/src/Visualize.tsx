@@ -37,7 +37,7 @@ export interface VisualizeRef {
     /** - 设置多个字段值 */
     setFieldsValue?: FormInstance['setFieldsValue'];
     /** - 渲染图表 */
-    renderChart: (options: Chart['options']) => void;
+    renderChart: (options: Chart['options']) => Promise<void>;
     /** - 获取图表配置 */
     transformConfig?: VisTypeDefinitionProps['transformConfig'];
 }
@@ -128,10 +128,7 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
         }
     };
 
-    /**
-     * - 转换图表配置
-     */
-
+    // 抛出到父组件的调用函数
     useImperativeHandle(ref, () => {
         return {
             setFieldValue: (name: NamePath, value) => {
@@ -312,16 +309,19 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
     };
 
     /**
-     * - 生成按钮
+     * - 预览按钮
      */
     const handleGenerate = async (formInstance: FormInstance) => {
         try {
             setGenerateLoading(true);
 
             const { values, options } = await buildChartDataAndOptions(formInstance);
-
-            await onGenerate?.(values, options);
+            // 触发预览函数
+            const newOptions = await onGenerate?.(values, options);
+            // 获取新的 options 并渲染
+            await renderChart(newOptions);
         } catch (err) {
+            console.error(err);
             setGenerateLoading(false);
         }
     };
@@ -336,6 +336,7 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
 
             const { values, options } = await buildChartDataAndOptions(formInstance);
 
+            // 触发保存函数
             await onSave?.(values, options);
         } catch (err) {}
 
