@@ -54,7 +54,8 @@ const VisConfig: React.FC<VisConfigProps> = (props) => {
 
     return (
         <div style={{ padding: '6px 0 0 16px' }}>
-            <div className="config-box" style={{ height: contentHeight - 94 }}>
+            {/* 62 - tab 标题、6 - 内边距、48 - 底部按钮 */}
+            <div className="config-box" style={{ height: contentHeight - 62 - 6 - 48 }}>
                 <Form.Item label="图表名称" name="name" rules={[{ required: true, message: '请输入图表名称' }]}>
                     <Input placeholder="请输入" />
                 </Form.Item>

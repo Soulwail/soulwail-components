@@ -6,63 +6,63 @@ import { AxisTitle, Legend, PieSeries, Series, XAxis, YAxis } from '../editor';
 import './index.less';
 
 const EditConfig: React.FC = () => {
-  const { contentHeight, visTypeDefinition, chartOptionsRender } =
-    useContext(VisualizeContext);
+    const { contentHeight, visTypeDefinition, chartOptionsRender } = useContext(VisualizeContext);
 
-  const form = Form.useFormInstance();
+    const form = Form.useFormInstance();
 
-  const items = useMemo(() => {
-    if (visTypeDefinition) {
-      const schemas = visTypeDefinition?.editorConfig?.schemas || [];
+    const items = useMemo(() => {
+        if (visTypeDefinition) {
+            const schemas = visTypeDefinition?.editorConfig?.schemas || [];
 
-      return schemas.map((item) => {
-        const config: Required<CollapseProps>['items'][number] = {
-          forceRender: true,
-          styles: {
-            header: { padding: '9px 16px' },
-            body: { padding: '6px 16px' },
-          },
-          label: item.title,
-          key: item.key,
-        };
+            return schemas.map((item) => {
+                const config: Required<CollapseProps>['items'][number] = {
+                    forceRender: true,
+                    styles: {
+                        header: { padding: '9px 16px' },
+                        body: { padding: '6px 16px' },
+                    },
+                    label: item.title,
+                    key: item.key,
+                };
 
-        if (item.key === 'axisTitle') {
-          config.children = <AxisTitle />;
-        } else if (item.key === 'pieSeries') {
-          config.children = <PieSeries />;
-        } else if (item.key === 'series') {
-          config.children = <Series />;
-        } else if (item.key === 'legend') {
-          config.children = <Legend />;
-        } else if (item.key === 'xAxis') {
-          config.children = <XAxis />;
-        } else if (item.key === 'yAxis') {
-          config.children = <YAxis />;
+                if (item.key === 'axisTitle') {
+                    config.children = <AxisTitle />;
+                } else if (item.key === 'pieSeries') {
+                    config.children = <PieSeries />;
+                } else if (item.key === 'series') {
+                    config.children = <Series />;
+                } else if (item.key === 'legend') {
+                    config.children = <Legend />;
+                } else if (item.key === 'xAxis') {
+                    config.children = <XAxis />;
+                } else if (item.key === 'yAxis') {
+                    config.children = <YAxis />;
+                }
+
+                return config;
+            });
+        } else {
+            return [];
         }
+    }, [visTypeDefinition]);
 
-        return config;
-      });
-    } else {
-      return [];
-    }
-  }, [visTypeDefinition]);
+    return (
+        <div>
+            {/* 62 - tab 标题、48 - 底部按钮 */}
+            <div className="config-box" style={{ height: contentHeight - 62 - 48 }}>
+                <Collapse ghost accordion items={items} />
+            </div>
 
-  return (
-    <div>
-      <div className="config-box" style={{ height: contentHeight - 88 }}>
-        <Collapse ghost accordion items={items} />
-      </div>
-
-      <Row justify="space-between" style={{ marginTop: '16px' }}>
-        <Col></Col>
-        <Col>
-          <Col>
-            <Space>{chartOptionsRender(form)}</Space>
-          </Col>
-        </Col>
-      </Row>
-    </div>
-  );
+            <Row justify="space-between" style={{ marginTop: '16px' }}>
+                <Col></Col>
+                <Col>
+                    <Col>
+                        <Space>{chartOptionsRender(form)}</Space>
+                    </Col>
+                </Col>
+            </Row>
+        </div>
+    );
 };
 
 export { EditConfig };
