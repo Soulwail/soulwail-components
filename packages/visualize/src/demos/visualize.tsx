@@ -13,7 +13,10 @@ export default () => {
         visRef.current.setFieldValue(['encode', 'x'], 'Channel');
     }, []);
 
-    const wait = async (milliseconds) => new Promise((resolve) => setTimeout(resolve, milliseconds));
+    const wait = async (milliseconds) =>
+        new Promise((resolve) => {
+            setTimeout(resolve, milliseconds);
+        });
 
     const onValueChange = (value, allValues) => {
         console.log(value, allValues);
