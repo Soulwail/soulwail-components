@@ -68,7 +68,9 @@ export const createPieVisTypeDefinition = (): VisTypeDefinitionProps<FormPieChar
             let options = cloneDeep(allValues);
 
             // 数据配置项
-            let data: Data = {};
+            let data: Data = {
+                type: 'inline', // 内联数据
+            };
 
             // 将 encode 值解析出来
             const { y, x: color } = allValues.encode;
@@ -171,9 +173,6 @@ export const createPieVisTypeDefinition = (): VisTypeDefinitionProps<FormPieChar
             // 饼图只有 color 轴和 y 轴
             Reflect.set(options, 'encode', { color, y });
 
-            // 设置新的 data
-            Reflect.set(options, 'data', data);
-
             // 设置新的 transform
             Reflect.set(options, 'transform', transform);
 
@@ -184,7 +183,7 @@ export const createPieVisTypeDefinition = (): VisTypeDefinitionProps<FormPieChar
 
             console.log('newOptions', options);
 
-            return options as Chart['options'];
+            return { options: options as Chart['options'], data };
         },
         onChangeConfig: (value, allValues, form) => {
             // 图例

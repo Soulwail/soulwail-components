@@ -5,10 +5,11 @@ import { cloneDeep, defaultsDeep } from 'lodash';
 import { forwardRef, useEffect, useImperativeHandle, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { EditConfig, VisConfig } from './components';
 import VisualizeContext, { VisualizeContextProps } from './context';
-import { VisTypeDefinitionProps, visualizations } from './typeVislib';
+import { TransformReturn, VisTypeDefinitionProps, visualizations } from './typeVislib';
 import { ChartTypes } from './utils/collections';
 
-type Operate = (values: Record<string, any>, options: Chart['options']) => Promise<void>;
+/** 操作回调 */
+type Operate<T = void> = (values: Record<string, any>, options: Chart['options'], data: Data) => Promise<T>;
 
 export interface VisualizeProps {
     /** - 数据来源 */
@@ -24,7 +25,7 @@ export interface VisualizeProps {
     /** - 字段值更新时触发回调事件 */
     onValueChange?: FormProps['onValuesChange'];
     /** - 生成按钮回调 */
-    onGenerate?: Operate;
+    onGenerate?: Operate<TransformReturn>;
     /** - 保存按钮回调 */
     onSave?: Operate;
     /** - 操作按钮渲染 */
@@ -37,7 +38,7 @@ export interface VisualizeRef {
     /** - 设置多个字段值 */
     setFieldsValue?: FormInstance['setFieldsValue'];
     /** - 渲染图表 */
-    renderChart: (options: Chart['options']) => Promise<void>;
+    renderChart: (options: Chart['options'], data: Data) => Promise<void>;
     /** - 获取图表配置 */
     transformConfig?: VisTypeDefinitionProps['transformConfig'];
 }
@@ -93,14 +94,13 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
 
     /**
      * - 渲染图表
+     * @param options 图表配置
+     * @param data 图表数据
      */
-    const renderChart = async (options: Chart['options'] & Data) => {
+    const renderChart = async (options: Chart['options'], data: Data) => {
         try {
             // 判断图表是否有数据
-            if (
-                (options?.data && Array.isArray(options.data) && options.data.length > 0) ||
-                (options.data?.value && Array.isArray(options.data.value) && options.data.value.length > 0)
-            ) {
+            if (data?.value && Array.isArray(data.value) && data.value.length > 0) {
                 setIsEmpty(false);
             } else {
                 setIsEmpty(true);
@@ -111,6 +111,8 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
                 chart.current.clear();
                 // 设置新的配置
                 chart.current.options(options);
+                // 更新数据
+                chart.current.data(data);
                 // 图表绘制后执行该事件
                 chart.current.on('afterpaint', () => {
                     setGenerateLoading(false);
@@ -282,10 +284,9 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
             const values = formInstance.getFieldsValue(true);
             const newValues = cloneDeep(values);
             const [chartType] = values.chartType.split('_');
-            let options = null;
 
             if (visTypeDefinition) {
-                options = visTypeDefinition.transformConfig(values);
+                const { options, data } = visTypeDefinition.transformConfig(values);
 
                 console.log('chart options', options);
 
@@ -300,9 +301,11 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
                         Reflect.set(newValues.encode, 'color', null);
                     }
                 }
-            }
 
-            return Promise.resolve({ values: newValues, options });
+                return Promise.resolve({ values: newValues, options, data });
+            } else {
+                return Promise.reject('No options and data!');
+            }
         } catch (err) {
             return Promise.reject(err);
         }
@@ -315,11 +318,11 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
         try {
             setGenerateLoading(true);
 
-            const { values, options } = await buildChartDataAndOptions(formInstance);
+            const { values, options, data } = await buildChartDataAndOptions(formInstance);
             // 触发预览函数
-            const newOptions = await onGenerate?.(values, options);
-            // 获取新的 options 并渲染
-            await renderChart(newOptions);
+            const { options: newOptions, data: newData } = await onGenerate?.(values, options, data);
+            // 获取新的 options 和 data 并渲染
+            await renderChart(newOptions, newData);
         } catch (err) {
             console.error(err);
             setGenerateLoading(false);
@@ -334,10 +337,10 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
         try {
             setSaveLoading(true);
 
-            const { values, options } = await buildChartDataAndOptions(formInstance);
+            const { values, options, data } = await buildChartDataAndOptions(formInstance);
 
             // 触发保存函数
-            await onSave?.(values, options);
+            await onSave?.(values, options, data);
         } catch (err) {}
 
         setSaveLoading(false);

@@ -1,5 +1,7 @@
-import Visualize from "./Visualize";
-export * from './utils/collections';
-export * from './typeVislib';
+import Visualize from './Visualize';
 
-export default Visualize
+export * from './typeVislib';
+export * from './utils/collections';
+export * from './Visualize';
+
+export default Visualize;

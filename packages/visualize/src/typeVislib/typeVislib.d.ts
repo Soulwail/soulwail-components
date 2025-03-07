@@ -1,4 +1,4 @@
-import { Chart } from '@antv/g2';
+import { Chart, Data } from '@antv/g2';
 import { FormInstance, SelectProps } from 'antd';
 
 /** - 轴配置 */
@@ -43,11 +43,19 @@ interface SchemaItem {
 }
 
 /**
+ * - 配置转换返回值
+ */
+type TransformReturn = {
+    options: Chart['options'];
+    data: Data;
+};
+
+/**
  * - 配置转换
  * @param values 所有表单值
  * @returns Chart 配置项
  */
-type TransformConfig = (values: Record<string, any>) => Chart['options'];
+type TransformConfig = (values: Record<string, any>) => TransformReturn;
 
 /**
  * - 额外参数
