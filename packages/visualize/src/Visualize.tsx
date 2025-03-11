@@ -18,6 +18,8 @@ export interface VisualizeProps {
     dataSourceMode?: SelectProps['mode'];
     /** - 内容展示高度 */
     height?: number;
+    /** - 容器间距尺寸 */
+    size?: 'small' | 'medium';
     /** - 初始值 */
     initialValues?: Record<string, any>;
     /** - 横轴选项 */
@@ -46,6 +48,7 @@ export interface VisualizeRef {
 const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
     const {
         height = 680,
+        size = 'medium',
         initialValues = {},
         dataSource = [],
         dataSourceMode,
@@ -382,6 +385,7 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
         <VisualizeContext.Provider
             value={{
                 contentHeight,
+                size,
                 visTypeDefinition,
                 categoryList,
                 colorCategoryList,
@@ -406,7 +410,7 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
                             <Empty
                                 image={Empty.PRESENTED_IMAGE_SIMPLE}
                                 style={{
-                                    top: `calc(${contentHeight / 2}px - 60px)`,
+                                    top: `calc(${contentHeight / 2}px - ${size === 'medium' ? 60 : 53}px)`,
                                     width: 'calc(100% - 16px)',
                                     position: 'absolute',
                                 }}

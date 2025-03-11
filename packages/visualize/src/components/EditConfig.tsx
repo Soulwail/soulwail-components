@@ -6,7 +6,7 @@ import { AxisTitle, Legend, PieSeries, Series, XAxis, YAxis } from '../editor';
 import './index.less';
 
 const EditConfig: React.FC = () => {
-    const { contentHeight, visTypeDefinition, chartOptionsRender } = useContext(VisualizeContext);
+    const { contentHeight, size, visTypeDefinition, chartOptionsRender } = useContext(VisualizeContext);
 
     const form = Form.useFormInstance();
 
@@ -48,8 +48,8 @@ const EditConfig: React.FC = () => {
 
     return (
         <div>
-            {/* 62 - tab 标题、48 - 底部按钮 */}
-            <div className="config-box" style={{ height: contentHeight - 62 - 48 }}>
+            {/* medium： 62 - tab 标题、48 - 底部按钮；small：44  - tab 标题、44 - 底部按钮 */}
+            <div className="config-box" style={{ height: contentHeight - (size === 'medium' ? 110 : 88) }}>
                 <Collapse ghost accordion items={items} />
             </div>
 

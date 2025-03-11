@@ -19,7 +19,7 @@ export type VisConfigProps = {
 
 const VisConfig: React.FC<VisConfigProps> = (props) => {
     const { dataSource = [], dataSourceMode } = props;
-    const { contentHeight, chartOptionsRender } = useContext(VisualizeContext);
+    const { contentHeight, size, chartOptionsRender } = useContext(VisualizeContext);
     const visTypeOptions = getChartTypes();
 
     const form = Form.useFormInstance();
@@ -54,8 +54,8 @@ const VisConfig: React.FC<VisConfigProps> = (props) => {
 
     return (
         <div style={{ padding: '6px 0 0 16px' }}>
-            {/* 62 - tab 标题、6 - 内边距、48 - 底部按钮 */}
-            <div className="config-box" style={{ height: contentHeight - 62 - 6 - 48 }}>
+            {/*  medium：62 - tab 标题、6 - 内边距、48 - 底部按钮；small：44  - tab 标题、6 - 内边距、44 - 底部按钮 */}
+            <div className="config-box" style={{ height: contentHeight - 6 - (size === 'medium' ? 110 : 88) }}>
                 <Form.Item label="图表名称" name="name" rules={[{ required: true, message: '请输入图表名称' }]}>
                     <Input placeholder="请输入" />
                 </Form.Item>
