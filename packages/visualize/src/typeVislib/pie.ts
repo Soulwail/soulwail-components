@@ -133,7 +133,7 @@ export const createPieVisTypeDefinition = (): VisTypeDefinitionProps<FormPieChar
                 }
             } else {
                 // 未开启数据标签，删除对应的数据标签显示
-                Reflect.set(options, 'labels', false);
+                Reflect.set(options, 'labels', [false]);
                 // 如果没有标签，则不需要留出空间
                 Reflect.set(options.coordinate, 'outerRadius', 1);
 

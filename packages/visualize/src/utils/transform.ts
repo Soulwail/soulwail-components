@@ -43,7 +43,7 @@ const transformLabel = (options: Record<string, any>, showLabel: boolean) => {
         Reflect.set(options, 'labels', [{ text: options.encode.y }]);
     } else {
         // 未开启数据标签，删除对应的数据标签显示
-        Reflect.set(options, 'labels', false);
+        Reflect.set(options, 'labels', [false]);
     }
 };
 
