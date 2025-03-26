@@ -205,8 +205,8 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
             if (chartVisType === ChartTypes.INTERVAL || chartVisType === ChartTypes.HORIZONTAL_BAR) {
                 // 如果上一次是折线图或面积图
                 if (prevChartVisType === ChartTypes.LINE || prevChartVisType === ChartTypes.AREA) {
-                    // 判断是否开启分组聚合，如果开启了，则设置值，否则不设置
-                    form.setFieldValue(['encode', 'color'], allValues.encodeColor ? colorCategoryList[0]?.value : null);
+                    // 将横轴的时间转为字段选项
+                    form.setFieldValue(['encode', 'x'], categoryList[0]?.value);
                 }
 
                 // 设置排序默认值
@@ -217,12 +217,8 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
                 }
             } else if (chartVisType === ChartTypes.LINE || chartVisType === ChartTypes.AREA) {
                 // 如果切换到折线图或面积图
-                if (prevChartVisType === ChartTypes.INTERVAL || prevChartVisType === ChartTypes.AREA) {
-                    // form.setFieldValue(['encode', 'x'], allValues.encode.x);
-                }
-
                 // 设置横轴固定为时间
-                form.setFieldValue(['encode', 'color'], 'time');
+                form.setFieldValue(['encode', 'x'], 'time');
 
                 // 设置面积图的折线类型
                 if (chartVisType === ChartTypes.AREA) {
@@ -291,19 +287,21 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
             if (visTypeDefinition) {
                 const { options, data } = visTypeDefinition.transformConfig(values);
 
-                console.log('chart options', options);
-
                 // 取值转换
                 if (chartType === ChartTypes.LINE || chartType === ChartTypes.AREA) {
                     // TODO:
                 } else if (chartType === ChartTypes.PIE) {
                     Reflect.set(newValues.encode, 'color', null);
                 } else {
-                    // 如果没有开启分组聚合，则 color 需要设置为 null
+                    // 如果没有开启分组聚合，则 value 中的 color 需要设置为 null
                     if (!values.encodeColor) {
                         Reflect.set(newValues.encode, 'color', null);
                     }
                 }
+
+                console.log('chart options', options);
+                console.log('chart values', newValues);
+                console.log('chart data', data);
 
                 return Promise.resolve({ values: newValues, options, data });
             } else {

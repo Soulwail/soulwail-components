@@ -31,10 +31,16 @@ export interface ChartFormProps {
     showLabel: boolean;
     /** - 通道配置 */
     encode: EncodeOptions;
-    /** - 是否开启检索 */
-    keywordSearch: boolean;
-    /** - 检索内容配置 */
-    search: { compare: '==' | 'like'; keyword: string };
+    /**
+     * - 是否开启检索
+     * - 横轴分组聚合
+     */
+    keywordSearch?: boolean;
+    /**
+     * - 检索内容配置
+     * - 横轴检索
+     */
+    search?: { compare: '==' | 'like'; keyword: string };
 }
 
 interface SchemaItem {

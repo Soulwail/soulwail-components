@@ -15,6 +15,11 @@ import {
     StepLineChartIcon,
 } from '../icons';
 
+// 最大字符数
+export const MaxCharNum = 12;
+// 最大字符长度
+export const MaxCharLength = 100;
+
 export const KeywordComparisonSymbols = Object.freeze({
     EQUAL: '==',
     LIKE: 'like',
@@ -207,9 +212,4 @@ const getConfigCollections = () => ({
     // thresholdLineStyles: getThresholdLineStyles(),
 });
 
-export {
-    getChartTypes,
-    getConfigCollections,
-    getKeywordComparisonSymbols,
-    getPositions,
-};
+export { getChartTypes, getConfigCollections, getKeywordComparisonSymbols, getPositions };

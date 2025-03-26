@@ -2,7 +2,7 @@ import { Chart, Data } from '@antv/g2';
 import { cloneDeep } from 'lodash';
 import { legendChange } from '../utils/change';
 import { ChartTypes, IntervalChartTypes, KeywordComparisonSymbols, Positions } from '../utils/collections';
-import { deleteExtraKey, transformLegend } from '../utils/transform';
+import { deleteExtraKey, ellipsisLabel, transformLegend } from '../utils/transform';
 import { ChartFormProps, VisTypeDefinitionProps } from './index';
 
 export interface FormPieChartOptionProps extends ChartFormProps {
@@ -88,19 +88,22 @@ export const createPieVisTypeDefinition = (): VisTypeDefinitionProps<FormPieChar
             // 图例
             transformLegend(options, allValues.showLegend);
 
+            // TODO: 展示百分比设置
             // 数据标签
             if (allValues.showLabel) {
+                // 获取标签设置
                 const { position, text } = allValues.labels[0];
 
-                const labelText = (data: Record<string, any>) => {
+                const labelText = (data: Record<string, any>, ...reset) => {
+                    console.log(data, reset);
+
                     let label = '',
                         count = '',
                         percent = '',
                         colon = '';
                     // 类别
                     if (text.includes('category')) {
-                        const maxLength = 12; // 设置最大字符数
-                        label = data[color].length > maxLength ? `${data[color].slice(0, maxLength)}...` : data[color];
+                        label = ellipsisLabel(data[color]);
                     }
 
                     // 总数
@@ -143,6 +146,20 @@ export const createPieVisTypeDefinition = (): VisTypeDefinitionProps<FormPieChar
                 }
             }
             Reflect.deleteProperty(options, 'showLabel');
+
+            // 悬浮提示
+            Reflect.set(options, 'tooltip', {
+                items: [
+                    (
+                        d, // 每一个数据项
+                        _index: number, // 索引
+                        _data, // 完整数据
+                        column, // 通道
+                    ) => {
+                        return { name: d[column.color?.field], value: d[column.y.field] };
+                    },
+                ],
+            });
 
             // 扇区排序
             if (allValues.transform.sortX) {

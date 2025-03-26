@@ -60,7 +60,7 @@ const VisConfig: React.FC<VisConfigProps> = (props) => {
                     <Input placeholder="请输入" />
                 </Form.Item>
 
-                <Form.Item label="数据来源" name="dataSource" rules={[{ required: true, message: '请选择数据来源' }]}>
+                <Form.Item label="数据来源" name="dataSource" rules={[{ required: false, message: '请选择数据来源' }]}>
                     <Select options={dataSource} mode={dataSourceMode} placeholder="请选择" />
                 </Form.Item>
 

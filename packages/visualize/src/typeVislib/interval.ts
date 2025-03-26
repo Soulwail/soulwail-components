@@ -1,7 +1,7 @@
 import { Chart, Data } from '@antv/g2';
 import { cloneDeep, defaultsDeep } from 'lodash';
 import { axisChange, encodeColorChange, legendChange } from '../utils/change';
-import { ChartTypes, IntervalChartTypes, KeywordComparisonSymbols, Positions } from '../utils/collections';
+import { ChartTypes, IntervalChartTypes, KeywordComparisonSymbols, MaxCharNum, Positions } from '../utils/collections';
 import {
     deleteExtraKey,
     transformAxis,
@@ -9,6 +9,7 @@ import {
     transformGrid,
     transformLabel,
     transformLegend,
+    transformTooltip,
 } from '../utils/transform';
 import { AxisOptions, ChartFormProps, VisTypeDefinitionProps } from './index';
 
@@ -67,6 +68,8 @@ export const createIntervalVisTypeDefinition = (): VisTypeDefinitionProps<FormIn
                     x: {
                         title: null, // 轴标题
                         label: true, // 标签
+                        size: MaxCharNum,
+                        labelAutoEllipsis: true,
                         tick: true,
                     },
                     // y 轴
@@ -135,6 +138,13 @@ export const createIntervalVisTypeDefinition = (): VisTypeDefinitionProps<FormIn
             // 网格线
             transformGrid(options, allValues.showGrid);
 
+            // 悬浮提示
+            if (chartTypeArr[1] === IntervalChartTypes.BASE) {
+                transformTooltip(options, 'count');
+            } else {
+                transformTooltip(options, 'name');
+            }
+
             // 横轴排序
             if (allValues.transform.sortX) {
                 // TODO:
@@ -147,8 +157,17 @@ export const createIntervalVisTypeDefinition = (): VisTypeDefinitionProps<FormIn
             // 分组聚合
             if (allValues.encodeColor) {
             } else {
-                // 未开启分组聚合，删除对应的视觉通道参数
-                Reflect.deleteProperty(options.encode, 'color');
+                // 单柱状图，开启视觉通道，需要将 transform type 设置为 stackY
+                if (chartTypeArr[1] === IntervalChartTypes.BASE) {
+                    transform.forEach((e) => {
+                        if (e.type === 'dodgeX') {
+                            e.type = 'stackY';
+                        }
+                    });
+                }
+
+                // 未开启分组聚合， 将对应的视觉通道参数设置为横轴
+                Reflect.set(options.encode, 'color', options.encode.x);
             }
 
             // 限制柱形图的宽度

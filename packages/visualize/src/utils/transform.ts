@@ -1,3 +1,5 @@
+import { MaxCharNum } from '@safety/visualize';
+
 /**
  * - 数值转换
  * @param num
@@ -19,6 +21,14 @@ const transformNumber = (num) => {
 };
 
 /**
+ * - label 自动省略溢出
+ * @param label
+ */
+const ellipsisLabel = (label: string) => {
+    return label.length > MaxCharNum ? `${label.slice(0, MaxCharNum)}...` : label;
+};
+
+/**
  * - 图例数据转换
  * @param options
  * @param showLegend
@@ -26,7 +36,15 @@ const transformNumber = (num) => {
 const transformLegend = (options: Record<string, any>, showLegend: boolean) => {
     // 图例
     if (showLegend) {
-        // 初始值和 onChange 时已经设置了
+        // 图例位置在初始值和 onChange 时已经设置了
+        // 这里设置图例 label 展示的最大宽度
+        if (Reflect.has(options, 'legend')) {
+            if (Reflect.has(options.legend, 'color')) {
+                Reflect.set(options.legend.color, 'itemLabelText', (datum: string | Record<string, string>) => {
+                    return typeof datum === 'string' ? ellipsisLabel(datum) : ellipsisLabel(datum?.label);
+                });
+            }
+        }
     } else {
         // 未开启图例，删除对应的图例显示
         Reflect.set(options, 'legend', false);
@@ -99,6 +117,29 @@ const transformAxisTitle = (
 };
 
 /**
+ * - 转换悬浮提示
+ * @param options
+ * @param type tooltip展示类型 count——总计、name——名称
+ * @description 将悬浮提示更换为
+ */
+const transformTooltip = (options: Record<string, any>, type: 'count' | 'name') => {
+    Reflect.set(options, 'tooltip', {
+        items: [
+            (
+                d, // 每一个数据项
+                _index: number, // 索引
+                _data, // 完整数据
+                column, // 通道
+            ) => {
+                const name = type === 'count' ? '总计' : d[column.color?.field];
+
+                return { name, value: d[column.y.field] };
+            },
+        ],
+    });
+};
+
+/**
  * - 删除多余的 key
  * @param options
  */
@@ -125,10 +166,12 @@ const deleteExtraKey = (options: Record<string, any>) => {
 
 export {
     deleteExtraKey,
+    ellipsisLabel,
     transformAxis,
     transformAxisTitle,
     transformGrid,
     transformLabel,
     transformLegend,
     transformNumber,
+    transformTooltip,
 };

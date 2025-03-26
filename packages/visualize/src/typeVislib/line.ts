@@ -1,7 +1,13 @@
 import { Chart, Data } from '@antv/g2';
 import { cloneDeep } from 'lodash';
 import { axisChange, legendChange } from '../utils/change';
-import { ChartTypes, IntervalChartTypes, KeywordComparisonSymbols, Positions } from '../utils/collections';
+import {
+    ChartTypes,
+    IntervalChartTypes,
+    KeywordComparisonSymbols,
+    LineChartTypes,
+    Positions,
+} from '../utils/collections';
 import {
     deleteExtraKey,
     transformAxis,
@@ -9,6 +15,7 @@ import {
     transformGrid,
     transformLabel,
     transformLegend,
+    transformTooltip,
 } from '../utils/transform';
 import { AxisOptions, ChartFormProps, VisTypeDefinitionProps } from './index';
 
@@ -21,6 +28,12 @@ export interface FormLineChartOptionProps extends ChartFormProps {
     axis: AxisOptions;
     /** - 是否显示网格 */
     showGrid: boolean;
+    /** - 是否开启颜色视觉通道 */
+    encodeColor: boolean;
+    /** - 是否开启检索 */
+    keywordSearchColor: boolean;
+    /** - 检索内容配置 */
+    searchColor: { compare: '==' | 'like'; keyword: string };
 }
 
 export const createLineVisTypeDefinition = (): VisTypeDefinitionProps<FormLineChartOptionProps> => {
@@ -66,12 +79,13 @@ export const createLineVisTypeDefinition = (): VisTypeDefinitionProps<FormLineCh
                 },
                 showLabel: true,
                 showGrid: true,
-                keywordSearch: false,
-                search: {
+                keywordSearchColor: false,
+                searchColor: {
                     compare: KeywordComparisonSymbols.EQUAL,
                     keyword: '',
                 },
-                encode: { color: 'time', y: 'count' },
+                encode: { x: 'time', y: 'count' },
+                encodeColor: false,
             },
             ...config,
         },
@@ -115,9 +129,12 @@ export const createLineVisTypeDefinition = (): VisTypeDefinitionProps<FormLineCh
             // 网格线
             transformGrid(options, allValues.showGrid);
 
-            // 取值转换
-            Reflect.set(options.encode, 'x', allValues.encode.color);
-            Reflect.set(options.encode, 'color', allValues.encode.x);
+            // 悬浮提示
+            if (chartTypeArr[1] === LineChartTypes.BASE) {
+                transformTooltip(options, 'count');
+            } else {
+                transformTooltip(options, 'name');
+            }
 
             // 删除 option 中多余的 key
             deleteExtraKey(options);

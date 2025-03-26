@@ -1,7 +1,13 @@
 import { Chart, Data } from '@antv/g2';
 import { cloneDeep } from 'lodash';
 import { axisChange, legendChange } from '../utils/change';
-import { ChartTypes, IntervalChartTypes, KeywordComparisonSymbols, Positions } from '../utils/collections';
+import {
+    AreaChartTypes,
+    ChartTypes,
+    IntervalChartTypes,
+    KeywordComparisonSymbols,
+    Positions,
+} from '../utils/collections';
 import {
     deleteExtraKey,
     transformAxis,
@@ -9,6 +15,7 @@ import {
     transformGrid,
     transformLabel,
     transformLegend,
+    transformTooltip,
 } from '../utils/transform';
 import { AxisOptions, ChartFormProps, VisTypeDefinitionProps } from './index';
 
@@ -23,6 +30,12 @@ export interface FormAreaChartOptionProps extends ChartFormProps {
     axis: AxisOptions;
     /** - 是否显示网格 */
     showGrid: boolean;
+    /** - 是否开启颜色视觉通道 */
+    encodeColor: boolean;
+    /** - 是否开启检索 */
+    keywordSearchColor: boolean;
+    /** - 检索内容配置 */
+    searchColor: { compare: '==' | 'like'; keyword: string };
 }
 
 export const createAreaVisTypeDefinition = (): VisTypeDefinitionProps<FormAreaChartOptionProps> => {
@@ -69,12 +82,13 @@ export const createAreaVisTypeDefinition = (): VisTypeDefinitionProps<FormAreaCh
                 },
                 showLabel: true,
                 showGrid: true,
-                keywordSearch: false,
-                search: {
+                keywordSearchColor: false,
+                searchColor: {
                     compare: KeywordComparisonSymbols.EQUAL,
                     keyword: '',
                 },
-                encode: { y: 'count', color: 'time' },
+                encode: { x: 'time', y: 'count' },
+                encodeColor: false,
             },
             ...config,
         },
@@ -149,12 +163,15 @@ export const createAreaVisTypeDefinition = (): VisTypeDefinitionProps<FormAreaCh
             // 网格线
             transformGrid(options, allValues.showGrid);
 
+            // 悬浮提示
+            if (chartTypeArr[1] === AreaChartTypes.BASE) {
+                transformTooltip(options, 'count');
+            } else {
+                transformTooltip(options, 'name');
+            }
+
             // 设置新的 transform
             Reflect.set(options, 'transform', transform);
-
-            // 取值转换
-            Reflect.set(options.encode, 'x', allValues.encode.color);
-            Reflect.set(options.encode, 'color', allValues.encode.x);
 
             // 删除 option 中多余的 key
             deleteExtraKey(options);
