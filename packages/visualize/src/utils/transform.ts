@@ -1,4 +1,4 @@
-import { MaxCharNum } from '@safety/visualize';
+import { ChartTypes, MaxCharNum } from '@safety/visualize';
 
 /**
  * - 数值转换
@@ -140,6 +140,40 @@ const transformTooltip = (options: Record<string, any>, type: 'count' | 'name') 
 };
 
 /**
+ * - 处理分组聚合
+ * @param options 图标配置
+ * @param encodeColor 是否开启分组聚合
+ * @param chartTypeArr 图表类型
+ * @param transform 图表转换
+ */
+const transformEncodeColor = (
+    options: Record<string, any>,
+    encodeColor: boolean,
+    chartTypeArr: [string, string],
+    transform?: Record<string, any>[],
+) => {
+    if (encodeColor) {
+    } else {
+        if (chartTypeArr[0] === ChartTypes.INTERVAL || chartTypeArr[0] === ChartTypes.HORIZONTAL_BAR) {
+            // 单柱状图，开启视觉通道，需要将 transform type 设置为 stackY
+            if (chartTypeArr[1] === 'base') {
+                transform.forEach((e) => {
+                    if (e.type === 'dodgeX') {
+                        e.type = 'stackY';
+                    }
+                });
+            }
+
+            // 未开启分组聚合， 将对应的视觉通道参数设置为横轴
+            Reflect.set(options.encode, 'color', options.encode.x);
+        } else {
+            // 未开启分组聚合，删除对应的视觉通道参数
+            Reflect.deleteProperty(options.encode, 'color');
+        }
+    }
+};
+
+/**
  * - 删除多余的 key
  * @param options
  */
@@ -169,6 +203,7 @@ export {
     ellipsisLabel,
     transformAxis,
     transformAxisTitle,
+    transformEncodeColor,
     transformGrid,
     transformLabel,
     transformLegend,

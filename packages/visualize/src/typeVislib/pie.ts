@@ -2,7 +2,7 @@ import { Chart, Data } from '@antv/g2';
 import { cloneDeep } from 'lodash';
 import { legendChange } from '../utils/change';
 import { ChartTypes, IntervalChartTypes, KeywordComparisonSymbols, Positions } from '../utils/collections';
-import { deleteExtraKey, ellipsisLabel, transformLegend } from '../utils/transform';
+import { deleteExtraKey, ellipsisLabel, transformEncodeColor, transformLegend } from '../utils/transform';
 import { ChartFormProps, VisTypeDefinitionProps } from './index';
 
 export interface FormPieChartOptionProps extends ChartFormProps {
@@ -192,6 +192,9 @@ export const createPieVisTypeDefinition = (): VisTypeDefinitionProps<FormPieChar
 
             // 设置新的 transform
             Reflect.set(options, 'transform', transform);
+
+            // 分组聚合
+            transformEncodeColor(options, allValues.encodeColor, chartTypeArr);
 
             // 删除 option 中多余的 key
             deleteExtraKey(options);

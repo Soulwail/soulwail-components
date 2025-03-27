@@ -12,6 +12,7 @@ import {
     deleteExtraKey,
     transformAxis,
     transformAxisTitle,
+    transformEncodeColor,
     transformGrid,
     transformLabel,
     transformLegend,
@@ -135,6 +136,9 @@ export const createLineVisTypeDefinition = (): VisTypeDefinitionProps<FormLineCh
             } else {
                 transformTooltip(options, 'name');
             }
+
+            // 分组聚合
+            transformEncodeColor(options, allValues.encodeColor, chartTypeArr);
 
             // 删除 option 中多余的 key
             deleteExtraKey(options);

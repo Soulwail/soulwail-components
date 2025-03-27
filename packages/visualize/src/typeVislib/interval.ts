@@ -6,6 +6,7 @@ import {
     deleteExtraKey,
     transformAxis,
     transformAxisTitle,
+    transformEncodeColor,
     transformGrid,
     transformLabel,
     transformLegend,
@@ -155,20 +156,7 @@ export const createIntervalVisTypeDefinition = (): VisTypeDefinitionProps<FormIn
             Reflect.set(options, 'transform', transform);
 
             // 分组聚合
-            if (allValues.encodeColor) {
-            } else {
-                // 单柱状图，开启视觉通道，需要将 transform type 设置为 stackY
-                if (chartTypeArr[1] === IntervalChartTypes.BASE) {
-                    transform.forEach((e) => {
-                        if (e.type === 'dodgeX') {
-                            e.type = 'stackY';
-                        }
-                    });
-                }
-
-                // 未开启分组聚合， 将对应的视觉通道参数设置为横轴
-                Reflect.set(options.encode, 'color', options.encode.x);
-            }
+            transformEncodeColor(options, allValues.encodeColor, chartTypeArr, transform);
 
             // 限制柱形图的宽度
             defaultsDeep(options, { style: { maxWidth: 50 } });

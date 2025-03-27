@@ -12,6 +12,7 @@ import {
     deleteExtraKey,
     transformAxis,
     transformAxisTitle,
+    transformEncodeColor,
     transformGrid,
     transformLabel,
     transformLegend,
@@ -172,6 +173,9 @@ export const createAreaVisTypeDefinition = (): VisTypeDefinitionProps<FormAreaCh
 
             // 设置新的 transform
             Reflect.set(options, 'transform', transform);
+
+            // 分组聚合
+            transformEncodeColor(options, allValues.encodeColor, chartTypeArr);
 
             // 删除 option 中多余的 key
             deleteExtraKey(options);
