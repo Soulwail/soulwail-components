@@ -51,7 +51,7 @@ export const createPieVisTypeDefinition = (): VisTypeDefinitionProps<FormPieChar
                     compare: KeywordComparisonSymbols.EQUAL,
                     keyword: '',
                 },
-                transform: { sortX: { by: 'y', reverse: true, slice: Infinity } },
+                transform: { sortX: { by: 'y', reverse: true, slice: 0 } },
                 encode: { y: 'count' },
             },
             ...config,
@@ -136,7 +136,7 @@ export const createPieVisTypeDefinition = (): VisTypeDefinitionProps<FormPieChar
                 }
             } else {
                 // 未开启数据标签，删除对应的数据标签显示
-                Reflect.set(options, 'labels', [false]);
+                Reflect.set(options, 'labels', []);
                 // 如果没有标签，则不需要留出空间
                 Reflect.set(options.coordinate, 'outerRadius', 1);
 
@@ -163,7 +163,7 @@ export const createPieVisTypeDefinition = (): VisTypeDefinitionProps<FormPieChar
 
             // 扇区排序
             if (allValues.transform.sortX) {
-                const { by, reverse, slice } = allValues.transform.sortX;
+                const { by, reverse, /* slice */ } = allValues.transform.sortX;
 
                 // 按扇区数值排序
                 if (by === 'y') {
@@ -187,9 +187,10 @@ export const createPieVisTypeDefinition = (): VisTypeDefinitionProps<FormPieChar
                 }
 
                 // 筛选 TOP
-                if (slice && slice !== Infinity) {
-                    data.transform.push({ type: 'slice', end: slice });
-                }
+                // 数量限制不在图表进行限制，通过接口控制返回的数据量
+                // if (slice) {
+                //     data.transform.push({ type: 'slice', end: slice });
+                // }
             }
 
             // 饼图只有 color 轴和 y 轴

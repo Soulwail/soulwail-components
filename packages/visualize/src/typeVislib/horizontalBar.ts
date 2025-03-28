@@ -100,7 +100,7 @@ export const createHorizontalBarVisTypeDefinition = (): VisTypeDefinitionProps<F
                     compare: KeywordComparisonSymbols.EQUAL,
                     keyword: '',
                 },
-                transform: { sortX: { by: 'y', reverse: true, slice: Infinity } },
+                transform: { sortX: { by: 'y', reverse: true, slice: 0 } },
                 encode: { y: 'count' },
                 encodeColor: false,
             },

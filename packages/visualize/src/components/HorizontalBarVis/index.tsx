@@ -71,7 +71,7 @@ const HorizontalBarVis: React.FC = () => {
                     options={[
                         { label: 'TOP 10', value: 10 },
                         { label: 'TOP 20', value: 20 },
-                        { label: '不限制', value: Infinity },
+                        { label: '不限制', value: 0 },
                     ]}
                 />
             </Form.Item>

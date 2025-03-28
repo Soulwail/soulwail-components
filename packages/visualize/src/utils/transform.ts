@@ -61,7 +61,7 @@ const transformLabel = (options: Record<string, any>, showLabel: boolean) => {
         Reflect.set(options, 'labels', [{ text: options.encode.y }]);
     } else {
         // 未开启数据标签，删除对应的数据标签显示
-        Reflect.set(options, 'labels', [false]);
+        Reflect.set(options, 'labels', []);
     }
 };
 
@@ -145,13 +145,14 @@ const transformTooltip = (options: Record<string, any>, type: 'count' | 'name') 
  * @param transform
  */
 const transformSortX = (sortX: Record<string, any>, transform: Record<string, any>[]) => {
-    const { by, reverse, slice } = sortX;
+    const { by, reverse, /* slice */ } = sortX;
     const transformItem: Record<string, any> = { type: 'sortX', by, reverse };
 
     // 如果有数量限制，则添加 slice
-    if (slice && slice !== Infinity) {
-        transformItem.slice = slice;
-    }
+    // 数量限制不在图表进行限制，通过接口控制返回的数据量
+    // if (slice) {
+    //     transformItem.slice = slice;
+    // }
 
     transform.push(transformItem);
 };
