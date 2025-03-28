@@ -13,6 +13,8 @@ export default () => {
     const [initialValues] = useState({});
 
     useEffect(() => {
+        visRef.current.setFieldValue('name', 'Test');
+        visRef.current.setFieldValue('dataSource', '1');
         visRef.current.setFieldValue(['encode', 'x'], 'month');
     }, []);
 
@@ -51,14 +53,14 @@ export default () => {
             { name: 'London', month: 'Jun.', count: 20.3 },
             { name: 'London', month: 'Jul.', count: 24 },
             { name: 'London', month: 'Aug.', count: 35.6 },
-            // { name: 'Berlin', month: 'Jan.', count: 12.4 },
-            // { name: 'Berlin', month: 'Feb.', count: 23.2 },
-            // { name: 'Berlin', month: 'Mar.', count: 34.5 },
-            // { name: 'Berlin', month: 'Apr.', count: 99.7 },
-            // { name: 'Berlin', month: 'May', count: 52.6 },
-            // { name: 'Berlin', month: 'Jun.', count: 35.5 },
-            // { name: 'Berlin', month: 'Jul.', count: 37.4 },
-            // { name: 'Berlin', month: 'Aug.', count: 42.4 },
+            { name: 'Berlin', month: 'Jan.Jan.Jan.Jan.Jan.Jan.Jan.Jan.', count: 12.4 },
+            { name: 'Berlin', month: 'Feb.', count: 23.2 },
+            { name: 'Berlin', month: 'Mar.', count: 34.5 },
+            { name: 'Berlin', month: 'Apr.', count: 99.7 },
+            { name: 'Berlin', month: 'May', count: 52.6 },
+            { name: 'Berlin', month: 'Jun.', count: 35.5 },
+            { name: 'Berlin', month: 'Jul.', count: 37.4 },
+            { name: 'Berlin', month: 'Aug.', count: 42.4 },
         ];
 
         await wait(2000);
