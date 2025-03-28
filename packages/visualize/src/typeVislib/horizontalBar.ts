@@ -6,7 +6,6 @@ import {
     HorizontalChartTypes,
     IntervalChartTypes,
     KeywordComparisonSymbols,
-    MaxCharNum,
     Positions,
 } from '../utils/collections';
 import {
@@ -77,8 +76,6 @@ export const createHorizontalBarVisTypeDefinition = (): VisTypeDefinitionProps<F
                     x: {
                         title: null, // 轴标题
                         label: true, // 标签
-                        size: MaxCharNum,
-                        labelAutoEllipsis: true, // 自动省略
                         tick: true,
                     },
                     // y 轴

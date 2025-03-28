@@ -72,6 +72,7 @@ const transformLabel = (options: Record<string, any>, showLabel: boolean) => {
  */
 const transformAxis = (options: Record<string, any>, showAxis: boolean) => {
     if (showAxis) {
+        Reflect.set(options.axis.x, 'labelFormatter', (val: string) => ellipsisLabel(val));
         Reflect.set(options.axis.y, 'labelFormatter', (val: number) => transformNumber(val));
     } else {
         // 未开启坐标轴，删除对应的坐标轴显示
@@ -145,7 +146,7 @@ const transformTooltip = (options: Record<string, any>, type: 'count' | 'name') 
  * @param transform
  */
 const transformSortX = (sortX: Record<string, any>, transform: Record<string, any>[]) => {
-    const { by, reverse, /* slice */ } = sortX;
+    const { by, reverse /* slice */ } = sortX;
     const transformItem: Record<string, any> = { type: 'sortX', by, reverse };
 
     // 如果有数量限制，则添加 slice

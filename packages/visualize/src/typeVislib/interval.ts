@@ -1,7 +1,7 @@
 import { Chart, Data } from '@antv/g2';
 import { cloneDeep, defaultsDeep } from 'lodash';
 import { axisChange, encodeColorChange, legendChange } from '../utils/change';
-import { ChartTypes, IntervalChartTypes, KeywordComparisonSymbols, MaxCharNum, Positions } from '../utils/collections';
+import { ChartTypes, IntervalChartTypes, KeywordComparisonSymbols, Positions } from '../utils/collections';
 import {
     deleteExtraKey,
     transformAxis,
@@ -70,8 +70,6 @@ export const createIntervalVisTypeDefinition = (): VisTypeDefinitionProps<FormIn
                     x: {
                         title: null, // 轴标题
                         label: true, // 标签
-                        size: MaxCharNum,
-                        labelAutoEllipsis: true,
                         tick: true,
                     },
                     // y 轴
