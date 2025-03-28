@@ -17,6 +17,7 @@ import {
     transformGrid,
     transformLabel,
     transformLegend,
+    transformSortX,
     transformTooltip,
 } from '../utils/transform';
 import { AxisOptions, ChartFormProps, VisTypeDefinitionProps } from './index';
@@ -36,7 +37,7 @@ export interface FormHorizontalBarChartOptionProps extends ChartFormProps {
     /** - 轴排序 */
     transform: {
         /** - x 轴排序 */
-        sortX: { by: string; reverse: boolean };
+        sortX: { by: string; reverse: boolean; slice: number };
     };
     /** - 是否开启检索 */
     keywordSearchColor: boolean;
@@ -99,7 +100,7 @@ export const createHorizontalBarVisTypeDefinition = (): VisTypeDefinitionProps<F
                     compare: KeywordComparisonSymbols.EQUAL,
                     keyword: '',
                 },
-                transform: { sortX: { by: 'y', reverse: true } },
+                transform: { sortX: { by: 'y', reverse: true, slice: Infinity } },
                 encode: { y: 'count' },
                 encodeColor: false,
             },
@@ -158,9 +159,7 @@ export const createHorizontalBarVisTypeDefinition = (): VisTypeDefinitionProps<F
             }
 
             // 横轴排序
-            if (allValues.transform.sortX) {
-                transform.push(Object.assign({ type: 'sortX' }, allValues.transform.sortX));
-            }
+            transformSortX(allValues.transform.sortX, transform);
 
             // 设置新的 transform
             Reflect.set(options, 'transform', transform);

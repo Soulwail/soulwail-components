@@ -2,14 +2,14 @@ import { Chart, Data } from '@antv/g2';
 import { cloneDeep } from 'lodash';
 import { legendChange } from '../utils/change';
 import { ChartTypes, IntervalChartTypes, KeywordComparisonSymbols, Positions } from '../utils/collections';
-import { deleteExtraKey, ellipsisLabel, transformEncodeColor, transformLegend } from '../utils/transform';
+import { deleteExtraKey, ellipsisLabel, transformLegend } from '../utils/transform';
 import { ChartFormProps, VisTypeDefinitionProps } from './index';
 
 export interface FormPieChartOptionProps extends ChartFormProps {
     /** - 轴排序 */
     transform: {
         /** - x 轴排序 */
-        sortX: { by: string; reverse: boolean };
+        sortX: { by: string; reverse: boolean; slice: number };
     };
     /** - 饼图数据标签 */
     labels: { position: string; text: string[] }[];
@@ -51,7 +51,7 @@ export const createPieVisTypeDefinition = (): VisTypeDefinitionProps<FormPieChar
                     compare: KeywordComparisonSymbols.EQUAL,
                     keyword: '',
                 },
-                transform: { sortX: { by: 'y', reverse: true } },
+                transform: { sortX: { by: 'y', reverse: true, slice: Infinity } },
                 encode: { y: 'count' },
             },
             ...config,
@@ -163,7 +163,7 @@ export const createPieVisTypeDefinition = (): VisTypeDefinitionProps<FormPieChar
 
             // 扇区排序
             if (allValues.transform.sortX) {
-                const { by, reverse } = allValues.transform.sortX;
+                const { by, reverse, slice } = allValues.transform.sortX;
 
                 // 按扇区数值排序
                 if (by === 'y') {
@@ -185,6 +185,11 @@ export const createPieVisTypeDefinition = (): VisTypeDefinitionProps<FormPieChar
                         },
                     ];
                 }
+
+                // 筛选 TOP
+                if (slice && slice !== Infinity) {
+                    data.transform.push({ type: 'slice', end: slice });
+                }
             }
 
             // 饼图只有 color 轴和 y 轴
@@ -192,9 +197,6 @@ export const createPieVisTypeDefinition = (): VisTypeDefinitionProps<FormPieChar
 
             // 设置新的 transform
             Reflect.set(options, 'transform', transform);
-
-            // 分组聚合
-            transformEncodeColor(options, allValues.encodeColor, chartTypeArr);
 
             // 删除 option 中多余的 key
             deleteExtraKey(options);

@@ -10,6 +10,7 @@ import {
     transformGrid,
     transformLabel,
     transformLegend,
+    transformSortX,
     transformTooltip,
 } from '../utils/transform';
 import { AxisOptions, ChartFormProps, VisTypeDefinitionProps } from './index';
@@ -29,7 +30,7 @@ export interface FormIntervalChartOptionProps extends ChartFormProps {
     /** - 轴排序 */
     transform: {
         /** - x 轴排序 */
-        sortX: { by: string; reverse: boolean };
+        sortX: { by: string; reverse: boolean; slice: number };
     };
     /** - 是否开启检索 */
     keywordSearchColor: boolean;
@@ -92,7 +93,7 @@ export const createIntervalVisTypeDefinition = (): VisTypeDefinitionProps<FormIn
                     compare: KeywordComparisonSymbols.EQUAL,
                     keyword: '',
                 },
-                transform: { sortX: { by: 'y', reverse: true } },
+                transform: { sortX: { by: 'y', reverse: true, slice: Infinity } },
                 encode: { y: 'count' },
                 encodeColor: false,
             },
@@ -147,16 +148,13 @@ export const createIntervalVisTypeDefinition = (): VisTypeDefinitionProps<FormIn
             }
 
             // 横轴排序
-            if (allValues.transform.sortX) {
-                // TODO:
-                transform.push(Object.assign({ type: 'sortX' }, allValues.transform.sortX));
-            }
-
-            // 设置新的 transform
-            Reflect.set(options, 'transform', transform);
+            transformSortX(allValues.transform.sortX, transform);
 
             // 分组聚合
             transformEncodeColor(options, allValues.encodeColor, chartTypeArr, transform);
+
+            // 设置新的 transform
+            Reflect.set(options, 'transform', transform);
 
             // 限制柱形图的宽度
             defaultsDeep(options, { style: { maxWidth: 50 } });

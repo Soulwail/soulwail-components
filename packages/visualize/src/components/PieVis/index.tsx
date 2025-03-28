@@ -70,6 +70,17 @@ const PieVis: React.FC = () => {
                 />
             </Form.Item>
 
+            <Form.Item label={<Text type="secondary">展示数量</Text>} name={['transform', 'sortX', 'slice']}>
+                <Segmented
+                    block
+                    options={[
+                        { label: 'TOP 10', value: 10 },
+                        { label: 'TOP 20', value: 20 },
+                        { label: '不限制', value: Infinity },
+                    ]}
+                />
+            </Form.Item>
+
             <Form.Item label="扇区数值（聚合方式）" name={['encode', 'y']}>
                 <Select options={[{ label: '统计总数', value: 'count' }]} disabled />
             </Form.Item>

@@ -140,6 +140,23 @@ const transformTooltip = (options: Record<string, any>, type: 'count' | 'name') 
 };
 
 /**
+ * - 处理轴排序
+ * @param sortX
+ * @param transform
+ */
+const transformSortX = (sortX: Record<string, any>, transform: Record<string, any>[]) => {
+    const { by, reverse, slice } = sortX;
+    const transformItem: Record<string, any> = { type: 'sortX', by, reverse };
+
+    // 如果有数量限制，则添加 slice
+    if (slice && slice !== Infinity) {
+        transformItem.slice = slice;
+    }
+
+    transform.push(transformItem);
+};
+
+/**
  * - 处理分组聚合
  * @param options 图标配置
  * @param encodeColor 是否开启分组聚合
@@ -208,5 +225,6 @@ export {
     transformLabel,
     transformLegend,
     transformNumber,
+    transformSortX,
     transformTooltip,
 };
