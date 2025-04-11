@@ -127,7 +127,8 @@ async function release() {
 
     // Publish
     // Umi must be the latest.
-    const pkgs = args.publishOnly ? getPackages() : updated;
+    // const pkgs = args.publishOnly ? getPackages() : updated;
+    const pkgs = getPackages();
     logStep(`publish packages: ${chalk.blue(pkgs.join(', '))}`);
 
     // 获取 opt 的输入
