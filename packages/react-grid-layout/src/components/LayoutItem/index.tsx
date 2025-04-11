@@ -14,7 +14,6 @@ export interface ItemProps {
     dragIcon?: React.ReactNode;
     /** - 额外显示按钮图标 */
     moreIcon?: React.ReactNode;
-
     /** 其他额外变量 */
     [P: string]: any;
 }

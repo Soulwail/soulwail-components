@@ -123,7 +123,7 @@ const ResponsiveGridLayout: React.FC<ResponsiveGridProps> = (props) => {
     const handleLayoutChange: RGL.ResponsiveProps['onLayoutChange'] = (currentLayout, allLayouts) => {
         const newAllLayouts = cloneDeep(allLayouts);
 
-        console.log('allLayouts', allLayouts);
+        // console.log('allLayouts', allLayouts);
 
         for (let [key, value] of Object.entries(allLayouts)) {
             value.forEach((el, idx) => {
