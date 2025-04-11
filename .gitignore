@@ -6,9 +6,13 @@ node_modules
 .DS_Store
 .idea
 .vscode
+.run
 
 # production
 **/dist
 /.vscode
 **/**/lib/**
 **/**/es/**
+
+# ignore generated version info
+/src/version.ts
