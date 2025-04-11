@@ -1,35 +1,35 @@
 {
-  "name": "@safety/visualize",
-  "version": "1.0.6",
-  "description": "",
-  "scripts": {
-    "build": "father build"
-  },
-  "keywords": [],
-  "authors": [],
-  "sideEffects": false,
-  "main": "lib/index.js",
-  "module": "es/index.js",
-  "types": "es/index.d.ts",
-  "files": [
-    "lib",
-    "es",
-    "dist"
-  ],
-  "publishConfig": {
-    "access": "public"
-  },
-  "peerDependencies": {
-    "@antv/g2": ">=5.2.0",
-    "antd": ">=5.21.0",
-    "lodash": ">=4.17.20",
-    "react": ">=16.9.0",
-    "react-dom": ">=16.9.0"
-  },
-  "devDependencies": {
-    "@types/lodash": "^4.17.13",
-    "@types/react": "^18.0.0",
-    "@types/react-dom": "^18.0.0",
-    "father": "^4.5.1"
-  }
+    "name": "@safety/visualize",
+    "version": "1.0.6",
+    "description": "",
+    "scripts": {
+        "build": "father build"
+    },
+    "keywords": [],
+    "authors": [],
+    "sideEffects": false,
+    "main": "lib/index.js",
+    "module": "es/index.js",
+    "types": "es/index.d.ts",
+    "files": [
+        "lib",
+        "es",
+        "dist"
+    ],
+    "publishConfig": {
+        "access": "public"
+    },
+    "peerDependencies": {
+        "@antv/g2": ">=5.2.0",
+        "antd": ">=5.21.0",
+        "lodash": ">=4.17.20",
+        "react": ">=16.9.0",
+        "react-dom": ">=16.9.0"
+    },
+    "devDependencies": {
+        "@types/lodash": "^4.17.13",
+        "@types/react": "^18.0.0",
+        "@types/react-dom": "^18.0.0",
+        "father": "^4.5.1"
+    }
 }

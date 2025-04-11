@@ -26,30 +26,16 @@ type LayoutItemProps = ItemProps &
     };
 
 const LayoutItem: React.FC<LayoutItemProps> = (props) => {
-    const {
-        title = '',
-        editable = false,
-        items,
-        dragIcon,
-        extraRender,
-        childrenRender,
-    } = props;
+    const { title = '', editable = false, items, dragIcon, extraRender, childrenRender } = props;
 
     return (
         <div className="layout-item">
-            <div
-                className={`layout-item-head showHeader ${
-                    editable ? 'isCanDrag' : ''
-                }`}
-            >
+            <div className={`layout-item-head showHeader ${editable ? 'isCanDrag' : ''}`}>
                 <div className="head-inner">
                     <span className="title">{title}</span>
 
                     {editable ? (
-                        <div
-                            className="menu-slot"
-                            onMouseDown={(e) => e.stopPropagation()}
-                        >
+                        <div className="menu-slot" onMouseDown={(e) => e.stopPropagation()}>
                             {extraRender ? extraRender(items) : <></>}
                         </div>
                     ) : (
@@ -58,16 +44,7 @@ const LayoutItem: React.FC<LayoutItemProps> = (props) => {
                 </div>
                 {editable ? (
                     <div className="drag isCanDrag">
-                        {dragIcon ? (
-                            dragIcon
-                        ) : (
-                            <img
-                                alt="drag icon"
-                                src={dragDot}
-                                width={16}
-                                height={16}
-                            />
-                        )}
+                        {dragIcon ? dragIcon : <img alt="drag icon" src={dragDot} width={16} height={16} />}
                     </div>
                 ) : (
                     <></>
@@ -75,9 +52,7 @@ const LayoutItem: React.FC<LayoutItemProps> = (props) => {
             </div>
 
             <div className="charts">
-                <div className="dashboard-grid-container">
-                    {childrenRender?.(items)}
-                </div>
+                <div className="dashboard-grid-container">{childrenRender?.(items)}</div>
             </div>
         </div>
     );

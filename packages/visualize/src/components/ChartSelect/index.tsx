@@ -11,9 +11,7 @@ const ChartSelect: React.FC<SelectProps> = (props) => {
             optionRender={(option) => {
                 return (
                     <Space key={option.data.value}>
-                        {option.data.icon ? (
-                            <option.data.icon style={{ fontSize: '36px' }} />
-                        ) : null}
+                        {option.data.icon ? <option.data.icon style={{ fontSize: '36px' }} /> : null}
                         {option.data.label}
                     </Space>
                 );

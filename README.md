@@ -1,7 +1,6 @@
 # safety-components
 
-[![NPM version](https://img.shields.io/npm/v/safety-components.svg?style=flat)](https://npmjs.org/package/safety-components)
-[![NPM downloads](http://img.shields.io/npm/dm/safety-components.svg?style=flat)](https://npmjs.org/package/safety-components)
+[![NPM version](https://img.shields.io/npm/v/safety-components.svg?style=flat)](https://npmjs.org/package/safety-components) [![NPM downloads](http://img.shields.io/npm/dm/safety-components.svg?style=flat)](https://npmjs.org/package/safety-components)
 
 A react library developed with dumi
 

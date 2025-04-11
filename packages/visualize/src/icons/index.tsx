@@ -22,90 +22,82 @@ import { ReactComponent as SteplineSvg } from './step-line.svg';
 type CustomIconComponentProps = GetProps<typeof Icon>;
 
 const AreaChartIcon = (props: Partial<CustomIconComponentProps>) => (
-  <Icon component={() => <AreaChartSvg />} {...props} />
+    <Icon component={() => <AreaChartSvg />} {...props} />
 );
 
 const BasicBarChartIcon = (props: Partial<CustomIconComponentProps>) => (
-  <Icon component={() => <BasicBarChartSvg />} {...props} />
+    <Icon component={() => <BasicBarChartSvg />} {...props} />
 );
 
-const BasicHorizontalBarChartIcon = (
-  props: Partial<CustomIconComponentProps>,
-) => <Icon component={() => <BasicHorizontalBarChartSvg />} {...props} />;
+const BasicHorizontalBarChartIcon = (props: Partial<CustomIconComponentProps>) => (
+    <Icon component={() => <BasicHorizontalBarChartSvg />} {...props} />
+);
 
 const BasicLineChartIcon = (props: Partial<CustomIconComponentProps>) => (
-  <Icon component={() => <BasicLineChartSvg />} {...props} />
+    <Icon component={() => <BasicLineChartSvg />} {...props} />
 );
 const DonutChartIcon = (props: Partial<CustomIconComponentProps>) => (
-  <Icon component={() => <DonutChartSvg />} {...props} />
+    <Icon component={() => <DonutChartSvg />} {...props} />
 );
 
-const PercentStackAreaChartIcon = (
-  props: Partial<CustomIconComponentProps>,
-) => <Icon component={() => <PercentStackAreaChartSvg />} {...props} />;
+const PercentStackAreaChartIcon = (props: Partial<CustomIconComponentProps>) => (
+    <Icon component={() => <PercentStackAreaChartSvg />} {...props} />
+);
 
 const PercentStackBarChartIcon = (props: Partial<CustomIconComponentProps>) => (
-  <Icon component={() => <PercentStackBarChartSvg />} {...props} />
+    <Icon component={() => <PercentStackBarChartSvg />} {...props} />
 );
 
-const PercentStackHorizontalBarChartIcon = (
-  props: Partial<CustomIconComponentProps>,
-) => (
-  <Icon component={() => <PercentStackHorizontalBarChartSvg />} {...props} />
+const PercentStackHorizontalBarChartIcon = (props: Partial<CustomIconComponentProps>) => (
+    <Icon component={() => <PercentStackHorizontalBarChartSvg />} {...props} />
 );
 
 const PieChartIcon = (props: Partial<CustomIconComponentProps>) => (
-  <Icon component={() => <PieChartSvg />} {...props} />
+    <Icon component={() => <PieChartSvg />} {...props} />
 );
 
 const SmoothLineChartIcon = (props: Partial<CustomIconComponentProps>) => (
-  <Icon component={() => <SmoothLineChartSvg />} {...props} />
+    <Icon component={() => <SmoothLineChartSvg />} {...props} />
 );
 
 const StackAreaChartIcon = (props: Partial<CustomIconComponentProps>) => (
-  <Icon component={() => <StackAreaChartSvg />} {...props} />
+    <Icon component={() => <StackAreaChartSvg />} {...props} />
 );
 
 const StackBarChartIcon = (props: Partial<CustomIconComponentProps>) => (
-  <Icon component={() => <StackBarChartSvg />} {...props} />
+    <Icon component={() => <StackBarChartSvg />} {...props} />
 );
 
-const StackHorizontalBarChartIcon = (
-  props: Partial<CustomIconComponentProps>,
-) => <Icon component={() => <StackHorizontalBarChartSvg />} {...props} />;
+const StackHorizontalBarChartIcon = (props: Partial<CustomIconComponentProps>) => (
+    <Icon component={() => <StackHorizontalBarChartSvg />} {...props} />
+);
 
 const StepLineChartIcon = (props: Partial<CustomIconComponentProps>) => (
-  <Icon component={() => <StepLineChartSvg />} {...props} />
+    <Icon component={() => <StepLineChartSvg />} {...props} />
 );
 
-const PolylineIcon = (props: Partial<CustomIconComponentProps>) => (
-  <Icon component={PolylineSvg} {...props} />
-);
+const PolylineIcon = (props: Partial<CustomIconComponentProps>) => <Icon component={PolylineSvg} {...props} />;
 
-const SmoothlineIcon = (props: Partial<CustomIconComponentProps>) => (
-  <Icon component={SmoothlineSvg} {...props} />
-);
+const SmoothlineIcon = (props: Partial<CustomIconComponentProps>) => <Icon component={SmoothlineSvg} {...props} />;
 
-const SteplineIcon = (props: Partial<CustomIconComponentProps>) => (
-  <Icon component={SteplineSvg} {...props} />
-);
+const SteplineIcon = (props: Partial<CustomIconComponentProps>) => <Icon component={SteplineSvg} {...props} />;
 
 export {
-  AreaChartIcon,
-  BasicBarChartIcon,
-  BasicHorizontalBarChartIcon,
-  BasicLineChartIcon,
-  DonutChartIcon,
-  PercentStackAreaChartIcon,
-  PercentStackBarChartIcon,
-  PercentStackHorizontalBarChartIcon,
-  PieChartIcon,
-  PolylineIcon,
-  SmoothLineChartIcon,
-  SmoothlineIcon,
-  StackAreaChartIcon,
-  StackBarChartIcon,
-  StackHorizontalBarChartIcon,
-  StepLineChartIcon,
-  SteplineIcon,
+    AreaChartIcon,
+    BasicBarChartIcon,
+    BasicHorizontalBarChartIcon,
+    BasicLineChartIcon,
+    DonutChartIcon,
+    PercentStackAreaChartIcon,
+    PercentStackBarChartIcon,
+    PercentStackHorizontalBarChartIcon,
+    PieChartIcon,
+    PolylineIcon,
+    SmoothLineChartIcon,
+    SmoothlineIcon,
+    StackAreaChartIcon,
+    StackBarChartIcon,
+    StackHorizontalBarChartIcon,
+    StepLineChartIcon,
+    SteplineIcon,
 };

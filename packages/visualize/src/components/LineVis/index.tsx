@@ -1,7 +1,7 @@
 import { Checkbox, Col, Form, Row, Select, Typography } from 'antd';
 import React, { useContext } from 'react';
-import VisualizeContext from '../../context';
 import { KeywordSearch } from '../';
+import VisualizeContext from '../../context';
 
 const { Text } = Typography;
 
@@ -43,11 +43,7 @@ const LineVis: React.FC = () => {
                 <Select options={[{ label: '统计总数', value: 'count' }]} disabled />
             </Form.Item>
 
-            <Form.Item
-                name="encodeColor"
-                valuePropName="checked"
-                style={{ marginBottom: '16px' }}
-            >
+            <Form.Item name="encodeColor" valuePropName="checked" style={{ marginBottom: '16px' }}>
                 <Checkbox>分组聚合</Checkbox>
             </Form.Item>
 

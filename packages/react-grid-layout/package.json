@@ -1,39 +1,39 @@
 {
-  "name": "@safety/react-grid-layout",
-  "version": "1.0.0",
-  "description": "",
-  "scripts": {
-    "build": "father build"
-  },
-  "keywords": [],
-  "authors": [],
-  "license": "MIT",
-  "main": "lib/index.js",
-  "module": "es/index.js",
-  "types": "es/index.d.ts",
-  "files": [
-    "lib",
-    "es",
-    "dist"
-  ],
-  "sideEffects": false,
-  "publishConfig": {
-    "access": "public"
-  },
-  "peerDependencies": {
-    "lodash": ">=4.17.20",
-    "react": ">=16.9.0",
-    "react-dom": ">=16.9.0"
-  },
-  "devDependencies": {
-    "@types/react": "^18.0.0",
-    "@types/react-dom": "^18.0.0",
-    "@types/react-grid-layout": "^1.3.5",
-    "father": "^4.5.1"
-  },
-  "dependencies": {
-    "html2canvas": "^1.4.1",
-    "react-grid-layout": "^1.5.0",
-    "react-resizable": "^3.0.5"
-  }
+    "name": "@safety/react-grid-layout",
+    "version": "1.0.0",
+    "description": "",
+    "scripts": {
+        "build": "father build"
+    },
+    "keywords": [],
+    "authors": [],
+    "license": "MIT",
+    "main": "lib/index.js",
+    "module": "es/index.js",
+    "types": "es/index.d.ts",
+    "files": [
+        "lib",
+        "es",
+        "dist"
+    ],
+    "sideEffects": false,
+    "publishConfig": {
+        "access": "public"
+    },
+    "peerDependencies": {
+        "lodash": ">=4.17.20",
+        "react": ">=16.9.0",
+        "react-dom": ">=16.9.0"
+    },
+    "devDependencies": {
+        "@types/react": "^18.0.0",
+        "@types/react-dom": "^18.0.0",
+        "@types/react-grid-layout": "^1.3.5",
+        "father": "^4.5.1"
+    },
+    "dependencies": {
+        "html2canvas": "^1.4.1",
+        "react-grid-layout": "^1.5.0",
+        "react-resizable": "^3.0.5"
+    }
 }

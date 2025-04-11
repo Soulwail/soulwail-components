@@ -163,7 +163,7 @@ export const createPieVisTypeDefinition = (): VisTypeDefinitionProps<FormPieChar
 
             // 扇区排序
             if (allValues.transform.sortX) {
-                const { by, reverse, /* slice */ } = allValues.transform.sortX;
+                const { by, reverse /* slice */ } = allValues.transform.sortX;
 
                 // 按扇区数值排序
                 if (by === 'y') {

@@ -2,11 +2,7 @@
  * iframe: false
  * compact: true
  */
-import {
-    DeleteOutlined,
-    MoreOutlined,
-    SettingOutlined,
-} from '@ant-design/icons';
+import { DeleteOutlined, MoreOutlined, SettingOutlined } from '@ant-design/icons';
 import { ResponsiveGridLayout } from '@safety/react-grid-layout';
 import '@safety/react-grid-layout/style/overrides.css';
 import { Button, Dropdown, Switch, Typography } from 'antd';
@@ -46,11 +42,7 @@ const Extra = (props) => {
                 },
             }}
         >
-            <Button
-                size="small"
-                icon={<MoreOutlined />}
-                onClick={(e) => e.preventDefault()}
-            />
+            <Button size="small" icon={<MoreOutlined />} onClick={(e) => e.preventDefault()} />
         </Dropdown>
     );
 };
@@ -100,9 +92,7 @@ export default () => {
         top: while (true) {
             // 过滤出占据当前 line 的 item
             // eslint-disable-next-line @typescript-eslint/no-loop-func
-            const currentLineItems = currentLayout.filter(
-                (item) => item.y < line && item.y + item.h >= line,
-            );
+            const currentLineItems = currentLayout.filter((item) => item.y < line && item.y + item.h >= line);
             // 按照 x 轴排列顺序进行排序
             currentLineItems.sort((a, b) => a.x - b.x);
 
@@ -119,24 +109,18 @@ export default () => {
                                 // 如果有，则开始下一次循环
                                 // continue;
                             } else {
-                                x =
-                                    currentLineItems[i].x +
-                                    currentLineItems[i].w;
+                                x = currentLineItems[i].x + currentLineItems[i].w;
                                 break top;
                             }
                         }
                     } else {
                         // 判断当前 item 和上一个 item 之间是否有位置放置新的 item
                         if (
-                            currentLineItems[i].x -
-                                (currentLineItems[i - 1].x +
-                                    currentLineItems[i - 1].w) >=
+                            currentLineItems[i].x - (currentLineItems[i - 1].x + currentLineItems[i - 1].w) >=
                             gridWidth
                         ) {
                             // 如果有，新的 item 放在上一个 item 后面
-                            x =
-                                currentLineItems[i - 1].x +
-                                currentLineItems[i - 1].w;
+                            x = currentLineItems[i - 1].x + currentLineItems[i - 1].w;
                             break top;
                         } else {
                             // 判断当前 item 后面有没有 item 了
@@ -145,16 +129,9 @@ export default () => {
                                 // continue;
                             } else {
                                 // 如果没有，则判断当前 item 后面是否有空间放置新的 item
-                                if (
-                                    currentCol -
-                                        (currentLineItems[i].x +
-                                            currentLineItems[i].w) >=
-                                    gridWidth
-                                ) {
+                                if (currentCol - (currentLineItems[i].x + currentLineItems[i].w) >= gridWidth) {
                                     // 有，则放在当前 item 后面
-                                    x =
-                                        currentLineItems[i].x +
-                                        currentLineItems[i].w;
+                                    x = currentLineItems[i].x + currentLineItems[i].w;
                                     break top;
                                 } else {
                                     // 没有，结束循环，在新的一行寻找位置
@@ -236,13 +213,7 @@ export default () => {
                         onBreakpointChange={onBreakpointChange}
                         onLayoutChange={onLayoutChange}
                         extraRender={(items) => {
-                            return (
-                                <Extra
-                                    id={items.i}
-                                    onSetting={onSettingItem}
-                                    onDelete={onDeleteItem}
-                                />
-                            );
+                            return <Extra id={items.i} onSetting={onSettingItem} onDelete={onDeleteItem} />;
                         }}
                         childrenRender={(items) => {
                             return <Text>{JSON.stringify(items)}</Text>;
