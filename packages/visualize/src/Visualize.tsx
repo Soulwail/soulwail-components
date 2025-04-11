@@ -158,7 +158,6 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
     });
 
     useLayoutEffect(() => {
-        console.log(111);
         // 初始化 chart 类
         if (chartRef.current) {
             console.log('初始化图表类--成功');
@@ -199,7 +198,7 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
 
             const allValues = form.getFieldsValue(true);
 
-            console.log('allValues', allValues);
+            // console.log('allValues', allValues);
 
             // 切换到柱状图或条形图
             if (chartVisType === ChartTypes.INTERVAL || chartVisType === ChartTypes.HORIZONTAL_BAR) {
@@ -249,7 +248,7 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
      * - 监听值变化
      */
     const onValuesChange = (value: Record<string, any>, allValues: Record<string, any>) => {
-        console.log(444, value);
+        // console.log(444, value);
 
         if (Reflect.has(value, 'chartType')) {
             const chartTypeArr = value.chartType.split('_');
