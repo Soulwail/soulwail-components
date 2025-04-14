@@ -45,7 +45,7 @@ pnpm run publish
 | `--skipBuild`              | 跳过 build 构建步骤                                    |
 | `--conventionalGraduate`   | 指定要从 prerelease 升为正式的包                           |
 | `--conventionalPrerelease` | 指定要发布为 prerelease 包                              |
-| `--major/minor`            | 手动置顶版本升级类型，有破坏性变更 (**X**.y.z) / 增加功能 (x.**Y**.z) |
+| `--major/minor`            | 手动指定版本升级类型，有破坏性变更 (**X**.y.z) / 增加功能 (x.**Y**.z) |
 | `--tag`                    | 设置发布的 tag（如 latest、next）                         |
 
 #### ✳️ 自动版本升级

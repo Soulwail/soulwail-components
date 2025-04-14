@@ -143,7 +143,7 @@ async function release() {
 
     for await (const pkg of pkgs) {
         console.log('发布中' + pkg);
-        const pkgPath = join(cwd, 'packages', pkg.replace('pro-', ''));
+        const pkgPath = join(cwd, 'packages', pkg);
         const { name, version } = require(join(pkgPath, 'package.json'));
         const isNext = isNextVersion(version);
         let isPackageExist = null;
