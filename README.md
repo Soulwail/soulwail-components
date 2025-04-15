@@ -38,25 +38,25 @@ pnpm run publish
 
 #### 🛠️ 支持的 CLI 参数
 
-| 参数名                        | 说明                                               |
-|:---------------------------|:-------------------------------------------------|
-| `--skipGitStatusCheck`     | 跳过 Git 状态检查                                      |
-| `--publishOnly`            | 跳过版本升级，只进行发布                                     |
-| `--skipBuild`              | 跳过 build 构建步骤                                    |
-| `--conventionalGraduate`   | 指定要从 prerelease 升为正式的包                           |
-| `--conventionalPrerelease` | 指定要发布为 prerelease 包                              |
+| 参数名                     | 说明                                                                  |
+| :------------------------- | :-------------------------------------------------------------------- |
+| `--skipGitStatusCheck`     | 跳过 Git 状态检查                                                     |
+| `--publishOnly`            | 跳过版本升级，只进行发布                                              |
+| `--skipBuild`              | 跳过 build 构建步骤                                                   |
+| `--conventionalGraduate`   | 指定要从 prerelease 升为正式的包                                      |
+| `--conventionalPrerelease` | 指定要发布为 prerelease 包                                            |
 | `--major/minor`            | 手动指定版本升级类型，有破坏性变更 (**X**.y.z) / 增加功能 (x.**Y**.z) |
-| `--tag`                    | 设置发布的 tag（如 latest、next）                         |
+| `--tag`                    | 设置发布的 tag（如 latest、next）                                     |
 
 #### ✳️ 自动版本升级
 
 通过 Git 提交历史 + semver 策略，自动更新所有相关包的版本号
 
-| 类型              | 含义     | 影响的版本级别（semver）      |
-|:----------------|:-------|:---------------------|
-| fix             | 修复BUG  | patch 版本 (x.y.**Z**) |
-| feat            | 新增功能   | minor 版本 (x.**Y**.z) |
-| BREAKING CHANGE | 有破坏性变更 | major 版本 (**X**.y.z) |
+| 类型            | 含义         | 影响的版本级别（semver） |
+| :-------------- | :----------- | :----------------------- |
+| fix             | 修复 BUG     | patch 版本 (x.y.**Z**)   |
+| feat            | 新增功能     | minor 版本 (x.**Y**.z)   |
+| BREAKING CHANGE | 有破坏性变更 | major 版本 (**X**.y.z)   |
 
 ## LICENSE
 

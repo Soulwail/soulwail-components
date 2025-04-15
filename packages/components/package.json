@@ -1,0 +1,40 @@
+{
+  "name": "@safety/components",
+  "version": "0.0.1",
+  "description": "自定义通用组件",
+  "license": "MIT",
+  "homepage": "http://192.168.1.135:4873/-/web/detail/@safety/components",
+  "repository": {
+    "type": "git",
+    "url": "http://192.168.1.221:180/wangweiwei/safety-components/tree/main/packages/components"
+  },
+  "scripts": {
+    "build": "father build"
+  },
+  "keywords": [],
+  "authors": [
+    "wangww"
+  ],
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "types": "es/index.d.ts",
+  "files": [
+    "lib",
+    "es",
+    "dist"
+  ],
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "antd": ">=5.21.0",
+    "react": ">=16.9.0",
+    "react-dom": ">=16.9.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "father": "^4.5.1"
+  }
+}
