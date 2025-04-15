@@ -2,12 +2,17 @@
     "name": "@safety/react-grid-layout",
     "version": "1.1.0",
     "description": "",
+    "license": "MIT",
+    "homepage": "http://192.168.1.135:4873/-/web/detail/@safety/react-grid-layout",
+    "repository": {
+        "type": "git",
+        "url": "http://192.168.1.221:180/wangweiwei/safety-components/tree/main/packages/react-grid-layout"
+    },
     "scripts": {
         "build": "father build"
     },
     "keywords": [],
-    "authors": [],
-    "license": "MIT",
+    "authors": ["wangww"],
     "main": "lib/index.js",
     "module": "es/index.js",
     "types": "es/index.d.ts",

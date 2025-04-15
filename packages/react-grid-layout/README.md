@@ -1,16 +1,17 @@
 # @safety/react-grid-layout
 
-[![NPM version](https://img.shields.io/npm/v/@safety/react-grid-layout.svg?style=flat)](https://npmjs.com/package/@safety/react-grid-layout) [![NPM downloads](http://img.shields.io/npm/dm/@safety/react-grid-layout.svg?style=flat)](https://npmjs.com/package/@safety/react-grid-layout)
-
 ## Install
 
 ```bash
-$ npm install
+$ npm install @safety/react-grid-layout --registry http://192.168.1.135:4873
 ```
 
 ```bash
-$ npm run dev
-$ npm run build
+$ yarn add @safety/react-grid-layout --registry http://192.168.1.135:4873
+```
+
+```bash
+$ pnpm add @safety/react-grid-layout --registry http://192.168.1.135:4873
 ```
 
 ## Options

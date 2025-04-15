@@ -2,12 +2,17 @@
     "name": "@safety/visualize",
     "version": "1.1.1",
     "description": "",
+    "license": "MIT",
+    "homepage": "http://192.168.1.135:4873/-/web/detail/@safety/visualize",
+    "repository": {
+        "type": "git",
+        "url": "http://192.168.1.221:180/wangweiwei/safety-components/tree/main/packages/visualize"
+    },
     "scripts": {
         "build": "father build"
     },
     "keywords": [],
-    "authors": [],
-    "sideEffects": false,
+    "authors": ["wangww"],
     "main": "lib/index.js",
     "module": "es/index.js",
     "types": "es/index.d.ts",
@@ -16,6 +21,7 @@
         "es",
         "dist"
     ],
+    "sideEffects": false,
     "publishConfig": {
         "access": "public"
     },
