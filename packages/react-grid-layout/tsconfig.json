@@ -12,7 +12,7 @@
         "skipLibCheck": true,
         "resolveJsonModule": true,
         "paths": {
-            "@safety/react-grid-layout": ["../../packages/react-grid-layout/src/index.tsx"]
+            "@safety/react-grid-layout": ["../../packages/react-grid-layout/src/index.ts"]
         }
     },
     "include": ["./src"]
