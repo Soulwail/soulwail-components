@@ -1,6 +1,6 @@
 {
     "name": "@safety/visualize",
-    "version": "1.1.1",
+    "version": "1.1.2",
     "description": "",
     "license": "MIT",
     "homepage": "http://192.168.1.135:4873/-/web/detail/@safety/visualize",
@@ -12,7 +12,9 @@
         "build": "father build"
     },
     "keywords": [],
-    "authors": ["wangww"],
+    "authors": [
+        "wangww"
+    ],
     "main": "lib/index.js",
     "module": "es/index.js",
     "types": "es/index.d.ts",
