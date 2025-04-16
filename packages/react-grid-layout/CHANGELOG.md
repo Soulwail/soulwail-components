@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.2](http://192.168.1.221:180/wangweiwei/safety-components/tree/main/packages/react-grid-layout/compare/@safety/react-grid-layout@1.1.1...@safety/react-grid-layout@1.1.2) (2025-04-16)
+
+**Note:** Version bump only for package @safety/react-grid-layout
+
 ## [1.1.1](http://192.168.1.221:180/wangweiwei/safety-components/tree/main/packages/react-grid-layout/compare/@safety/react-grid-layout@1.1.0...@safety/react-grid-layout@1.1.1) (2025-04-16)
 
 ### Performance Improvements

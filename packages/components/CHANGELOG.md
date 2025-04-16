@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.1](http://192.168.1.221:180/wangweiwei/safety-components/tree/main/packages/components/compare/@safety/components@0.1.0...@safety/components@0.1.1) (2025-04-16)
+
+**Note:** Version bump only for package @safety/components
+
 # 0.1.0 (2025-04-16)
 
 ### Features
