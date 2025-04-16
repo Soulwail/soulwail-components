@@ -3,7 +3,7 @@
     "version": "0.1.0",
     "description": "自定义通用组件",
     "license": "MIT",
-    "homepage": "http://192.168.1.135:4873/-/web/detail/@safety/components",
+    "homepage": "http://192.168.1.221:180/wangweiwei/safety-components/tree/main/packages/components",
     "repository": {
         "type": "git",
         "url": "http://192.168.1.221:180/wangweiwei/safety-components/tree/main/packages/components"

@@ -3,7 +3,7 @@
     "version": "1.1.2",
     "description": "",
     "license": "MIT",
-    "homepage": "http://192.168.1.135:4873/-/web/detail/@safety/visualize",
+    "homepage": "http://192.168.1.221:180/wangweiwei/safety-components/tree/main/packages/visualize",
     "repository": {
         "type": "git",
         "url": "http://192.168.1.221:180/wangweiwei/safety-components/tree/main/packages/visualize"
