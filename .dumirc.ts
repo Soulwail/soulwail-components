@@ -60,6 +60,10 @@ export default defineConfig({
                     title: '布局',
                     children: [
                         {
+                            title: 'Components - 自定义组件',
+                            link: '/components/components',
+                        },
+                        {
                             title: 'Visualize - 可视化组件',
                             link: '/components/visualize',
                         },
@@ -77,6 +81,7 @@ export default defineConfig({
             ],
         },
         footer: false,
+        apiHeader: false,
     },
     hash: true,
 });

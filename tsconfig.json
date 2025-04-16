@@ -15,6 +15,7 @@
         "resolveJsonModule": true,
         "paths": {
             "@@/*": [".dumi/tmp/*"],
+            "@safety/components": ["./packages/components/src/index.ts"],
             "@safety/react-grid-layout": ["./packages/react-grid-layout/src/index.ts"],
             "@safety/visualize": ["./packages/visualize/src/index.ts"]
         }

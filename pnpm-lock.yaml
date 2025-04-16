@@ -89,6 +89,12 @@ importers:
       antd:
         specifier: '>=5.21.0'
         version: 5.24.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      antd-style:
+        specifier: '>=3.7.0'
+        version: 3.7.1(@types/react@18.3.18)(antd@5.24.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      rc-resize-observer:
+        specifier: ^1.4.3
+        version: 1.4.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react:
         specifier: '>=16.9.0'
         version: 18.3.1
@@ -19418,7 +19424,7 @@ snapshots:
   rc-resize-observer@1.4.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       '@babel/runtime': 7.26.9
-      classnames: 2.3.2
+      classnames: 2.5.1
       rc-util: 5.44.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
