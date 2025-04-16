@@ -7,4 +7,4 @@ export interface PageBoxProps {
     footerHeight?: number;
 }
 
-export type PageBoxStyleProps = Pick<PageBoxProps, 'marginHeight' | 'footerHeight'>
+export type PageBoxStyleProps = Pick<PageBoxProps, 'marginHeight' | 'footerHeight'>;
