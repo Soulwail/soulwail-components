@@ -146,26 +146,28 @@ async function release() {
         const pkgPath = join(cwd, 'packages', pkg);
         const { name, version } = require(join(pkgPath, 'package.json'));
         const isNext = isNextVersion(version);
-        let isPackageExist = null;
-        if (args.publishOnly) {
-            isPackageExist = packageExists({ name, version });
-            if (isPackageExist) {
-                console.log(`package ${name}@${version} is already exists on npm, skip.`);
-            }
+
+        const isPackageExist = packageExists({ name, version });
+        if (isPackageExist) {
+            console.log(`package ${name}@${version} is already exists on npm, skip.`);
+            continue;
         }
 
-        if (!args.publishOnly || !isPackageExist) {
-            console.log(` Publish package ${name} ${isNext ? 'with next tag' : ''}`);
-            // 默认设置为 tag 检查通过之后在设置为 latest
-            let cliArgs = isNext ? ['publish', '--tag', 'next'] : ['publish', '--tag', 'beta'];
+        console.log(` Publish package ${name} ${isNext ? 'with next tag' : ''}`);
 
-            if (args.tag) {
-                cliArgs = ['publish', '--tag', args.tag];
-            }
-            await execa('npm', cliArgs, {
-                cwd: pkgPath,
-            });
+        // 默认设置为 tag 检查通过之后在设置为 latest
+        let cliArgs = ['publish', '--tag'];
+        if (args.tag) {
+            cliArgs.push(args.tag);
+        } else if (isNext) {
+            cliArgs.push('next');
+        } else {
+            cliArgs.push('beta'); // 默认发布为 beta
         }
+
+        await execa('npm', cliArgs, {
+            cwd: pkgPath,
+        });
     }
     console.log('发布成功！');
     await exec('npm', ['run', 'prettier']);
