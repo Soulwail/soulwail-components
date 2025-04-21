@@ -22,6 +22,7 @@ const file_content = `
 export const version = {
     ${pkgList
         .map((pak) => {
+            console.log(`"${pak.name}": '${pak.version}'`);
             return `"${pak.name}": '${pak.version}'`;
         })
         .join(',\n    ')}    
