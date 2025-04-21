@@ -1,0 +1,43 @@
+import { createStyles } from 'antd-style';
+import 'react-grid-layout/css/styles.css';
+import 'react-resizable/css/styles.css';
+
+export default createStyles(({ css }) => {
+    return {
+        'grid-layout': css`
+            .react-grid-layout {
+                box-sizing: content-box;
+                overflow: hidden;
+                min-height: 100%;
+                position: relative;
+            }
+
+            .react-grid-item.cssTransforms {
+                transition-property: transform;
+            }
+
+            .react-grid-item:not(.react-grid-placeholder) {
+                border-radius: 8px;
+                background: #fff;
+            }
+
+            .static {
+                border: 1px solid #fff;
+            }
+
+            .react-draggable {
+                border: 1px dashed #98a2b3;
+            }
+
+            .react-grid-item.resizing {
+                opacity: 0.9;
+            }
+
+            .react-grid-item.react-grid-placeholder {
+                background: #91d5ff;
+                border-radius: 8px;
+                z-index: 0;
+            }
+        `,
+    };
+});

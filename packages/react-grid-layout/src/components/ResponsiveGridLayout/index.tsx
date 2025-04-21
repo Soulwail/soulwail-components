@@ -3,6 +3,7 @@ import React, { useMemo, useState } from 'react';
 import RGL, { Responsive, WidthProvider } from 'react-grid-layout';
 import BackgroundGrid from '../BackgroundGrid';
 import LayoutItem, { ItemProps } from '../LayoutItem';
+import useStyles from './style';
 
 export type Layout = ItemProps & RGL.Layout;
 export type Layouts = {
@@ -66,6 +67,8 @@ const ResponsiveGridLayout: React.FC<ResponsiveGridProps> = (props) => {
         extraRender,
         childrenRender,
     } = props;
+
+    const { styles } = useStyles();
 
     const [isShowBackgroundGrid, setIsShowBackgroundGrid] = useState(false); // 是否显示背景网格
     const [gridWidth, setGridWidth] = useState(0); // 网格宽度
@@ -152,7 +155,7 @@ const ResponsiveGridLayout: React.FC<ResponsiveGridProps> = (props) => {
             <BackgroundGrid width={gridWidth} height={rowHeight} right={8} bottom={11} onGridChange={onGridChange} />
 
             <ReactResponsiveGridLayout
-                className="grid-layout"
+                className={styles['grid-layout']}
                 draggableHandle=".layout-item-head"
                 measureBeforeMount={false}
                 cols={cols}

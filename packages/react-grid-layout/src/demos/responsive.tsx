@@ -4,7 +4,6 @@
  */
 import { DeleteOutlined, MoreOutlined, SettingOutlined } from '@ant-design/icons';
 import { ResponsiveGridLayout } from '@safety/react-grid-layout';
-import '@safety/react-grid-layout/style/overrides.css';
 import { Button, Dropdown, Switch, Typography } from 'antd';
 import { cloneDeep } from 'lodash';
 import { useEffect, useState } from 'react';
