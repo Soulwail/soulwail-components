@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](http://192.168.1.221:180/wangweiwei/safety-components/tree/main/packages/react-grid-layout/compare/@safety/react-grid-layout@1.1.2...@safety/react-grid-layout@1.2.0) (2025-04-21)
+
+### Features
+
+-   **react-grid-layout:** 使用 antd-style 修改样式生效方式，不再额外导入样式文件 ([212be86](http://192.168.1.221:180/wangweiwei/safety-components/tree/main/packages/react-grid-layout/commits/212be860c65128e3d94c62dd64ad56eae41c4140))
+
 ## [1.1.2](http://192.168.1.221:180/wangweiwei/safety-components/tree/main/packages/react-grid-layout/compare/@safety/react-grid-layout@1.1.1...@safety/react-grid-layout@1.1.2) (2025-04-16)
 
 **Note:** Version bump only for package @safety/react-grid-layout
