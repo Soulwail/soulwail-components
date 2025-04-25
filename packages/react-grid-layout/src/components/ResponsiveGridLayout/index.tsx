@@ -31,6 +31,10 @@ export interface ResponsiveGridProps {
     breakpoint: string;
     /** 不同断点对应的 layout */
     layouts: Layouts;
+    /** 是否能拖放 */
+    isDraggable?: boolean;
+    /** 是否能调整大小 */
+    isResizable?: boolean;
     /** - layout item 取值属性 */
     titleKey?: string;
     /** - 右上角自定义区域 */
@@ -60,6 +64,8 @@ const ResponsiveGridLayout: React.FC<ResponsiveGridProps> = (props) => {
         rowHeight,
         breakpoint,
         layouts,
+        isDraggable = true,
+        isResizable = true,
         titleKey = 'title',
         onLayoutChange = () => void 0,
         onBreakpointChange = () => void 0,
@@ -68,11 +74,17 @@ const ResponsiveGridLayout: React.FC<ResponsiveGridProps> = (props) => {
         childrenRender,
     } = props;
 
-    const { styles } = useStyles();
+    const { styles } = useStyles({ isDraggable });
 
     const [isShowBackgroundGrid, setIsShowBackgroundGrid] = useState(false); // 是否显示背景网格
     const [gridWidth, setGridWidth] = useState(0); // 网格宽度
     const [backgroundImage, setBackgroundImage] = useState(''); // 背景图片 base64
+
+    /**
+     * - 不可编辑
+     * @description 当前处于不可编辑状态
+     */
+    const disabled = useMemo(() => breakpoint === 'xs', [breakpoint]);
 
     const ReactResponsiveGridLayout = useMemo(() => WidthProvider(Responsive), []);
 
@@ -126,12 +138,10 @@ const ResponsiveGridLayout: React.FC<ResponsiveGridProps> = (props) => {
     const handleLayoutChange: RGL.ResponsiveProps['onLayoutChange'] = (currentLayout, allLayouts) => {
         const newAllLayouts = cloneDeep(allLayouts);
 
-        // console.log('allLayouts', allLayouts);
-
         for (let [key, value] of Object.entries(allLayouts)) {
             value.forEach((el, idx) => {
-                // TODO: 目前只支持两种尺寸：xs、sm，xs 状态下不允许编辑
-                const extraValue = layouts['sm'].find((item) => item.i === el.i) || {};
+                // 只支持两种尺寸：xs、sm，xs 状态下不允许编辑（包括调节尺寸和调整位置）
+                const extraValue = layouts?.['sm']?.find((item) => item.i === el.i);
 
                 if (extraValue) {
                     newAllLayouts[key][idx] = Object.assign({}, extraValue, el); // 使用新的 layout 数据，替换原有的数据
@@ -163,6 +173,8 @@ const ResponsiveGridLayout: React.FC<ResponsiveGridProps> = (props) => {
                 layouts={layouts}
                 rowHeight={rowHeight}
                 margin={margin}
+                isDraggable={disabled ? !disabled : isDraggable} // 不可编辑状态下，不可拖拽
+                isResizable={disabled ? !disabled : isResizable} // 不可编辑状态下，不可调整尺寸
                 containerPadding={containerPadding}
                 onBreakpointChange={onBreakpointChange}
                 onLayoutChange={handleLayoutChange}
@@ -180,10 +192,37 @@ const ResponsiveGridLayout: React.FC<ResponsiveGridProps> = (props) => {
             >
                 {breakpoint
                     ? layouts?.[breakpoint]?.map((el) => {
+                          const { isDraggable: itemIsDraggable, isResizable: itemIsResizable, static: itemStatic } = el;
+
+                          let tmpIsDraggable = true,
+                              tmpIsResizable = true;
+
+                          // item static 权重最大
+                          if (itemStatic) {
+                              tmpIsDraggable = false;
+                              tmpIsResizable = false;
+                          } else {
+                              // 其次是 item 权重
+                              if (itemIsDraggable) {
+                                  tmpIsDraggable = itemIsDraggable;
+                              } else {
+                                  // 最后是组件权重
+                                  tmpIsDraggable = isDraggable;
+                              }
+
+                              if (itemIsResizable) {
+                                  tmpIsResizable = itemIsResizable;
+                              } else {
+                                  tmpIsResizable = isResizable;
+                              }
+                          }
+
                           return (
                               <div key={el.i}>
                                   <LayoutItem
-                                      editable={!el.static}
+                                      disabled={disabled}
+                                      isDraggable={tmpIsDraggable}
+                                      isResizable={tmpIsResizable}
                                       title={el[titleKey]}
                                       items={el}
                                       extraRender={extraRender}

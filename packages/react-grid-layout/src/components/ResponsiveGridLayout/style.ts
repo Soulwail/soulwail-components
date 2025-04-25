@@ -2,7 +2,9 @@ import { createStyles } from 'antd-style';
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 
-export default createStyles(({ css }) => {
+export default createStyles(({ css }, props: { isDraggable: boolean }) => {
+    const { isDraggable } = props;
+
     return {
         'grid-layout': css`
             .react-grid-layout {
@@ -12,6 +14,10 @@ export default createStyles(({ css }) => {
                 position: relative;
             }
 
+            .react-grid-item {
+                border: 1px dashed ${isDraggable ? '#98a2b3' : 'rgba(0, 0, 0, 0)'};
+            }
+
             .react-grid-item.cssTransforms {
                 transition-property: transform;
             }
@@ -19,14 +25,6 @@ export default createStyles(({ css }) => {
             .react-grid-item:not(.react-grid-placeholder) {
                 border-radius: 8px;
                 background: #fff;
-            }
-
-            .static {
-                border: 1px solid #fff;
-            }
-
-            .react-draggable {
-                border: 1px dashed #98a2b3;
             }
 
             .react-grid-item.resizing {

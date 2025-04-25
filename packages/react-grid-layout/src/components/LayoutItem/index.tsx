@@ -2,18 +2,23 @@ import React from 'react';
 import RGL from 'react-grid-layout';
 import dragDot from '../../icons/drag-dot.svg';
 import { ResponsiveGridProps } from '../ResponsiveGridLayout';
-import './index.less';
+import useStyles from './style';
 
 /** - item 信息 */
 export interface ItemProps {
     /** - 卡片标题 */
     title?: string;
-    /** - 是否可编辑 */
-    editable?: boolean;
+    /** 是否能拖放 */
+    isDraggable?: boolean;
+    /** 是否能调整大小 */
+    isResizable?: boolean;
+    /** - 是否禁用 */
+    disabled?: boolean;
     /** - 拖拽图标 */
     dragIcon?: React.ReactNode;
     /** - 额外显示按钮图标 */
     moreIcon?: React.ReactNode;
+
     /** 其他额外变量 */
     [P: string]: any;
 }
@@ -25,24 +30,33 @@ type LayoutItemProps = ItemProps &
     };
 
 const LayoutItem: React.FC<LayoutItemProps> = (props) => {
-    const { title = '', editable = false, items, dragIcon, extraRender, childrenRender } = props;
+    const { title = '', isDraggable = true, disabled = false, items, dragIcon, extraRender, childrenRender } = props;
+
+    const { styles, cx } = useStyles({ disabled });
 
     return (
-        <div className="layout-item">
-            <div className={`layout-item-head showHeader ${editable ? 'isCanDrag' : ''}`}>
-                <div className="head-inner">
-                    <span className="title">{title}</span>
+        <div className={styles['layout-item']}>
+            <div
+                className={cx(
+                    'layout-item-head',
+                    styles['layout-item-head'],
+                    styles['showHeader'],
+                    isDraggable ? styles.isCanDrag : '',
+                )}
+            >
+                <div className={styles['head-inner']}>
+                    <span className={styles.title}>{title}</span>
 
-                    {editable ? (
-                        <div className="menu-slot" onMouseDown={(e) => e.stopPropagation()}>
+                    {isDraggable ? (
+                        <div className={styles['menu-slot']} onMouseDown={(e) => e.stopPropagation()}>
                             {extraRender ? extraRender(items) : <></>}
                         </div>
                     ) : (
                         <></>
                     )}
                 </div>
-                {editable ? (
-                    <div className="drag isCanDrag">
+                {isDraggable ? (
+                    <div className={cx(styles.drag, isDraggable ? styles.isCanDrag : '')}>
                         {dragIcon ? dragIcon : <img alt="drag icon" src={dragDot} width={16} height={16} />}
                     </div>
                 ) : (
@@ -50,8 +64,8 @@ const LayoutItem: React.FC<LayoutItemProps> = (props) => {
                 )}
             </div>
 
-            <div className="charts">
-                <div className="dashboard-grid-container">{childrenRender?.(items)}</div>
+            <div className={styles['charts']}>
+                <div className={styles['dashboard-grid-container']}>{childrenRender?.(items)}</div>
             </div>
         </div>
     );

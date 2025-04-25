@@ -4,9 +4,9 @@
  */
 import { DeleteOutlined, MoreOutlined, SettingOutlined } from '@ant-design/icons';
 import { ResponsiveGridLayout } from '@safety/react-grid-layout';
-import { Button, Dropdown, Switch, Typography } from 'antd';
+import { Button, Dropdown, Space, Switch, Typography } from 'antd';
 import { cloneDeep } from 'lodash';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import type { Layouts } from 'react-grid-layout';
 
 const { Text } = Typography;
@@ -175,29 +175,17 @@ export default () => {
         setLayouts(allLayouts);
     };
 
-    useEffect(() => {
-        const newLayouts = cloneDeep(layouts);
-
-        for (let [key, value] of Object.entries(layouts)) {
-            value.forEach((el, idx) => {
-                newLayouts[key][idx] = Object.assign({}, el, {
-                    static: !editable,
-                });
-            });
-        }
-
-        setLayouts(newLayouts);
-    }, [editable]);
-
     return (
         <div>
-            <Button type="primary" onClick={() => onAddItem()}>
-                Add item
-            </Button>
+            <Space>
+                <Button type="primary" onClick={() => onAddItem()}>
+                    Add Item
+                </Button>
 
-            <Switch checked={editable} onChange={setEditable} />
+                <Switch checked={editable} onChange={setEditable} />
+            </Space>
 
-            <div style={{ height: '600px' }}>
+            <div style={{ height: '600px', marginTop: '16px' }}>
                 <div
                     style={{
                         height: '100%',
@@ -209,6 +197,8 @@ export default () => {
                         breakpoint={breakpoint}
                         layouts={layouts}
                         rowHeight={rowHeight}
+                        isDraggable={editable}
+                        isResizable={editable}
                         onBreakpointChange={onBreakpointChange}
                         onLayoutChange={onLayoutChange}
                         extraRender={(items) => {
