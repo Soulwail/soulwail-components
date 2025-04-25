@@ -22,6 +22,7 @@ const tailPkgList = pkgList.map((path) => `packages/${path}/src/components`);
 export default defineConfig({
     outputPath: 'docs-dist',
     alias,
+    extraBabelPlugins: [require.resolve('babel-plugin-antd-style')],
     resolve: {
         docDirs: ['docs'],
         atomDirs: tailPkgList.map((dir) => ({ type: 'component', dir })),
