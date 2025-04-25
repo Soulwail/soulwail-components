@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0](http://192.168.1.221:180/wangweiwei/safety-components/tree/main/packages/react-grid-layout/compare/@safety/react-grid-layout@1.2.0...@safety/react-grid-layout@1.3.0) (2025-04-25)
+
+### Features
+
+-   **react-grid-layout:** 组件增加 isDraggable、isResizable 属性 ([559c943](http://192.168.1.221:180/wangweiwei/safety-components/tree/main/packages/react-grid-layout/commits/559c943b53adbd74ac67469ba62a997e001b84c3))
+
 # [1.2.0](http://192.168.1.221:180/wangweiwei/safety-components/tree/main/packages/react-grid-layout/compare/@safety/react-grid-layout@1.1.2...@safety/react-grid-layout@1.2.0) (2025-04-21)
 
 ### Features
