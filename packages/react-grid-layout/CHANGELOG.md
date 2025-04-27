@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.1](http://192.168.1.221:180/wangweiwei/safety-components/tree/main/packages/react-grid-layout/compare/@safety/react-grid-layout@1.3.0...@safety/react-grid-layout@1.3.1) (2025-04-27)
+
+### Bug Fixes
+
+-   **react-grid-layout:** 修复底部边距没有撑开问题 ([ac77e40](http://192.168.1.221:180/wangweiwei/safety-components/tree/main/packages/react-grid-layout/commits/ac77e4068273ef92492ce89bc69f9faf243bd8a0))
+
 # [1.3.0](http://192.168.1.221:180/wangweiwei/safety-components/tree/main/packages/react-grid-layout/compare/@safety/react-grid-layout@1.2.0...@safety/react-grid-layout@1.3.0) (2025-04-25)
 
 ### Features
