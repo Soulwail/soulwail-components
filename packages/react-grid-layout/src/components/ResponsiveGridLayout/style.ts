@@ -6,13 +6,19 @@ export default createStyles(({ css }, props: { isDraggable: boolean }) => {
     const { isDraggable } = props;
 
     return {
-        'grid-layout': css`
+        'dashboard-content': css`
+            height: 100%;
+            min-height: 100%;
+
             .react-grid-layout {
                 box-sizing: content-box;
                 overflow: hidden;
-                min-height: 100%;
-                position: relative;
             }
+        `,
+        'grid-layout': css`
+            min-height: 100%;
+            opacity: 1;
+            padding-bottom: 56px;
 
             .react-grid-item {
                 border: 1px dashed ${isDraggable ? '#98a2b3' : 'rgba(0, 0, 0, 0)'};

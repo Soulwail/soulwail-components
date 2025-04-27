@@ -161,7 +161,7 @@ const ResponsiveGridLayout: React.FC<ResponsiveGridProps> = (props) => {
     };
 
     return (
-        <div style={{ height: '100%', minHeight: '100%' }}>
+        <div className={styles['dashboard-content']}>
             <BackgroundGrid width={gridWidth} height={rowHeight} right={8} bottom={11} onGridChange={onGridChange} />
 
             <ReactResponsiveGridLayout
@@ -185,9 +185,6 @@ const ResponsiveGridLayout: React.FC<ResponsiveGridProps> = (props) => {
                 onWidthChange={handleWidthChange}
                 style={{
                     ...backgroundGridStyles,
-                    minHeight: '100%',
-                    opacity: 1,
-                    paddingBottom: '55.625px',
                 }}
             >
                 {breakpoint
