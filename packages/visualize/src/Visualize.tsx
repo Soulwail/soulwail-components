@@ -1,12 +1,13 @@
 import { Chart, Data } from '@antv/g2';
-import { Button, Col, Empty, Form, FormInstance, FormProps, Row, SelectProps, Spin, Tabs } from 'antd';
+import { Button, Col, Form, FormInstance, FormProps, Row, SelectProps, Tabs } from 'antd';
 import { NamePath } from 'antd/es/form/interface';
-import { cloneDeep, defaultsDeep } from 'lodash';
+import { defaultsDeep } from 'lodash';
 import { forwardRef, useEffect, useImperativeHandle, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { EditConfig, VisConfig } from './components';
+import { ChartRender, ChartRenderRef, EditConfig, StatisticCard, VisConfig } from './components';
 import VisualizeContext, { VisualizeContextProps } from './context';
 import { TransformReturn, VisTypeDefinitionProps, visualizations } from './typeVislib';
-import { ChartTypes } from './utils/collections';
+import { FormStatisticCardOptionProps } from './typeVislib/statisticCard';
+import { buildChartDataAndOptions, ChartTypes, OtherTypes } from './utils';
 
 /** 操作回调 */
 type Operate<T = void> = (values: Record<string, any>, options: Chart['options'], data: Data) => Promise<T>;
@@ -39,8 +40,6 @@ export interface VisualizeRef {
     setFieldValue: FormInstance['setFieldValue'];
     /** - 设置多个字段值 */
     setFieldsValue?: FormInstance['setFieldsValue'];
-    /** - 渲染图表 */
-    renderChart: (options: Chart['options'], data: Data) => Promise<void>;
     /** - 获取图表配置 */
     transformConfig?: VisTypeDefinitionProps['transformConfig'];
 }
@@ -60,6 +59,8 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
     } = props;
     const chartRef = useRef<HTMLDivElement>(null);
     const chart = useRef<Chart>();
+    const renderRef = useRef<ChartRenderRef>();
+    const statisticRef = useRef<ChartRenderRef>(null);
 
     const [form] = Form.useForm();
     const chartType = Form.useWatch('chartType', form);
@@ -68,7 +69,6 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
     const [visTypeDefinition, setVisTypeDefinition] = useState<VisTypeDefinitionProps>(); // 不同图形的可视化配置
     const [prevChartVisType, setPrevChartVisType] = useState<string>('');
     const [chartVisType, setChartVisType] = useState<string>('');
-    const [isEmpty, setIsEmpty] = useState<boolean>(true); // chart data 是否为空
     const [generateLoading, setGenerateLoading] = useState<boolean>(false); // 预览加载
     const [saveLoading, setSaveLoading] = useState<boolean>(false); // 保存加载
 
@@ -95,44 +95,6 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
         return categoryList.filter((item) => item.value !== x);
     }, [x]);
 
-    /**
-     * - 渲染图表
-     * @param options 图表配置
-     * @param data 图表数据
-     */
-    const renderChart = async (options: Chart['options'], data: Data) => {
-        try {
-            // 判断图表是否有数据
-            if (data?.value && Array.isArray(data.value) && data.value.length > 0) {
-                setIsEmpty(false);
-            } else {
-                setIsEmpty(true);
-            }
-
-            if (chart) {
-                // 清楚旧配置
-                chart.current.clear();
-                // 设置新的配置
-                chart.current.options(options);
-                // 更新数据
-                chart.current.data(data);
-                // 图表绘制后执行该事件
-                chart.current.on('afterpaint', () => {
-                    setGenerateLoading(false);
-                });
-
-                // 重新渲染
-                await chart.current.render();
-
-                return Promise.resolve();
-            }
-
-            return Promise.reject('图表类不存在');
-        } catch (err) {
-            return Promise.reject(err);
-        }
-    };
-
     // 抛出到父组件的调用函数
     useImperativeHandle(ref, () => {
         return {
@@ -152,7 +114,6 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
                 // TODO: 只允许单独修改数据来源、横轴字段、分组聚合开关、分组聚合字段
                 form.setFieldValue(name, value);
             },
-            renderChart,
             transformConfig: visTypeDefinition?.transformConfig,
         };
     });
@@ -259,9 +220,19 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
             setVisTypeDefinition(definition);
             // 存储图表类型
             setChartVisType(chartTypeArr[0]);
+
+            // 设置 default value
+            // 设置其它初始值，转到 useEffect<chartVisType>
+            if (chartTypeArr[0] === OtherTypes.STATISTIC_CARD) {
+                // 如果切换到指标卡
+                form.setFieldValue(
+                    'formatter',
+                    (definition as VisTypeDefinitionProps<FormStatisticCardOptionProps>).visConfig.defaults.formatter,
+                );
+            }
         } else {
             if (visTypeDefinition) {
-                visTypeDefinition.onChangeConfig(value, allValues, form, {
+                visTypeDefinition?.onChangeConfig?.(value, allValues, form, {
                     categoryList,
                     colorCategoryList,
                 });
@@ -272,61 +243,24 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
     };
 
     /**
-     * - 构建图表数据和配置
-     * @param formInstance
-     */
-    const buildChartDataAndOptions = async (formInstance: FormInstance) => {
-        try {
-            await formInstance.validateFields();
-
-            const values = formInstance.getFieldsValue(true);
-            const newValues = cloneDeep(values);
-            const [chartType] = values.chartType.split('_');
-
-            if (visTypeDefinition) {
-                const { options, data } = visTypeDefinition.transformConfig(values);
-
-                // 取值转换
-                if (chartType === ChartTypes.LINE || chartType === ChartTypes.AREA) {
-                    // TODO:
-                } else if (chartType === ChartTypes.PIE) {
-                    Reflect.set(newValues.encode, 'color', null);
-                } else {
-                    // 如果没有开启分组聚合，则 value 中的 color 需要设置为 null
-                    if (!values.encodeColor) {
-                        Reflect.set(newValues.encode, 'color', null);
-                    }
-                }
-
-                console.log('chart options', options);
-                console.log('chart values', newValues);
-                console.log('chart data', data);
-
-                return Promise.resolve({ values: newValues, options, data });
-            } else {
-                return Promise.reject('No options and data!');
-            }
-        } catch (err) {
-            return Promise.reject(err);
-        }
-    };
-
-    /**
      * - 预览按钮
      */
     const handleGenerate = async (formInstance: FormInstance) => {
         try {
             setGenerateLoading(true);
 
-            const { values, options, data } = await buildChartDataAndOptions(formInstance);
+            const { values, options, data } = await buildChartDataAndOptions(formInstance, visTypeDefinition);
             // 触发预览函数
             const { options: newOptions, data: newData } = await onGenerate?.(values, options, data);
+
             // 获取新的 options 和 data 并渲染
-            await renderChart(newOptions, newData);
+            const ref = visType === OtherTypes.STATISTIC_CARD ? statisticRef : renderRef;
+            await ref.current?.renderChart(newOptions, newData);
         } catch (err) {
             console.error(err);
-            setGenerateLoading(false);
         }
+
+        setGenerateLoading(false);
     };
 
     /**
@@ -337,7 +271,7 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
         try {
             setSaveLoading(true);
 
-            const { values, options, data } = await buildChartDataAndOptions(formInstance);
+            const { values, options, data } = await buildChartDataAndOptions(formInstance, visTypeDefinition);
 
             // 触发保存函数
             await onSave?.(values, options, data);
@@ -391,32 +325,39 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
         >
             <Row wrap={false}>
                 <Col flex="auto">
-                    <Spin
-                        wrapperClassName="spin-container"
-                        spinning={generateLoading}
-                        style={{
-                            // Spin 垂直居中
-                            position: 'absolute',
-                            top: '50%',
-                            left: '50%',
-                            transform: 'translate(-50%, -50%)',
-                        }}
-                    >
-                        {/* 空数据展示 */}
-                        {isEmpty ? (
-                            <Empty
-                                image={Empty.PRESENTED_IMAGE_SIMPLE}
+                    {visType === OtherTypes.STATISTIC_CARD ? (
+                        <div
+                            style={{
+                                height: '100%',
+                                width: '100%',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                padding: 0,
+                            }}
+                        >
+                            <StatisticCard
+                                renderRef={statisticRef}
+                                loading={generateLoading}
                                 style={{
-                                    top: `calc(${contentHeight / 2}px - ${size === 'medium' ? 60 : 53}px)`,
-                                    width: 'calc(100% - 16px)',
-                                    position: 'absolute',
+                                    padding: '6px 48px',
+                                    maxWidth: '223.766px',
+                                    minWidth: '330px',
+                                    height: '278px',
                                 }}
                             />
-                        ) : null}
-
-                        {/* - 图表渲染 */}
-                        <div ref={chartRef} style={{ height: contentHeight, display: isEmpty ? 'none' : 'block' }} />
-                    </Spin>
+                        </div>
+                    ) : (
+                        <ChartRender
+                            renderRef={renderRef}
+                            size={size}
+                            contentHeight={contentHeight}
+                            loading={generateLoading}
+                            onAfterPaint={() => {
+                                setGenerateLoading(false);
+                            }}
+                        />
+                    )}
                 </Col>
 
                 <Col flex="340px">

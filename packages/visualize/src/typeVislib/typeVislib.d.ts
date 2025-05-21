@@ -22,15 +22,15 @@ export interface ChartFormProps {
     /** - 图表类型 */
     chartType: string;
     /** - 是否显示图例 */
-    showLegend: boolean;
+    showLegend?: boolean;
     /** - 图例相关设置 */
-    legend: {
+    legend?: {
         color: Record<string, any>;
     };
     /** - 是否显示标签 */
-    showLabel: boolean;
+    showLabel?: boolean;
     /** - 通道配置 */
-    encode: EncodeOptions;
+    encode?: EncodeOptions;
     /**
      * - 是否开启检索
      * - 横轴分组聚合
@@ -52,7 +52,7 @@ interface SchemaItem {
  * - 配置转换返回值
  */
 type TransformReturn = {
-    options: Chart['options'];
+    options: ChartOptions;
     data: Data;
 };
 
@@ -102,5 +102,13 @@ export interface VisTypeDefinitionProps<T = Record<string, any>> {
         [key: string]: any;
     };
     transformConfig: TransformConfig;
-    onChangeConfig: ChangeConfig;
+    onChangeConfig?: ChangeConfig;
 }
+
+/**
+ * - Chart 图标配置扩展
+ */
+type ChartOptions = Chart['options'] & {
+    style?: Record<string, any>;
+    formatter?: Record<string, any>;
+};

@@ -1,15 +1,14 @@
-import { Chart, Data } from '@antv/g2';
+import { Data } from '@antv/g2';
 import { cloneDeep } from 'lodash';
-import { axisChange, legendChange } from '../utils/change';
 import {
+    axisChange,
     ChartTypes,
+    deleteExtraKey,
     IntervalChartTypes,
     KeywordComparisonSymbols,
+    legendChange,
     LineChartTypes,
     Positions,
-} from '../utils/collections';
-import {
-    deleteExtraKey,
     transformAxis,
     transformAxisTitle,
     transformEncodeColor,
@@ -17,8 +16,8 @@ import {
     transformLabel,
     transformLegend,
     transformTooltip,
-} from '../utils/transform';
-import { AxisOptions, ChartFormProps, VisTypeDefinitionProps } from './index';
+} from '../utils';
+import { AxisOptions, ChartFormProps, ChartOptions, VisTypeDefinitionProps } from './index';
 
 export interface FormLineChartOptionProps extends ChartFormProps {
     /** - 是否显示坐标轴 */
@@ -145,7 +144,7 @@ export const createLineVisTypeDefinition = (): VisTypeDefinitionProps<FormLineCh
             // TODO: 趋势图暂时没有排序
             Reflect.deleteProperty(options, 'transform');
 
-            return { options: options as Chart['options'], data };
+            return { options: options as ChartOptions, data };
         },
         onChangeConfig: (value, allValues, form) => {
             // 图例

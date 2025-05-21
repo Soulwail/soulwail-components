@@ -12,7 +12,9 @@ import {
     StackAreaChartIcon,
     StackBarChartIcon,
     StackHorizontalBarChartIcon,
+    StatisticCardIcon,
     StepLineChartIcon,
+    TableViewIcon,
 } from '../icons';
 
 // 最大字符数
@@ -69,6 +71,14 @@ export const ChartTypes = Object.freeze({
     PIE: 'pie',
 });
 
+export const ViewTypes = Object.freeze({
+    TABLE: 'table',
+});
+
+export const OtherTypes = Object.freeze({
+    STATISTIC_CARD: 'statisticCard',
+});
+
 /** - 柱状图 */
 export const IntervalChartTypes = Object.freeze({
     BASE: 'base',
@@ -106,6 +116,7 @@ export const PieChartTypes = Object.freeze({
 const getChartTypes = () => [
     {
         label: '柱状图',
+        key: ChartTypes.INTERVAL,
         options: [
             {
                 label: '基础柱状图',
@@ -126,6 +137,7 @@ const getChartTypes = () => [
     },
     {
         label: '折线图',
+        key: ChartTypes.LINE,
         options: [
             {
                 label: '基础折线图',
@@ -146,6 +158,7 @@ const getChartTypes = () => [
     },
     {
         label: '面积图',
+        key: ChartTypes.AREA,
         options: [
             {
                 label: '面积图',
@@ -166,6 +179,7 @@ const getChartTypes = () => [
     },
     {
         label: '条形图',
+        key: ChartTypes.HORIZONTAL_BAR,
         options: [
             {
                 label: '基础条形图',
@@ -186,6 +200,7 @@ const getChartTypes = () => [
     },
     {
         label: '饼图',
+        key: ChartTypes.PIE,
         options: [
             {
                 label: '饼图',
@@ -196,6 +211,28 @@ const getChartTypes = () => [
                 label: '环形图',
                 value: `${ChartTypes.PIE}_${PieChartTypes.RING}`,
                 icon: DonutChartIcon,
+            },
+        ],
+    },
+    {
+        label: '视图',
+        key: 'view',
+        options: [
+            {
+                label: '表格',
+                value: ViewTypes.TABLE,
+                icon: TableViewIcon,
+            },
+        ],
+    },
+    {
+        label: '其他',
+        key: 'other',
+        options: [
+            {
+                label: '指标卡',
+                value: OtherTypes.STATISTIC_CARD,
+                icon: StatisticCardIcon,
             },
         ],
     },

@@ -1,8 +1,8 @@
 import { Col, Form, Input, Row, Select, SelectProps, Space } from 'antd';
 import React, { useContext, useMemo } from 'react';
 import VisualizeContext from '../context';
-import { ChartTypes, getChartTypes } from '../utils/collections';
-import { AreaVis, HorizontalBarVis, IntervalVis, LineVis, PieVis } from './index';
+import { ChartTypes, getChartTypes, OtherTypes } from '../utils';
+import { AreaVis, HorizontalBarVis, IntervalVis, LineVis, PieVis, StatisticCardVis } from './index';
 
 import { ChartSelect } from './ChartSelect';
 import './index.less';
@@ -47,6 +47,8 @@ const VisConfig: React.FC<VisConfigProps> = (props) => {
                 return <HorizontalBarVis />;
             case ChartTypes.AREA:
                 return <AreaVis />;
+            case OtherTypes.STATISTIC_CARD:
+                return <StatisticCardVis />;
             default:
                 return <></>;
         }

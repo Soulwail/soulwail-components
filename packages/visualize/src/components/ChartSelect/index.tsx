@@ -9,9 +9,11 @@ const ChartSelect: React.FC<SelectProps> = (props) => {
             value={value}
             onChange={onChange}
             optionRender={(option) => {
+                const Icon = option.data.icon;
+
                 return (
                     <Space key={option.data.value}>
-                        {option.data.icon ? <option.data.icon style={{ fontSize: '36px' }} /> : null}
+                        {Icon ? <Icon style={{ fontSize: '36px' }} /> : null}
                         {option.data.label}
                     </Space>
                 );

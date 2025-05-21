@@ -1,9 +1,16 @@
-import { Chart, Data } from '@antv/g2';
+import { Data } from '@antv/g2';
 import { cloneDeep } from 'lodash';
-import { legendChange } from '../utils/change';
-import { ChartTypes, IntervalChartTypes, KeywordComparisonSymbols, Positions } from '../utils/collections';
-import { deleteExtraKey, ellipsisLabel, transformLegend } from '../utils/transform';
-import { ChartFormProps, VisTypeDefinitionProps } from './index';
+import {
+    ChartTypes,
+    deleteExtraKey,
+    ellipsisLabel,
+    IntervalChartTypes,
+    KeywordComparisonSymbols,
+    legendChange,
+    Positions,
+    transformLegend,
+} from '../utils';
+import { ChartFormProps, ChartOptions, VisTypeDefinitionProps } from './index';
 
 export interface FormPieChartOptionProps extends ChartFormProps {
     /** - 轴排序 */
@@ -206,7 +213,7 @@ export const createPieVisTypeDefinition = (): VisTypeDefinitionProps<FormPieChar
 
             console.log('newOptions', options);
 
-            return { options: options as Chart['options'], data };
+            return { options: options as ChartOptions, data };
         },
         onChangeConfig: (value, allValues, form) => {
             // 图例

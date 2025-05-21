@@ -1,15 +1,15 @@
-import { Chart, Data } from '@antv/g2';
+import { Data } from '@antv/g2';
 import { cloneDeep, defaultsDeep } from 'lodash';
-import { axisChange, encodeColorChange, legendChange } from '../utils/change';
 import {
+    axisChange,
     ChartTypes,
+    deleteExtraKey,
+    encodeColorChange,
     HorizontalChartTypes,
     IntervalChartTypes,
     KeywordComparisonSymbols,
+    legendChange,
     Positions,
-} from '../utils/collections';
-import {
-    deleteExtraKey,
     transformAxis,
     transformAxisTitle,
     transformEncodeColor,
@@ -18,8 +18,8 @@ import {
     transformLegend,
     transformSortX,
     transformTooltip,
-} from '../utils/transform';
-import { AxisOptions, ChartFormProps, VisTypeDefinitionProps } from './index';
+} from '../utils';
+import { AxisOptions, ChartFormProps, ChartOptions, VisTypeDefinitionProps } from './index';
 
 /** - 柱状图表单配置项 */
 export interface FormHorizontalBarChartOptionProps extends ChartFormProps {
@@ -170,7 +170,7 @@ export const createHorizontalBarVisTypeDefinition = (): VisTypeDefinitionProps<F
             // 删除 option 中多余的 key
             deleteExtraKey(options);
 
-            return { options: options as Chart['options'], data };
+            return { options: options as ChartOptions, data };
         },
         onChangeConfig: (value, allValues, form, extraOpts) => {
             const { categoryList = [], colorCategoryList = [] } = extraOpts;

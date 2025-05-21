@@ -1,7 +1,7 @@
 import { Col, Collapse, type CollapseProps, Form, Row, Space } from 'antd';
 import React, { useContext, useMemo } from 'react';
 import VisualizeContext from '../context';
-import { AxisTitle, Legend, PieSeries, Series, XAxis, YAxis } from '../editor';
+import { AxisTitle, Background, Font, Legend, NumberFormat, PieSeries, Series, XAxis, YAxis } from '../editor';
 
 import './index.less';
 
@@ -37,6 +37,12 @@ const EditConfig: React.FC = () => {
                     config.children = <XAxis />;
                 } else if (item.key === 'yAxis') {
                     config.children = <YAxis />;
+                } else if (item.key === 'background') {
+                    config.children = <Background />;
+                } else if (item.key === 'font') {
+                    config.children = <Font />;
+                } else if (item.key === 'numberFormat') {
+                    config.children = <NumberFormat />;
                 }
 
                 return config;
