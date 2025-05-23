@@ -168,6 +168,7 @@ const ResponsiveGridLayout: React.FC<ResponsiveGridProps> = (props) => {
                 className={styles['grid-layout']}
                 draggableHandle=".layout-item-head"
                 measureBeforeMount={false}
+                useCSSTransforms={false}
                 cols={cols}
                 breakpoints={breakpoints}
                 layouts={layouts}
