@@ -1,4 +1,4 @@
-import { ChartTypes, MaxCharNum } from '@safety/visualize';
+import { ChartTypes, MaxCharNum } from '../utils';
 
 /**
  * - 数值转换

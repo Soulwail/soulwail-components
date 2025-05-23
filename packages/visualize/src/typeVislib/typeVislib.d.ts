@@ -10,7 +10,7 @@ export interface AxisOptions {
 
 /** - 通道配置 */
 interface EncodeOptions {
-    x?: string;
+    x?: string | string[];
     y?: string;
     color?: string;
     shape?: string;
@@ -109,6 +109,7 @@ export interface VisTypeDefinitionProps<T = Record<string, any>> {
  * - Chart 图标配置扩展
  */
 type ChartOptions = Chart['options'] & {
+    encode?: EncodeOptions;
     style?: Record<string, any>;
     formatter?: Record<string, any>;
 };

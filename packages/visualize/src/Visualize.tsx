@@ -3,11 +3,11 @@ import { Button, Col, Form, FormInstance, FormProps, Row, SelectProps, Tabs } fr
 import { NamePath } from 'antd/es/form/interface';
 import { defaultsDeep } from 'lodash';
 import { forwardRef, useEffect, useImperativeHandle, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { ChartRender, ChartRenderRef, EditConfig, StatisticCard, VisConfig } from './components';
+import { ChartRender, ChartRenderRef, EditConfig, StatisticCard, TableCard, VisConfig } from './components';
 import VisualizeContext, { VisualizeContextProps } from './context';
 import { TransformReturn, VisTypeDefinitionProps, visualizations } from './typeVislib';
 import { FormStatisticCardOptionProps } from './typeVislib/statisticCard';
-import { buildChartDataAndOptions, ChartTypes, OtherTypes } from './utils';
+import { buildChartDataAndOptions, ChartTypes, OtherTypes, TableVisibleAllFieldsValue, ViewTypes } from './utils';
 
 /** 操作回调 */
 type Operate<T = void> = (values: Record<string, any>, options: Chart['options'], data: Data) => Promise<T>;
@@ -57,10 +57,9 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
         onSave,
         optionsRender,
     } = props;
-    const chartRef = useRef<HTMLDivElement>(null);
-    const chart = useRef<Chart>();
     const renderRef = useRef<ChartRenderRef>();
     const statisticRef = useRef<ChartRenderRef>(null);
+    const tableRef = useRef<ChartRenderRef>(null);
 
     const [form] = Form.useForm();
     const chartType = Form.useWatch('chartType', form);
@@ -119,15 +118,6 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
     });
 
     useLayoutEffect(() => {
-        // 初始化 chart 类
-        if (chartRef.current) {
-            console.log('初始化图表类--成功');
-            chart.current = new Chart({
-                container: chartRef.current,
-                autoFit: true,
-            });
-        }
-
         // 设置初始图表类型
         let type = ChartTypes.INTERVAL;
 
@@ -162,9 +152,17 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
             // console.log('allValues', allValues);
 
             // 切换到柱状图或条形图
-            if (chartVisType === ChartTypes.INTERVAL || chartVisType === ChartTypes.HORIZONTAL_BAR) {
-                // 如果上一次是折线图或面积图
-                if (prevChartVisType === ChartTypes.LINE || prevChartVisType === ChartTypes.AREA) {
+            if (
+                chartVisType === ChartTypes.INTERVAL ||
+                chartVisType === ChartTypes.HORIZONTAL_BAR ||
+                chartVisType === OtherTypes.STATISTIC_CARD
+            ) {
+                // 如果上一次是折线图或面积图，或者是表格
+                if (
+                    prevChartVisType === ChartTypes.LINE ||
+                    prevChartVisType === ChartTypes.AREA ||
+                    prevChartVisType === ViewTypes.TABLE
+                ) {
                     // 将横轴的时间转为字段选项
                     form.setFieldValue(['encode', 'x'], categoryList[0]?.value);
                 }
@@ -192,13 +190,26 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
                     }
                 }
             } else if (chartVisType === ChartTypes.PIE) {
-                // 如果切换到饼图
-                form.setFieldValue(['encode', 'color'], allValues.encode.x);
+                // 如果上一次是折线图或面积图，或者是表格
+                if (
+                    prevChartVisType === ChartTypes.LINE ||
+                    prevChartVisType === ChartTypes.AREA ||
+                    prevChartVisType === ViewTypes.TABLE
+                ) {
+                    console.log('prevChartVisType', prevChartVisType, categoryList[0]?.value);
+                    form.setFieldValue(['encode', 'x'], categoryList[0]?.value);
+                } else {
+                    form.setFieldValue(['encode', 'x'], allValues.encode.x);
+                }
 
                 // 设置排序默认值
                 if (allValues.transform.sortX.by === 'x') {
                     form.setFieldValue(['transform', 'sortX', 'by'], 'color');
                 }
+            } else if (chartVisType === ViewTypes.TABLE) {
+                // 如果切换到表格
+                // 设置可见字段为全部字段
+                form.setFieldValue(['encode', 'x'], [TableVisibleAllFieldsValue]);
             }
 
             setPrevChartVisType(chartVisType);
@@ -230,6 +241,24 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
                     (definition as VisTypeDefinitionProps<FormStatisticCardOptionProps>).visConfig.defaults.formatter,
                 );
             }
+        } else if (Reflect.has(value, 'encode') && Reflect.has(value.encode, 'x')) {
+            if (chartVisType === ViewTypes.TABLE) {
+                const visibleFields = Reflect.get(value.encode, 'x');
+                // 如果最新选择的字段是所有字段
+                // 那么移除其他字段，只保留所有字段
+                if (visibleFields[visibleFields.length - 1] === TableVisibleAllFieldsValue) {
+                    form.setFieldValue(['encode', 'x'], [TableVisibleAllFieldsValue]);
+                } else {
+                    // 如果已选择的字段中包含所有字段
+                    // 那么需要移除所有字段
+                    if (visibleFields.includes(TableVisibleAllFieldsValue)) {
+                        form.setFieldValue(
+                            ['encode', 'x'],
+                            visibleFields.filter((item) => item !== TableVisibleAllFieldsValue),
+                        );
+                    }
+                }
+            }
         } else {
             if (visTypeDefinition) {
                 visTypeDefinition?.onChangeConfig?.(value, allValues, form, {
@@ -254,7 +283,12 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
             const { options: newOptions, data: newData } = await onGenerate?.(values, options, data);
 
             // 获取新的 options 和 data 并渲染
-            const ref = visType === OtherTypes.STATISTIC_CARD ? statisticRef : renderRef;
+            const ref =
+                visType === OtherTypes.STATISTIC_CARD
+                    ? statisticRef
+                    : visType === ViewTypes.TABLE
+                    ? tableRef
+                    : renderRef;
             await ref.current?.renderChart(newOptions, newData);
         } catch (err) {
             console.error(err);
@@ -347,7 +381,11 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
                                 }}
                             />
                         </div>
-                    ) : (
+                    ) : null}
+
+                    {visType === ViewTypes.TABLE ? <TableCard size={size} renderRef={tableRef} /> : null}
+
+                    {visType !== OtherTypes.STATISTIC_CARD && visType !== ViewTypes.TABLE ? (
                         <ChartRender
                             renderRef={renderRef}
                             size={size}
@@ -357,7 +395,7 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
                                 setGenerateLoading(false);
                             }}
                         />
-                    )}
+                    ) : null}
                 </Col>
 
                 <Col flex="340px">
@@ -371,12 +409,17 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
                                     forceRender: true,
                                     children: <VisConfig dataSource={dataSource} dataSourceMode={dataSourceMode} />,
                                 },
-                                {
-                                    key: 'editor',
-                                    label: '自定义样式',
-                                    forceRender: true,
-                                    children: <EditConfig />,
-                                },
+                                // 表格组件没有自定义样式
+                                ...(visType !== ViewTypes.TABLE
+                                    ? [
+                                          {
+                                              key: 'editor',
+                                              label: '自定义样式',
+                                              forceRender: true,
+                                              children: <EditConfig />,
+                                          },
+                                      ]
+                                    : []),
                             ]}
                             style={{ borderLeft: '1px solid #e4e9ec' }}
                         />

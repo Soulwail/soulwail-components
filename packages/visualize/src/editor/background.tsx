@@ -1,6 +1,6 @@
+import { Form } from 'antd';
 import React from 'react';
 import { ChartColorPicker } from '../components/ChartColorPicker';
-import { Form } from 'antd';
 
 const Background: React.FC = () => {
     return (

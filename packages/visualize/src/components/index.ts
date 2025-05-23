@@ -8,4 +8,6 @@ export * from './LineVis';
 export * from './PieVis';
 export * from './StatisticCard';
 export * from './StatisticCardVis';
+export * from './TableCard';
+export * from './TableCardVis';
 export * from './VisConfig';

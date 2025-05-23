@@ -21,6 +21,8 @@ import {
 export const MaxCharNum = 12;
 // 最大字符长度
 export const MaxCharLength = 60;
+// 表格组件展示所有字段的值
+export const TableVisibleAllFieldsValue = '0';
 
 export const KeywordComparisonSymbols = Object.freeze({
     EQUAL: '==',
