@@ -1,6 +1,6 @@
 import { Form } from 'antd';
-import { getChartTypes } from '../../utils';
 import { ChartSelect } from '../';
+import { getChartTypes } from '../../utils';
 
 const ChartType = () => {
     const visTypeOptions = getChartTypes();

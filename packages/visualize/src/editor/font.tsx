@@ -5,7 +5,7 @@ import VisualizeContext from '../context';
 
 const Font: React.FC = () => {
     const { layout } = useContext(VisualizeContext);
-    
+
     return (
         <>
             <Form.Item
