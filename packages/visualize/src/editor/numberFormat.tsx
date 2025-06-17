@@ -1,7 +1,10 @@
 import { Form, InputNumber, Select } from 'antd';
-import React from 'react';
+import React, { useContext } from 'react';
+import VisualizeContext from '../context';
 
 const NumberFormat: React.FC = () => {
+    const { layout } = useContext(VisualizeContext);
+
     const selectAfter = (
         <Form.Item name={['formatter', 'format']} noStyle>
             <Select
@@ -17,7 +20,7 @@ const NumberFormat: React.FC = () => {
 
     return (
         <>
-            <Form.Item name={['formatter', 'fix']}>
+            <Form.Item label={layout === 'drawer' ? '数字格式' : null} name={['formatter', 'fix']}>
                 <InputNumber controls min={0} addonAfter={selectAfter} precision={0} style={{ width: '100%' }} />
             </Form.Item>
         </>

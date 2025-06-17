@@ -1,21 +1,28 @@
 import {
     AreaChartIcon,
+    AreaChartNavyIcon,
     BasicBarChartIcon,
+    BasicBarChartNavyIcon,
     BasicHorizontalBarChartIcon,
+    BasicHorizontalBarChartNavyIcon,
     BasicLineChartIcon,
+    BasicLineChartNavyIcon,
     DonutChartIcon,
     PercentStackAreaChartIcon,
     PercentStackBarChartIcon,
     PercentStackHorizontalBarChartIcon,
     PieChartIcon,
+    PieChartNavyIcon,
     SmoothLineChartIcon,
     StackAreaChartIcon,
     StackBarChartIcon,
     StackHorizontalBarChartIcon,
     StatisticCardIcon,
+    StatisticCardNavyIcon,
     StepLineChartIcon,
     TableViewIcon,
-} from '../icons';
+    TableViewNavyIcon,
+} from '../icons'; // 最大字符数
 
 // 最大字符数
 export const MaxCharNum = 12;
@@ -240,10 +247,115 @@ const getChartTypes = () => [
     },
 ];
 
+const getDrawerChartTypes = () => [
+    {
+        label: '柱状图',
+        value: ChartTypes.INTERVAL,
+        icon: BasicBarChartNavyIcon,
+        children: [
+            {
+                label: '基础柱状图',
+                value: IntervalChartTypes.BASE,
+            },
+            {
+                label: '堆积柱状图',
+                value: IntervalChartTypes.STACK,
+            },
+            {
+                label: '百分比堆积柱状图',
+                value: IntervalChartTypes.PERCENT_STACK,
+            },
+        ],
+    },
+    {
+        label: '折线图',
+        value: ChartTypes.LINE,
+        icon: BasicLineChartNavyIcon,
+        children: [
+            {
+                label: '基础折线图',
+                value: LineChartTypes.BASE,
+            },
+            {
+                label: '平滑折线图',
+                value: LineChartTypes.SMOOTH,
+            },
+            {
+                label: '阶梯图',
+                value: LineChartTypes.STEP,
+            },
+        ],
+    },
+    {
+        label: '面积图',
+        value: ChartTypes.AREA,
+        icon: AreaChartNavyIcon,
+        children: [
+            {
+                label: '面积图',
+                value: AreaChartTypes.BASE,
+            },
+            {
+                label: '堆积面积图',
+                value: AreaChartTypes.STACK,
+            },
+            {
+                label: '百分比堆积面积图',
+                value: AreaChartTypes.PERCENT_STACK,
+            },
+        ],
+    },
+    {
+        label: '条形图',
+        value: ChartTypes.HORIZONTAL_BAR,
+        icon: BasicHorizontalBarChartNavyIcon,
+        children: [
+            {
+                label: '基础条形图',
+                value: HorizontalChartTypes.BASE,
+            },
+            {
+                label: '堆积条形图',
+                value: HorizontalChartTypes.STACK,
+            },
+            {
+                label: '百分比堆积条形图',
+                value: HorizontalChartTypes.PERCENT_STACK,
+            },
+        ],
+    },
+    {
+        label: '饼图',
+        value: ChartTypes.PIE,
+        icon: PieChartNavyIcon,
+        children: [
+            {
+                label: '饼图',
+                value: PieChartTypes.BASE,
+            },
+            {
+                label: '环形图',
+                value: PieChartTypes.RING,
+            },
+        ],
+    },
+    {
+        label: '表格',
+        value: ViewTypes.TABLE,
+        icon: TableViewNavyIcon,
+    },
+    {
+        label: '指标卡',
+        value: OtherTypes.STATISTIC_CARD,
+        icon: StatisticCardNavyIcon,
+    },
+];
+
 const getConfigCollections = () => ({
     legendPositions: getPositions(),
     // positions: getPositions(),
     chartTypes: getChartTypes(),
+    drawerChartTypes: getDrawerChartTypes(),
     // axisModes: getAxisModes(),
     // scaleTypes: getScaleTypes(),
     // chartModes: getChartModes(),
@@ -251,4 +363,4 @@ const getConfigCollections = () => ({
     // thresholdLineStyles: getThresholdLineStyles(),
 });
 
-export { getChartTypes, getConfigCollections, getKeywordComparisonSymbols, getPositions };
+export { getChartTypes, getConfigCollections, getDrawerChartTypes, getKeywordComparisonSymbols, getPositions };

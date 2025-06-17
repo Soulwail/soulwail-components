@@ -1,78 +1,24 @@
-import { Col, Form, Input, Row, Select, SelectProps, Space } from 'antd';
-import React, { useContext, useMemo } from 'react';
+import { Col, Form, Row, Space } from 'antd';
+import React, { useContext } from 'react';
 import VisualizeContext from '../context';
-import { ChartTypes, getChartTypes, OtherTypes, ViewTypes } from '../utils';
-import { AreaVis, HorizontalBarVis, IntervalVis, LineVis, PieVis, StatisticCardVis, TableCardVis } from './index';
+import { ChartConfig, ChartName, ChartType, DataSource } from './';
+import useStyles from './style';
 
-import { ChartSelect } from './ChartSelect';
-import './index.less';
-
-/**
- * - VisConfig 组件配置
- */
-export type VisConfigProps = {
-    /** - 数据来源选择项 */
-    dataSource: SelectProps['options'];
-    /** - 数据来源是否多选 */
-    dataSourceMode?: SelectProps['mode'];
-};
-
-const VisConfig: React.FC<VisConfigProps> = (props) => {
-    const { dataSource = [], dataSourceMode } = props;
+const VisConfig: React.FC = () => {
     const { contentHeight, size, chartOptionsRender } = useContext(VisualizeContext);
-    const visTypeOptions = getChartTypes();
-
     const form = Form.useFormInstance();
-    const chartType = Form.useWatch('chartType');
-
-    const type: string = useMemo(() => {
-        if (chartType) {
-            const chartTypeArr = chartType.split('_');
-
-            return chartTypeArr[0];
-        } else {
-            return '';
-        }
-    }, [chartType]);
-
-    const getVisConfig = (t: string) => {
-        switch (t) {
-            case ChartTypes.INTERVAL:
-                return <IntervalVis />;
-            case ChartTypes.LINE:
-                return <LineVis />;
-            case ChartTypes.PIE:
-                return <PieVis />;
-            case ChartTypes.HORIZONTAL_BAR:
-                return <HorizontalBarVis />;
-            case ChartTypes.AREA:
-                return <AreaVis />;
-            case ViewTypes.TABLE:
-                return <TableCardVis />;
-            case OtherTypes.STATISTIC_CARD:
-                return <StatisticCardVis />;
-            default:
-                return <></>;
-        }
-    };
+    const { styles } = useStyles({ height: contentHeight - 6 - (size === 'medium' ? 110 : 88) }); // medium：62 - tab 标题、6 - 内边距、48 - 底部按钮；small：44  - tab 标题、6 - 内边距、44 - 底部按钮
 
     return (
         <div style={{ padding: '6px 0 0 16px' }}>
-            {/*  medium：62 - tab 标题、6 - 内边距、48 - 底部按钮；small：44  - tab 标题、6 - 内边距、44 - 底部按钮 */}
-            <div className="config-box" style={{ height: contentHeight - 6 - (size === 'medium' ? 110 : 88) }}>
-                <Form.Item label="图表名称" name="name" rules={[{ required: true, message: '请输入图表名称' }]}>
-                    <Input placeholder="请输入" />
-                </Form.Item>
+            <div className={styles['config-box']}>
+                <ChartName />
 
-                <Form.Item label="数据来源" name="dataSource" rules={[{ required: true, message: '请选择数据来源' }]}>
-                    <Select options={dataSource} mode={dataSourceMode} placeholder="请选择" />
-                </Form.Item>
+                <DataSource />
 
-                <Form.Item label="图表类型" name="chartType">
-                    <ChartSelect options={visTypeOptions} placeholder="请选择" />
-                </Form.Item>
+                <ChartType />
 
-                {getVisConfig(type)}
+                <ChartConfig />
             </div>
 
             <Row justify="space-between" style={{ marginTop: '16px' }}>

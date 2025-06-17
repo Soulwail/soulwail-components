@@ -2,13 +2,12 @@ import { Col, Collapse, type CollapseProps, Form, Row, Space } from 'antd';
 import React, { useContext, useMemo } from 'react';
 import VisualizeContext from '../context';
 import { AxisTitle, Background, Font, Legend, NumberFormat, PieSeries, Series, XAxis, YAxis } from '../editor';
-
-import './index.less';
+import useStyles from './style';
 
 const EditConfig: React.FC = () => {
     const { contentHeight, size, visTypeDefinition, chartOptionsRender } = useContext(VisualizeContext);
-
     const form = Form.useFormInstance();
+    const { styles } = useStyles({ height: contentHeight - (size === 'medium' ? 110 : 88) }); // medium： 62 - tab 标题、48 - 底部按钮；small：44  - tab 标题、44 - 底部按钮
 
     const items = useMemo(() => {
         if (visTypeDefinition) {
@@ -54,8 +53,7 @@ const EditConfig: React.FC = () => {
 
     return (
         <div>
-            {/* medium： 62 - tab 标题、48 - 底部按钮；small：44  - tab 标题、44 - 底部按钮 */}
-            <div className="config-box" style={{ height: contentHeight - (size === 'medium' ? 110 : 88) }}>
+            <div className={styles['config-box']}>
                 <Collapse ghost accordion items={items} />
             </div>
 

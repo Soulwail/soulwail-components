@@ -4,12 +4,21 @@ import { VisTypeDefinitionProps } from './typeVislib';
 
 export interface VisualizeContextProps {
     contentHeight: number;
+    /** - 尺寸 */
     size?: 'small' | 'medium';
+    /** - 布局 */
+    layout?: 'feishu' | 'drawer'; // feishu 参照飞书的布局、drawer 自定义抽屉布局
+    formProps?: {
+        /** - 数据来源 */
+        dataSource: any[];
+        /** - 数据来源是否多选 */
+        dataSourceMode?: SelectProps['mode'];
+        /** - 横轴选项 */
+        categoryList: SelectProps['options'];
+        /** - 聚合字段选择项 */
+        colorCategoryList: SelectProps['options'];
+    };
     visTypeDefinition?: VisTypeDefinitionProps;
-    /** - 横轴选择项 */
-    categoryList?: SelectProps['options'];
-    /** - 聚合字段选择项 */
-    colorCategoryList?: SelectProps['options'];
     chartOptionsRender?: (form: FormInstance) => React.ReactNode[];
 }
 

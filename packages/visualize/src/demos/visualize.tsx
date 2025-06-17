@@ -71,9 +71,12 @@ export default () => {
     return (
         <Visualize
             ref={visRef}
-            dataSource={dataSource}
-            categoryList={categoryList}
-            initialValues={initialValues}
+            formProps={{
+                layout: 'vertical',
+                initialValues,
+                dataSource,
+                categoryList,
+            }}
             onValueChange={onValueChange}
             onGenerate={onGenerate}
         />

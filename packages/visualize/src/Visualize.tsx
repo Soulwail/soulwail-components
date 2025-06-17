@@ -1,38 +1,51 @@
 import { Chart, Data } from '@antv/g2';
-import { Button, Col, Form, FormInstance, FormProps, Row, SelectProps, Tabs } from 'antd';
+import { Button, Form, FormInstance, FormProps } from 'antd';
 import { NamePath } from 'antd/es/form/interface';
 import { defaultsDeep } from 'lodash';
 import { forwardRef, useEffect, useImperativeHandle, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { ChartRender, ChartRenderRef, EditConfig, StatisticCard, TableCard, VisConfig } from './components';
+import { ChartRender, ChartRenderRef, StatisticCard, TableCard, VisualizeLayout } from './components';
 import VisualizeContext, { VisualizeContextProps } from './context';
+import useStyles from './style';
 import { TransformReturn, VisTypeDefinitionProps, visualizations } from './typeVislib';
 import { FormStatisticCardOptionProps } from './typeVislib/statisticCard';
-import { buildChartDataAndOptions, ChartTypes, OtherTypes, TableVisibleAllFieldsValue, ViewTypes } from './utils';
+import {
+    buildChartDataAndOptions,
+    ChartTypes,
+    getDrawerChartTypes,
+    IntervalChartTypes,
+    OtherTypes,
+    TableVisibleAllFieldsValue,
+    ViewTypes,
+} from './utils';
+
+const chartTypeOptions = getDrawerChartTypes();
 
 /** 操作回调 */
 type Operate<T = void> = (values: Record<string, any>, options: Chart['options'], data: Data) => Promise<T>;
 
+type VisualizeFormProps = Pick<FormProps, 'layout' | 'labelCol' | 'labelAlign' | 'labelWrap'> &
+    Pick<VisualizeContextProps['formProps'], 'categoryList' | 'dataSource' | 'dataSourceMode'> & {
+        /** - 初始值 */
+        initialValues?: Record<string, any>;
+    };
+
 export interface VisualizeProps {
-    /** - 数据来源 */
-    dataSource: any[];
-    /** - 数据来源是否多选 */
-    dataSourceMode?: SelectProps['mode'];
     /** - 内容展示高度 */
     height?: number;
     /** - 容器间距尺寸 */
-    size?: 'small' | 'medium';
-    /** - 初始值 */
-    initialValues?: Record<string, any>;
-    /** - 横轴选项 */
-    categoryList: VisualizeContextProps['categoryList'];
+    size?: VisualizeContextProps['size'];
+    /** - 整体布局 */
+    layout?: VisualizeContextProps['layout'];
+    /** - 操作按钮渲染 */
+    optionsRender?: VisualizeContextProps['chartOptionsRender'];
+    /** - form 配置 */
+    formProps: VisualizeFormProps;
     /** - 字段值更新时触发回调事件 */
     onValueChange?: FormProps['onValuesChange'];
     /** - 生成按钮回调 */
     onGenerate?: Operate<TransformReturn>;
     /** - 保存按钮回调 */
     onSave?: Operate;
-    /** - 操作按钮渲染 */
-    optionsRender?: VisualizeContextProps['chartOptionsRender'];
 }
 
 export interface VisualizeRef {
@@ -45,18 +58,10 @@ export interface VisualizeRef {
 }
 
 const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
-    const {
-        height = 680,
-        size = 'medium',
-        initialValues = {},
-        dataSource = [],
-        dataSourceMode,
-        categoryList = [],
-        onValueChange,
-        onGenerate,
-        onSave,
-        optionsRender,
-    } = props;
+    const { height = 680, size = 'medium', layout = 'feishu', formProps, onValueChange, onGenerate, onSave } = props;
+    const { initialValues = {}, dataSource = [], dataSourceMode, categoryList = [], ...resetProps } = formProps;
+    const { styles } = useStyles();
+
     const renderRef = useRef<ChartRenderRef>();
     const statisticRef = useRef<ChartRenderRef>(null);
     const tableRef = useRef<ChartRenderRef>(null);
@@ -120,12 +125,14 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
     useLayoutEffect(() => {
         // 设置初始图表类型
         let type = ChartTypes.INTERVAL;
+        let subType = IntervalChartTypes.BASE;
 
         // 如果组件传入了图表类型，则使用传入的
         if (initialValues.chartType) {
             const chartTypeArr = initialValues.chartType.split('_');
 
             type = chartTypeArr[0];
+            subType = chartTypeArr[1];
         }
 
         // 获取图表类型的默认配置
@@ -135,8 +142,16 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
             setVisTypeDefinition(definition);
             setPrevChartVisType(type);
 
+            // drawer 布局下，设置初始值
+            const chartDrawerConfig: { chartParentType?: string; chartSubType?: string } = {};
+
+            if (layout === 'drawer') {
+                chartDrawerConfig.chartParentType = type;
+                chartDrawerConfig.chartSubType = subType;
+            }
+
             // 将默认配置与传入的初始配置进行覆盖合并，得到新的配置值
-            const values = defaultsDeep(initialValues, definition.visConfig.defaults);
+            const values = defaultsDeep(initialValues, definition.visConfig.defaults, chartDrawerConfig);
 
             // 设置表单初始值
             form.setFieldsValue(values);
@@ -217,55 +232,66 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
     }, [chartVisType]);
 
     /**
+     * - 更新 definition
+     * @param chartType
+     */
+    const updateDefinition = (chartType: string) => {
+        const definition = visualizations.find((item) => item.name === chartType);
+
+        // console.log('definition', definition);
+        // 获取图表的配置
+        setVisTypeDefinition(definition);
+        // 存储图表类型
+        setChartVisType(chartType);
+
+        // 设置 default value
+        // 设置其它初始值，转到 useEffect<chartVisType>
+        if (chartType === OtherTypes.STATISTIC_CARD) {
+            // 如果切换到指标卡
+            form.setFieldValue(
+                'formatter',
+                (definition as VisTypeDefinitionProps<FormStatisticCardOptionProps>).visConfig.defaults.formatter,
+            );
+        }
+    };
+
+    /**
      * - 监听值变化
      */
     const onValuesChange = (value: Record<string, any>, allValues: Record<string, any>) => {
-        // console.log(444, value);
+        console.log(444, value);
 
-        if (Reflect.has(value, 'chartType')) {
-            const chartTypeArr = value.chartType.split('_');
-            const definition = visualizations.find((item) => item.name === chartTypeArr[0]);
+        if (layout === 'feishu') {
+            if (Reflect.has(value, 'chartType')) {
+                const chartTypeArr = value.chartType.split('_');
+                updateDefinition(chartTypeArr[0]);
+            }
+        } else if (layout === 'drawer') {
+            if (Reflect.has(value, 'chartParentType')) {
+                const subTypeList =
+                    chartTypeOptions.find((item) => item.value === value.chartParentType)?.children || [];
+                const subType = subTypeList[0]?.value;
+                const chartType = subType ? `${value.chartParentType}_${subTypeList[0]?.value}` : value.chartParentType;
 
-            // console.log('definition', definition);
-            // 获取图表的配置
-            setVisTypeDefinition(definition);
-            // 存储图表类型
-            setChartVisType(chartTypeArr[0]);
+                updateDefinition(value.chartParentType);
 
-            // 设置 default value
-            // 设置其它初始值，转到 useEffect<chartVisType>
-            if (chartTypeArr[0] === OtherTypes.STATISTIC_CARD) {
-                // 如果切换到指标卡
-                form.setFieldValue(
-                    'formatter',
-                    (definition as VisTypeDefinitionProps<FormStatisticCardOptionProps>).visConfig.defaults.formatter,
-                );
+                form.setFieldValue('chartSubType', subType);
+                form.setFieldValue('chartType', chartType);
+            } else if (Reflect.has(value, 'chartSubType')) {
+                const parentType = allValues.chartParentType;
+                const chartType = value.chartSubType ? `${parentType}_${value.chartSubType}` : parentType;
+
+                updateDefinition(parentType);
+
+                form.setFieldValue('chartType', chartType);
             }
-        } else if (Reflect.has(value, 'encode') && Reflect.has(value.encode, 'x')) {
-            if (chartVisType === ViewTypes.TABLE) {
-                const visibleFields = Reflect.get(value.encode, 'x');
-                // 如果最新选择的字段是所有字段
-                // 那么移除其他字段，只保留所有字段
-                if (visibleFields[visibleFields.length - 1] === TableVisibleAllFieldsValue) {
-                    form.setFieldValue(['encode', 'x'], [TableVisibleAllFieldsValue]);
-                } else {
-                    // 如果已选择的字段中包含所有字段
-                    // 那么需要移除所有字段
-                    if (visibleFields.includes(TableVisibleAllFieldsValue)) {
-                        form.setFieldValue(
-                            ['encode', 'x'],
-                            visibleFields.filter((item) => item !== TableVisibleAllFieldsValue),
-                        );
-                    }
-                }
-            }
-        } else {
-            if (visTypeDefinition) {
-                visTypeDefinition?.onChangeConfig?.(value, allValues, form, {
-                    categoryList,
-                    colorCategoryList,
-                });
-            }
+        }
+
+        if (visTypeDefinition) {
+            visTypeDefinition?.onChangeConfig?.(value, allValues, form, {
+                categoryList,
+                colorCategoryList,
+            });
         }
 
         onValueChange?.(value, allValues);
@@ -318,67 +344,54 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
      * - 操作按钮配置
      * @param formInstance
      */
-    const chartOptionsRender: VisualizeContextProps['chartOptionsRender'] = (formInstance) => {
-        return optionsRender
-            ? optionsRender(formInstance)
-            : [
-                  <Button
-                      key="gene"
-                      disabled={saveLoading}
-                      loading={generateLoading}
-                      onClick={() => {
-                          handleGenerate(formInstance);
-                      }}
-                  >
-                      预览
-                  </Button>,
-                  <Button
-                      key="save"
-                      type="primary"
-                      disabled={generateLoading}
-                      loading={saveLoading}
-                      onClick={() => {
-                          handleSave(formInstance);
-                      }}
-                  >
-                      保存
-                  </Button>,
-              ];
-    };
+    const chartOptionsRender: VisualizeContextProps['chartOptionsRender'] = (formInstance) => [
+        <Button
+            key="gene"
+            disabled={saveLoading}
+            loading={generateLoading}
+            onClick={() => {
+                handleGenerate(formInstance);
+            }}
+        >
+            预览
+        </Button>,
+        <Button
+            key="save"
+            type="primary"
+            disabled={generateLoading}
+            loading={saveLoading}
+            onClick={() => {
+                handleSave(formInstance);
+            }}
+        >
+            保存
+        </Button>,
+    ];
 
     return (
         <VisualizeContext.Provider
             value={{
                 contentHeight,
                 size,
+                layout,
                 visTypeDefinition,
-                categoryList,
-                colorCategoryList,
+                formProps: {
+                    dataSource,
+                    dataSourceMode,
+                    categoryList,
+                    colorCategoryList,
+                },
                 chartOptionsRender,
             }}
         >
-            <Row wrap={false}>
-                <Col flex="auto">
+            <Form form={form} {...resetProps} onValuesChange={onValuesChange} style={{ height: '100%' }}>
+                <VisualizeLayout visType={visType}>
                     {visType === OtherTypes.STATISTIC_CARD ? (
-                        <div
-                            style={{
-                                height: '100%',
-                                width: '100%',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                padding: 0,
-                            }}
-                        >
+                        <div className={styles['statistic-card-preview-box']}>
                             <StatisticCard
+                                className={styles['statistic-card-preview-content']}
                                 renderRef={statisticRef}
                                 loading={generateLoading}
-                                style={{
-                                    padding: '6px 48px',
-                                    maxWidth: '223.766px',
-                                    minWidth: '330px',
-                                    height: '278px',
-                                }}
                             />
                         </div>
                     ) : null}
@@ -396,36 +409,8 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
                             }}
                         />
                     ) : null}
-                </Col>
-
-                <Col flex="340px">
-                    <Form form={form} layout="vertical" onValuesChange={onValuesChange}>
-                        <Tabs
-                            centered
-                            items={[
-                                {
-                                    key: 'vis',
-                                    label: '类型与数据',
-                                    forceRender: true,
-                                    children: <VisConfig dataSource={dataSource} dataSourceMode={dataSourceMode} />,
-                                },
-                                // 表格组件没有自定义样式
-                                ...(visType !== ViewTypes.TABLE
-                                    ? [
-                                          {
-                                              key: 'editor',
-                                              label: '自定义样式',
-                                              forceRender: true,
-                                              children: <EditConfig />,
-                                          },
-                                      ]
-                                    : []),
-                            ]}
-                            style={{ borderLeft: '1px solid #e4e9ec' }}
-                        />
-                    </Form>
-                </Col>
-            </Row>
+                </VisualizeLayout>
+            </Form>
         </VisualizeContext.Provider>
     );
 });
