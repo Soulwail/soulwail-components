@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.4.0](http://192.168.1.221:180/wangweiwei/safety-components/tree/main/packages/visualize/compare/@safety/visualize@1.3.0...@safety/visualize@1.4.0) (2025-06-17)
+
+### Features
+
+-   **visualize:** 可视化新增 Drawer 布局 ([9a5fa3a](http://192.168.1.221:180/wangweiwei/safety-components/tree/main/packages/visualize/commits/9a5fa3af707631879542278e28ac001d3260a821))
+
+### Performance Improvements
+
+-   **visualize:** 代码格式化 ([5c0aa4a](http://192.168.1.221:180/wangweiwei/safety-components/tree/main/packages/visualize/commits/5c0aa4a06c2f83992776f0cf362c96835213c363))
+
 # [1.3.0](http://192.168.1.221:180/wangweiwei/safety-components/tree/main/packages/visualize/compare/@safety/visualize@1.2.0...@safety/visualize@1.3.0) (2025-05-23)
 
 ### Features

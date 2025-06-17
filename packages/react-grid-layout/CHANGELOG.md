@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.3](http://192.168.1.221:180/wangweiwei/safety-components/tree/main/packages/react-grid-layout/compare/@safety/react-grid-layout@1.4.2...@safety/react-grid-layout@1.4.3) (2025-06-17)
+
+### Bug Fixes
+
+-   **react-grid-layout:** 修复 react-grid-layout 原生 api 导出问题 ([d7c606b](http://192.168.1.221:180/wangweiwei/safety-components/tree/main/packages/react-grid-layout/commits/d7c606bde8f6bf83cb3fe1b5964d04fe25a23ea6))
+
 ## [1.4.2](http://192.168.1.221:180/wangweiwei/safety-components/tree/main/packages/react-grid-layout/compare/@safety/react-grid-layout@1.4.1...@safety/react-grid-layout@1.4.2) (2025-06-06)
 
 ### Bug Fixes
