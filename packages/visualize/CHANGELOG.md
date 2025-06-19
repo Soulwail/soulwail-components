@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.5.2](http://192.168.1.221:180/wangweiwei/safety-components/tree/main/packages/visualize/compare/@safety/visualize@1.5.1...@safety/visualize@1.5.2) (2025-06-19)
+
+**Note:** Version bump only for package @safety/visualize
+
 ## [1.5.1](http://192.168.1.221:180/wangweiwei/safety-components/tree/main/packages/visualize/compare/@safety/visualize@1.5.0...@safety/visualize@1.5.1) (2025-06-19)
 
 **Note:** Version bump only for package @safety/visualize
