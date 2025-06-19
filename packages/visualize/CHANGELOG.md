@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.1](http://192.168.1.221:180/wangweiwei/safety-components/tree/main/packages/visualize/compare/@safety/visualize@1.4.0...@safety/visualize@1.4.1) (2025-06-19)
+
+### Bug Fixes
+
+-   **visualize:** 修复图表展示位置错误问题，修复图表因缺失表单导致无法展示问题 ([6379871](http://192.168.1.221:180/wangweiwei/safety-components/tree/main/packages/visualize/commits/6379871c1b5d4e3bac4da939798038603a179dbc))
+
 # [1.4.0](http://192.168.1.221:180/wangweiwei/safety-components/tree/main/packages/visualize/compare/@safety/visualize@1.3.0...@safety/visualize@1.4.0) (2025-06-17)
 
 ### Features
