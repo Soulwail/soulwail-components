@@ -18,10 +18,8 @@ import {
     StackBarChartIcon,
     StackHorizontalBarChartIcon,
     StatisticCardIcon,
-    StatisticCardNavyIcon,
     StepLineChartIcon,
     TableViewIcon,
-    TableViewNavyIcon,
 } from '../icons'; // 最大字符数
 
 // 最大字符数

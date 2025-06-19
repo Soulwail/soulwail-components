@@ -309,7 +309,6 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
             // 触发预览函数
             const { options: newOptions, data: newData } = await onGenerate?.(values, options, data);
 
-
             // 获取新的 options 和 data 并渲染
             const ref =
                 visType === OtherTypes.STATISTIC_CARD
