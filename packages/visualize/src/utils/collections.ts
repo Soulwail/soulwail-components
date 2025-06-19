@@ -339,16 +339,16 @@ const getDrawerChartTypes = () => [
             },
         ],
     },
-    {
-        label: '表格',
-        value: ViewTypes.TABLE,
-        icon: TableViewNavyIcon,
-    },
-    {
-        label: '指标卡',
-        value: OtherTypes.STATISTIC_CARD,
-        icon: StatisticCardNavyIcon,
-    },
+    // {
+    //     label: '表格',
+    //     value: ViewTypes.TABLE,
+    //     icon: TableViewNavyIcon,
+    // },
+    // {
+    //     label: '指标卡',
+    //     value: OtherTypes.STATISTIC_CARD,
+    //     icon: StatisticCardNavyIcon,
+    // },
 ];
 
 const getConfigCollections = () => ({
