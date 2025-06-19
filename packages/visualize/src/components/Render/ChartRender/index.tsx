@@ -1,8 +1,6 @@
 import { Chart, Data } from '@antv/g2';
 import { Empty, Spin } from 'antd';
-import { debounce } from 'lodash';
-import ResizeObserver from 'rc-resize-observer';
-import React, { useImperativeHandle, useLayoutEffect, useRef, useState } from 'react';
+import React, { useEffect, useImperativeHandle, useLayoutEffect, useRef, useState } from 'react';
 
 import { VisualizeContextProps } from '../../../context';
 import useStyles from './style';
@@ -107,28 +105,24 @@ const ChartRender: React.FC<ChartRenderProps> = (props) => {
         }
     }, []);
 
-    return (
-        <ResizeObserver
-            onResize={() => {
-                debounce(() => {
-                    // 改变 item 大小时，进行刷新
-                    if (chart.current) {
-                        chart.current?.render();
-                    }
-                }, 1000)();
-            }}
-        >
-            {/*该 div 用于 ResizeObserver 获得 width 和 height*/}
-            <div style={{ height: '100%', width: '100%' }}>
-                <Spin spinning={loading} className={styles['spin-box']}>
-                    {/* 空数据展示 */}
-                    {isEmpty ? <Empty className={styles['empty-box']} image={Empty.PRESENTED_IMAGE_SIMPLE} /> : null}
+    useEffect(() => {
+        // 改变 item 大小时，进行刷新
+        if (chart.current) {
+            chart.current?.render();
+        }
+    }, [contentHeight]);
 
-                    {/* - 图表渲染 */}
-                    <div ref={chartRef} className={styles['chart-box']} />
-                </Spin>
-            </div>
-        </ResizeObserver>
+    return (
+        <div style={{ height: '100%', width: '100%' }}>
+            {/*该 div 用于 ResizeObserver 获得 width 和 height*/}
+            <Spin spinning={loading} className={styles['spin-box']}>
+                {/* 空数据展示 */}
+                {isEmpty ? <Empty className={styles['empty-box']} image={Empty.PRESENTED_IMAGE_SIMPLE} /> : null}
+
+                {/* - 图表渲染 */}
+                <div ref={chartRef} className={styles['chart-box']} />
+            </Spin>
+        </div>
     );
 };
 
