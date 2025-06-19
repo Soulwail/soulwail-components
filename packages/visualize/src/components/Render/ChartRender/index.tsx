@@ -2,6 +2,7 @@ import { Chart, Data } from '@antv/g2';
 import { Empty, Spin } from 'antd';
 import React, { useImperativeHandle, useLayoutEffect, useRef, useState } from 'react';
 import { VisualizeContextProps } from '../../../context';
+import useStyles from './style';
 
 interface ChartRenderProps {
     /** 容器高度 */
@@ -21,13 +22,29 @@ interface ChartRenderRef {
     renderChart: (options: Chart['options'], data: Data) => Promise<void>;
 }
 
+// 自定义图表主题色
+const CUSTOM_CATEGORY_10 = [
+    '#0db7f0',
+    '#fa9f1b',
+    '#71cf11',
+    '#0280f5',
+    '#e45240',
+    '#ffe405',
+    '#ab47bc',
+    '#26a69a',
+    '#24447f',
+    '#b6bbc2',
+];
+
 const ChartRender: React.FC<ChartRenderProps> = (props) => {
-    const { contentHeight, loading, size, onAfterPaint } = props;
+    const { contentHeight, loading, size = 'medium', onAfterPaint } = props;
 
     const chartRef = useRef<HTMLDivElement>(null);
     const chart = useRef<Chart>();
 
     const [isEmpty, setIsEmpty] = useState<boolean>(true); // chart data 是否为空
+
+    const { styles } = useStyles({ contentHeight, isEmpty, size });
 
     /**
      * - 渲染图表
@@ -48,6 +65,8 @@ const ChartRender: React.FC<ChartRenderProps> = (props) => {
                 chart.current.clear();
                 // 设置新的配置
                 chart.current.options(options);
+                // 设置主题配色
+                chart.current.options({ theme: { category10: CUSTOM_CATEGORY_10 } });
                 // 更新数据
                 chart.current.data(data);
                 // 图表绘制后执行该事件
@@ -86,31 +105,12 @@ const ChartRender: React.FC<ChartRenderProps> = (props) => {
     }, []);
 
     return (
-        <Spin
-            wrapperClassName="spin-container"
-            spinning={loading}
-            style={{
-                // Spin 垂直居中
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-            }}
-        >
+        <Spin spinning={loading} className={styles['spin-box']}>
             {/* 空数据展示 */}
-            {isEmpty ? (
-                <Empty
-                    image={Empty.PRESENTED_IMAGE_SIMPLE}
-                    style={{
-                        top: `calc(${contentHeight / 2}px - ${size === 'medium' ? 60 : 53}px)`,
-                        width: 'calc(100% - 16px)',
-                        position: 'absolute',
-                    }}
-                />
-            ) : null}
+            {isEmpty ? <Empty className={styles['empty-box']} image={Empty.PRESENTED_IMAGE_SIMPLE} /> : null}
 
             {/* - 图表渲染 */}
-            <div ref={chartRef} style={{ height: contentHeight, display: isEmpty ? 'none' : 'block' }} />
+            <div ref={chartRef} className={styles['chart-box']} />
         </Spin>
     );
 };

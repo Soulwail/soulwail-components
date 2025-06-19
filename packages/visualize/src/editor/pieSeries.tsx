@@ -1,16 +1,19 @@
 import { Checkbox, Col, Form, Row, Select, Typography } from 'antd';
-import React from 'react';
+import React, { useContext } from 'react';
+import VisualizeContext from '../context';
 
 const { Text } = Typography;
 
 const PieSeries: React.FC = () => {
+    const { layout } = useContext(VisualizeContext);
+
     return (
         <>
-            <Form.Item name="showLabel" valuePropName="checked">
+            <Form.Item hidden={layout !== 'feishu'} name="showLabel" valuePropName="checked">
                 <Checkbox>显示数据标签</Checkbox>
             </Form.Item>
 
-            <Form.Item dependencies={['showLabel']} noStyle>
+            <Form.Item hidden={layout !== 'feishu'} dependencies={['showLabel']} noStyle>
                 {({ getFieldValue }) => {
                     const showLabel = getFieldValue('showLabel');
 

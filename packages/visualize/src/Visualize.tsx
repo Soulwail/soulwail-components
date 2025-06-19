@@ -305,8 +305,10 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
             setGenerateLoading(true);
 
             const { values, options, data } = await buildChartDataAndOptions(formInstance, visTypeDefinition);
+            console.log(options, data);
             // 触发预览函数
             const { options: newOptions, data: newData } = await onGenerate?.(values, options, data);
+
 
             // 获取新的 options 和 data 并渲染
             const ref =

@@ -70,15 +70,41 @@ const ChartDetailConfig: React.FC = () => {
     const getVisDetailConfig = (t: string) => {
         switch (t) {
             case ChartTypes.INTERVAL:
-                return <IntervalDetailVis />;
+                return (
+                    <>
+                        <IntervalDetailVis />
+                        <EditDrawerConfig />
+                    </>
+                );
             case ChartTypes.LINE:
-                return <LineDetailVis />;
+                return (
+                    <>
+                        <LineDetailVis />
+                        <EditDrawerConfig />
+                    </>
+                );
+
             case ChartTypes.PIE:
-                return <PieDetailVis />;
+                return (
+                    <>
+                        <PieDetailVis />
+                        <EditDrawerConfig />
+                    </>
+                );
             case ChartTypes.HORIZONTAL_BAR:
-                return <HorizontalDetailBarVis />;
+                return (
+                    <>
+                        <HorizontalDetailBarVis />
+                        <EditDrawerConfig />
+                    </>
+                );
             case ChartTypes.AREA:
-                return <AreaDetailVis />;
+                return (
+                    <>
+                        <AreaDetailVis />
+                        <EditDrawerConfig />
+                    </>
+                );
             case ViewTypes.TABLE:
                 return <></>;
             case OtherTypes.STATISTIC_CARD:

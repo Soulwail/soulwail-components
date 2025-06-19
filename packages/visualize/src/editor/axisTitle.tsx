@@ -1,12 +1,15 @@
 import { Form, Input, Select, Typography } from 'antd';
-import React from 'react';
+import React, { useContext } from 'react';
+import VisualizeContext from '../context';
 
 const { Text } = Typography;
 
 const AxisTitle: React.FC = () => {
+    const { layout } = useContext(VisualizeContext);
+
     return (
         <>
-            <Form.Item label={null} name="axisLine">
+            <Form.Item hidden={layout !== 'feishu'} label={null} name="axisLine">
                 <Select
                     options={[
                         { label: '横轴标题', value: 'x' },
@@ -15,7 +18,7 @@ const AxisTitle: React.FC = () => {
                 />
             </Form.Item>
 
-            <Form.Item noStyle dependencies={['axisLine']}>
+            <Form.Item hidden={layout !== 'feishu'} noStyle dependencies={['axisLine']}>
                 {({ getFieldValue }) => {
                     const axisLine = getFieldValue('axisLine');
 

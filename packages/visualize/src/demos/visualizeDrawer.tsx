@@ -17,10 +17,12 @@ export default () => {
     const [initialValues] = useState({});
 
     useLayoutEffect(() => {
-        visRef.current.setFieldValue('name', 'Test');
-        visRef.current.setFieldValue('dataSource', '1');
-        visRef.current.setFieldValue(['encode', 'x'], 'month');
-    }, []);
+        if (open) {
+            visRef.current.setFieldValue('name', 'Test');
+            visRef.current.setFieldValue('dataSource', '1');
+            visRef.current.setFieldValue(['encode', 'x'], 'month');
+        }
+    }, [open]);
 
     const wait = async (milliseconds) =>
         new Promise((resolve) => {
@@ -86,7 +88,7 @@ export default () => {
             <Drawer
                 open={open}
                 width={1100}
-                forceRender
+                destroyOnClose
                 styles={{ body: { padding: 0 } }}
                 onClose={() => setOpen(false)}
             >

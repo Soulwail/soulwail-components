@@ -37,7 +37,7 @@ const VisDrawerConfig: React.FC<PropsWithChildren> = (props) => {
                         </div>
 
                         <Card variant="outlined" styles={{ body: { padding: 0 } }}>
-                            <div style={{ height: contentHeight - 32 }}>{children}</div>
+                            <div style={{ height: contentHeight }}>{children}</div>
                         </Card>
                     </Col>
                 </Row>
