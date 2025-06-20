@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.5.3](http://192.168.1.221:180/wangweiwei/safety-components/tree/main/packages/visualize/compare/@safety/visualize@1.5.2...@safety/visualize@1.5.3) (2025-06-20)
+
+### Bug Fixes
+
+-   **visualize:** 修复图表改变尺寸时多次渲染问题 ([de8dbb2](http://192.168.1.221:180/wangweiwei/safety-components/tree/main/packages/visualize/commits/de8dbb2e00d36edb56b8b6e569dec43bdd8dfdff))
+
 ## [1.5.2](http://192.168.1.221:180/wangweiwei/safety-components/tree/main/packages/visualize/compare/@safety/visualize@1.5.1...@safety/visualize@1.5.2) (2025-06-19)
 
 **Note:** Version bump only for package @safety/visualize
