@@ -10,10 +10,16 @@ const ChartSubType: React.FC = () => {
             <Form.Item noStyle dependencies={['chartParentType']}>
                 {({ getFieldValue }) => {
                     const chartParentType = getFieldValue('chartParentType');
-                    const options = allOptions.find((item) => item.value === chartParentType)?.children || [];
+                    const parentConfig = allOptions.find((item) => item.value === chartParentType);
+
+                    const options = parentConfig?.children || [];
 
                     return (
-                        <Form.Item label="类型" hidden={options.length === 0} name="chartSubType">
+                        <Form.Item
+                            label={parentConfig?.label + '类型'}
+                            hidden={options.length === 0}
+                            name="chartSubType"
+                        >
                             <Radio.Group options={options} />
                         </Form.Item>
                     );

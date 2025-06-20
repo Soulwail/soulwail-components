@@ -9,6 +9,8 @@ export interface VisualizeContextProps {
     /** - 布局 */
     layout?: 'feishu' | 'drawer'; // feishu 参照飞书的布局、drawer 自定义抽屉布局
     formProps?: {
+        /** - 数据来源 label */
+        dataSourceLabel?: string;
         /** - 数据来源 */
         dataSource: any[];
         /** - 数据来源是否多选 */

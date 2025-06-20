@@ -1,6 +1,7 @@
 import { Form, Select } from 'antd';
 import React, { useContext } from 'react';
 import VisualizeContext from '../../../context';
+import { getTranslateZh } from '../../../utils';
 import {
     ChartDisplayQuantity,
     ChartGroupAgg,
@@ -9,6 +10,8 @@ import {
     ChartSortingRules,
     KeywordSearch,
 } from '../../index';
+
+const translate = getTranslateZh();
 
 const HorizontalBarVis: React.FC = () => {
     const {
@@ -21,9 +24,9 @@ const HorizontalBarVis: React.FC = () => {
             {layout === 'feishu' ? <ChartOption /> : null}
 
             <Form.Item
-                label="纵轴（聚合字段）"
+                label={translate[layout].xAxis}
                 name={['encode', 'x']}
-                rules={[{ required: true, message: '请选择纵轴字段' }]}
+                rules={[{ required: true, message: '请选择' + translate[layout].xAxis }]}
             >
                 <Select options={categoryList} placeholder="请选择" />
             </Form.Item>
@@ -65,7 +68,7 @@ const HorizontalBarVis: React.FC = () => {
                 }}
             </Form.Item>
 
-            <Form.Item label="横轴（聚合方式）" name={['encode', 'y']}>
+            <Form.Item label={translate[layout].yAxis} name={['encode', 'y']}>
                 <Select options={[{ label: '统计总数', value: 'count' }]} disabled />
             </Form.Item>
         </>

@@ -1,11 +1,15 @@
 import { Form, Segmented, type SegmentedProps, Typography } from 'antd';
-import React, { useMemo } from 'react';
-import { getDrawerChartTypes } from '../../utils';
+import React, { useContext, useMemo } from 'react';
+import VisualizeContext from '../../context';
+import { getDrawerChartTypes, getTranslateZh } from '../../utils';
 
 const { Text } = Typography;
 const visTypeOptions = getDrawerChartTypes();
+const translate = getTranslateZh();
 
 const ChartParentType: React.FC = React.memo(() => {
+    const { layout } = useContext(VisualizeContext);
+
     const options = useMemo(() => {
         const tmpOptions: SegmentedProps['options'] = [];
 
@@ -29,7 +33,7 @@ const ChartParentType: React.FC = React.memo(() => {
     }, [visTypeOptions]);
 
     return (
-        <Form.Item label="图表类型" name="chartParentType">
+        <Form.Item label={translate[layout].chartType} name="chartParentType">
             <Segmented block size="small" options={options} />
         </Form.Item>
     );

@@ -1,7 +1,8 @@
-import { Form, Select, Typography } from 'antd';
+import { Form, Select } from 'antd';
 import React, { useContext } from 'react';
 import VisualizeContext from '../../../context';
 // import { PieChartTypes } from '../../utils/collections';
+import { getTranslateZh } from '../../../utils';
 import {
     ChartDisplayQuantity,
     ChartPieOption,
@@ -10,7 +11,7 @@ import {
     KeywordSearch,
 } from '../../index';
 
-const { Text } = Typography;
+const translate = getTranslateZh();
 
 const PieVis: React.FC = () => {
     const {
@@ -23,9 +24,9 @@ const PieVis: React.FC = () => {
             {layout === 'feishu' ? <ChartPieOption /> : null}
 
             <Form.Item
-                label="扇区分组（聚合字段）"
+                label={translate[layout].pieXAxis}
                 name={['encode', 'x']}
-                rules={[{ required: true, message: '请选择扇区分组' }]}
+                rules={[{ required: true, message: '请选择' + translate[layout].pieXAxis }]}
             >
                 <Select options={categoryList} />
             </Form.Item>
@@ -40,7 +41,7 @@ const PieVis: React.FC = () => {
                 </>
             ) : null}
 
-            <Form.Item label="扇区数值（聚合方式）" name={['encode', 'y']}>
+            <Form.Item label={translate[layout].pieYAxis} name={['encode', 'y']}>
                 <Select options={[{ label: '统计总数', value: 'count' }]} disabled />
             </Form.Item>
         </>

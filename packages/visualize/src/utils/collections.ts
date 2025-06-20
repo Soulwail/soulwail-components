@@ -349,6 +349,33 @@ const getDrawerChartTypes = () => [
     // },
 ];
 
+const getTranslateZh = () => {
+    return {
+        feishu: {
+            chartName: '图表名称',
+            chartType: '图表类型',
+            chartOption: '图表选项',
+            xAxis: '横轴（聚合字段）',
+            yAxis: '纵轴（聚合方式）',
+            pieXAxis: '扇区分组（聚合字段）',
+            pieYAxis: '扇区数值（聚合方式）',
+            keyword: '关键字过滤',
+            displayQuantity: '展示数量',
+        },
+        drawer: {
+            chartName: '可视化名称',
+            chartType: '可视化类型',
+            chartOption: '可视化选项',
+            xAxis: 'X轴',
+            yAxis: 'Y轴',
+            pieXAxis: '扇区分组',
+            pieYAxis: '扇区数值',
+            keyword: '字段过滤',
+            displayQuantity: '统计数量',
+        },
+    };
+};
+
 const getConfigCollections = () => ({
     legendPositions: getPositions(),
     // positions: getPositions(),
@@ -361,4 +388,11 @@ const getConfigCollections = () => ({
     // thresholdLineStyles: getThresholdLineStyles(),
 });
 
-export { getChartTypes, getConfigCollections, getDrawerChartTypes, getKeywordComparisonSymbols, getPositions };
+export {
+    getChartTypes,
+    getConfigCollections,
+    getDrawerChartTypes,
+    getKeywordComparisonSymbols,
+    getPositions,
+    getTranslateZh,
+};

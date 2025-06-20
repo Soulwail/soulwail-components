@@ -11,6 +11,7 @@ const ChartSortBy: React.FC = () => {
         <Form.Item
             label={<Text type={layout === 'feishu' ? 'secondary' : null}>排序依据</Text>}
             name={['transform', 'sortX', 'by']}
+            hidden={layout !== 'feishu'} // TODO: 目前不展示排序依据
         >
             {layout === 'feishu' ? (
                 <Segmented

@@ -1,7 +1,10 @@
 import { Form, Select } from 'antd';
 import React, { useContext } from 'react';
 import VisualizeContext from '../../../context';
+import { getTranslateZh } from '../../../utils';
 import { ChartGroupAgg, ChartOption, KeywordSearch } from '../../index';
+
+const translate = getTranslateZh();
 
 const LineVis: React.FC = () => {
     const {
@@ -13,11 +16,11 @@ const LineVis: React.FC = () => {
         <>
             {layout === 'feishu' ? <ChartOption /> : null}
 
-            <Form.Item label="横轴（聚合字段）" name={['encode', 'x']}>
+            <Form.Item label={translate[layout].xAxis} name={['encode', 'x']}>
                 <Select options={[{ label: '时间', value: 'time' }]} disabled />
             </Form.Item>
 
-            <Form.Item label="纵轴（聚合方式）" name={['encode', 'y']}>
+            <Form.Item label={translate[layout].yAxis} name={['encode', 'y']}>
                 <Select options={[{ label: '统计总数', value: 'count' }]} disabled />
             </Form.Item>
 
@@ -30,7 +33,7 @@ const LineVis: React.FC = () => {
                     return encodeColor ? (
                         <>
                             <Form.Item
-                                label={layout === 'feishu' ? null : '分组聚合字段'}
+                                label={layout === 'feishu' ? null : '聚合字段'}
                                 name={['encode', 'color']}
                                 style={layout === 'feishu' ? { margin: '-8px 0 16px' } : {}}
                                 rules={[{ required: true, message: '请选择聚合字段' }]}

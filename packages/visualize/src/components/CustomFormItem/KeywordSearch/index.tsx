@@ -2,9 +2,10 @@ import { Checkbox, Col, Form, Input, Row, Select, Typography } from 'antd';
 import { NamePath } from 'antd/es/form/interface';
 import React, { useContext } from 'react';
 import VisualizeContext from '../../../context';
-import { getKeywordComparisonSymbols } from '../../../utils';
+import { getKeywordComparisonSymbols, getTranslateZh } from '../../../utils';
 
 const { Text } = Typography;
+const translate = getTranslateZh();
 
 interface KeywordSearchProps {
     searchName?: NamePath;
@@ -20,12 +21,14 @@ const KeywordSearch: React.FC<KeywordSearchProps> = (props) => {
     return (
         <>
             <Form.Item
-                label={layout === 'feishu' ? null : <Text>关键字过滤</Text>}
+                label={layout === 'feishu' ? null : <Text>{translate[layout].keyword}</Text>}
                 name={searchName}
                 valuePropName="checked"
                 style={{ marginBottom: '16px' }}
             >
-                <Checkbox>{layout === 'feishu' ? <Text type="secondary">关键字过滤</Text> : null}</Checkbox>
+                <Checkbox>
+                    {layout === 'feishu' ? <Text type="secondary">{translate[layout].keyword}</Text> : null}
+                </Checkbox>
             </Form.Item>
 
             <Form.Item dependencies={[searchName]} noStyle>

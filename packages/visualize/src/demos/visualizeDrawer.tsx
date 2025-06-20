@@ -100,6 +100,7 @@ export default () => {
                     ref={visRef}
                     layout="drawer"
                     formProps={{
+                        dataSourceLabel: '数据库',
                         layout: 'horizontal',
                         labelCol: { flex: '150px' },
                         initialValues,

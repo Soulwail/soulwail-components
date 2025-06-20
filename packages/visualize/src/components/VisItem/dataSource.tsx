@@ -4,11 +4,15 @@ import VisualizeContext from '../../context';
 
 const DataSource = () => {
     const {
-        formProps: { dataSource = [], dataSourceMode },
+        formProps: { dataSourceLabel, dataSource = [], dataSourceMode },
     } = useContext(VisualizeContext);
 
     return (
-        <Form.Item label="数据来源" name="dataSource" rules={[{ required: true, message: '请选择数据来源' }]}>
+        <Form.Item
+            label={dataSourceLabel}
+            name="dataSource"
+            rules={[{ required: true, message: '请选择' + dataSourceLabel }]}
+        >
             <Select options={dataSource} mode={dataSourceMode} placeholder="请选择" />
         </Form.Item>
     );

@@ -11,6 +11,7 @@ const ChartPieSortingRules = () => {
         <Form.Item
             label={<Text type={layout === 'feishu' ? 'secondary' : null}>排序依据</Text>}
             name={['transform', 'sortX', 'by']}
+            hidden={layout !== 'feishu'}
         >
             {layout === 'feishu' ? (
                 <Segmented

@@ -24,7 +24,7 @@ const chartTypeOptions = getDrawerChartTypes();
 type Operate<T = void> = (values: Record<string, any>, options: Chart['options'], data: Data) => Promise<T>;
 
 type VisualizeFormProps = Pick<FormProps, 'layout' | 'labelCol' | 'labelAlign' | 'labelWrap'> &
-    Pick<VisualizeContextProps['formProps'], 'categoryList' | 'dataSource' | 'dataSourceMode'> & {
+    Pick<VisualizeContextProps['formProps'], 'categoryList' | 'dataSourceLabel' | 'dataSource' | 'dataSourceMode'> & {
         /** - 初始值 */
         initialValues?: Record<string, any>;
     };
@@ -59,7 +59,14 @@ export interface VisualizeRef {
 
 const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
     const { height = 680, size = 'medium', layout = 'feishu', formProps, onValueChange, onGenerate, onSave } = props;
-    const { initialValues = {}, dataSource = [], dataSourceMode, categoryList = [], ...resetProps } = formProps;
+    const {
+        initialValues = {},
+        dataSourceLabel = '数据来源',
+        dataSource = [],
+        dataSourceMode,
+        categoryList = [],
+        ...resetProps
+    } = formProps;
     const { styles } = useStyles();
 
     const renderRef = useRef<ChartRenderRef>();
@@ -377,6 +384,7 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
                 layout,
                 visTypeDefinition,
                 formProps: {
+                    dataSourceLabel,
                     dataSource,
                     dataSourceMode,
                     categoryList,

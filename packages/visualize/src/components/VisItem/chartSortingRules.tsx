@@ -11,6 +11,7 @@ const ChartSortingRules: React.FC = () => {
         <Form.Item
             label={<Text type={layout === 'feishu' ? 'secondary' : null}>排序规则</Text>}
             name={['transform', 'sortX', 'reverse']}
+            hidden={layout !== 'feishu'} // TODO: 目前不展示排序规则
         >
             {layout === 'feishu' ? (
                 <Segmented
