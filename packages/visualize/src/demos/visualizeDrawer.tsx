@@ -9,18 +9,21 @@ export default () => {
 
     const [open, setOpen] = useState(false);
 
-    const [dataSource] = useState([]);
+    const [dataSource] = useState([{ label: '全部数据库', value: 0, fields: [] }]); // 字段不固定时，需要添加 fields
     const [categoryList, setCategoryList] = useState([
         { label: 'month', value: 'month' },
         { label: 'name', value: 'name' },
     ]);
-    const [initialValues] = useState({});
+
+    const [initialValues, setInitialValues] = useState({});
 
     useLayoutEffect(() => {
         if (open) {
-            visRef.current.setFieldValue('name', 'Test');
-            visRef.current.setFieldValue('dataSource', '1');
-            visRef.current.setFieldValue(['encode', 'x'], 'month');
+            setInitialValues({
+                name: 'Test',
+                dataSource: [0],
+                encode: { x: 'month' },
+            });
         }
     }, [open]);
 

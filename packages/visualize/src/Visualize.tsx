@@ -156,7 +156,7 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
             // 设置表单初始值
             form.setFieldsValue(values);
         }
-    }, []);
+    }, [JSON.stringify(initialValues)]);
 
     useEffect(() => {
         if (chartVisType) {

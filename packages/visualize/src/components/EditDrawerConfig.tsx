@@ -13,23 +13,23 @@ const EditDrawerConfig: React.FC = () => {
                 let configItem: ReactNode = <></>;
 
                 if (item.key === 'axisTitle') {
-                    configItem = <AxisTitle />;
+                    configItem = <AxisTitle key="axisTitle" />;
                 } else if (item.key === 'pieSeries') {
-                    configItem = <PieSeries />;
+                    configItem = <PieSeries key="pieSeries" />;
                 } else if (item.key === 'series') {
-                    configItem = <Series />;
+                    configItem = <Series key="series" />;
                 } else if (item.key === 'legend') {
-                    configItem = <Legend />;
+                    configItem = <Legend key="legend" />;
                 } else if (item.key === 'xAxis') {
-                    configItem = <XAxis />;
+                    configItem = <XAxis key="xAxis" />;
                 } else if (item.key === 'yAxis') {
-                    configItem = <YAxis />;
+                    configItem = <YAxis key="yAxis" />;
                 } else if (item.key === 'background') {
-                    configItem = <Background />;
+                    configItem = <Background key="background" />;
                 } else if (item.key === 'font') {
-                    configItem = <Font />;
+                    configItem = <Font key="font" />;
                 } else if (item.key === 'numberFormat') {
-                    configItem = <NumberFormat />;
+                    configItem = <NumberFormat key="numberFormat" />;
                 }
 
                 return configItem;
