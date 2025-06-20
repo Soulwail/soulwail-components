@@ -14,7 +14,7 @@ export default createStyles(
 
         return {
             'spin-box': {
-                top: `${(contentHeight - 400) / 2}px !important`,
+                maxHeight: 'unset',
             },
             'empty-box': {
                 top: `calc(${contentHeight / 2}px - ${size === 'medium' ? 60 : 53}px)`,
