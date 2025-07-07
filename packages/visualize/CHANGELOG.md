@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.6.0](http://192.168.1.221:180/wangweiwei/safety-components/tree/main/packages/visualize/compare/@safety/visualize@1.5.6...@safety/visualize@1.6.0) (2025-07-07)
+
+### Features
+
+-   **visualize:** 更新图表的展示图标 ([424ef1f](http://192.168.1.221:180/wangweiwei/safety-components/tree/main/packages/visualize/commits/424ef1f16fdf353a6a8e7d2125a18442dc584818))
+
 ## [1.5.6](http://192.168.1.221:180/wangweiwei/safety-components/tree/main/packages/visualize/compare/@safety/visualize@1.5.5...@safety/visualize@1.5.6) (2025-06-20)
 
 ### Performance Improvements
