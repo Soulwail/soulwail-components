@@ -1,18 +1,18 @@
 import {
+    AreaChartColorfulIcon,
     AreaChartIcon,
-    AreaChartNavyIcon,
+    BasicBarChartColorfulIcon,
     BasicBarChartIcon,
-    BasicBarChartNavyIcon,
+    BasicHorizontalBarChartColorfulIcon,
     BasicHorizontalBarChartIcon,
-    BasicHorizontalBarChartNavyIcon,
+    BasicLineChartColorfulIcon,
     BasicLineChartIcon,
-    BasicLineChartNavyIcon,
     DonutChartIcon,
     PercentStackAreaChartIcon,
     PercentStackBarChartIcon,
     PercentStackHorizontalBarChartIcon,
+    PieChartColorfulIcon,
     PieChartIcon,
-    PieChartNavyIcon,
     SmoothLineChartIcon,
     StackAreaChartIcon,
     StackBarChartIcon,
@@ -249,7 +249,7 @@ const getDrawerChartTypes = () => [
     {
         label: '柱状图',
         value: ChartTypes.INTERVAL,
-        icon: BasicBarChartNavyIcon,
+        icon: BasicBarChartColorfulIcon,
         children: [
             {
                 label: '基础柱状图',
@@ -268,7 +268,7 @@ const getDrawerChartTypes = () => [
     {
         label: '折线图',
         value: ChartTypes.LINE,
-        icon: BasicLineChartNavyIcon,
+        icon: BasicLineChartColorfulIcon,
         children: [
             {
                 label: '基础折线图',
@@ -287,7 +287,7 @@ const getDrawerChartTypes = () => [
     {
         label: '面积图',
         value: ChartTypes.AREA,
-        icon: AreaChartNavyIcon,
+        icon: AreaChartColorfulIcon,
         children: [
             {
                 label: '面积图',
@@ -306,7 +306,7 @@ const getDrawerChartTypes = () => [
     {
         label: '条形图',
         value: ChartTypes.HORIZONTAL_BAR,
-        icon: BasicHorizontalBarChartNavyIcon,
+        icon: BasicHorizontalBarChartColorfulIcon,
         children: [
             {
                 label: '基础条形图',
@@ -325,7 +325,7 @@ const getDrawerChartTypes = () => [
     {
         label: '饼图',
         value: ChartTypes.PIE,
-        icon: PieChartNavyIcon,
+        icon: PieChartColorfulIcon,
         children: [
             {
                 label: '饼图',

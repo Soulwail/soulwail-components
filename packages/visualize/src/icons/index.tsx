@@ -1,12 +1,15 @@
 // @ts-nocheck
 import Icon from '@ant-design/icons';
 import type { GetProps } from 'antd';
+import { ReactComponent as AreaChartColorfulSvg } from './area-chart-colorful.svg';
 import { ReactComponent as AreaChartNavySvg } from './area-chart-navy.svg';
 import { ReactComponent as AreaChartSvg } from './area-chart.svg';
+import { ReactComponent as BasicBarChartColorfulSvg } from './basic-bar-chart-colorful.svg';
 import { ReactComponent as BasicBarChartNavySvg } from './basic-bar-chart-navy.svg';
 import { ReactComponent as BasicBarChartSvg } from './basic-bar-chart.svg';
 import { ReactComponent as BasicHorizontalBarCharNavytSvg } from './basic-horizontal-bar-chart-navy.svg';
 import { ReactComponent as BasicHorizontalBarChartSvg } from './basic-horizontal-bar-chart.svg';
+import { ReactComponent as BasicLineChartColorfulSvg } from './basic-line-chart-colorful.svg';
 import { ReactComponent as BasicLineChartNavgSvg } from './basic-line-chart-navy.svg';
 import { ReactComponent as BasicLineChartSvg } from './basic-line-chart.svg';
 import { ReactComponent as DonutChartSvg } from './donut-chart.svg';
@@ -18,6 +21,7 @@ import {
 } from './percent-stack-bar-chart.svg';
 import { ReactComponent as PercentStackHorizontalBarChartNavySvg } from './percent-stack-horizontal-bar-chart-navy.svg';
 import { ReactComponent as PercentStackHorizontalBarChartSvg } from './percent-stack-horizontal-bar-chart.svg';
+import { ReactComponent as PieChartColorfulSvg } from './pie-chart-colorful.svg';
 import { ReactComponent as PieChartNavySvg } from './pie-chart-navy.svg';
 import { ReactComponent as PieChartSvg } from './pie-chart.svg';
 import { ReactComponent as PolylineSvg } from './poly-line.svg';
@@ -33,6 +37,7 @@ import { ReactComponent as StatisticCardNavySvg } from './statistic-card-navy.sv
 import { ReactComponent as StatisticCardSvg } from './statistic-card.svg';
 import { ReactComponent as StepLineChartSvg } from './step-line-chart.svg';
 import { ReactComponent as SteplineSvg } from './step-line.svg';
+import { ReactComponent as TableViewColorfulSvg } from './table-view-colorful.svg';
 import { ReactComponent as TableViewNavySvg } from './table-view-navy.svg';
 import { ReactComponent as TableViewSvg } from './table-view.svg';
 
@@ -40,6 +45,10 @@ type CustomIconComponentProps = GetProps<typeof Icon>;
 
 const AreaChartIcon = (props: Partial<CustomIconComponentProps>) => (
     <Icon component={() => <AreaChartSvg />} {...props} />
+);
+
+const AreaChartColorfulIcon = (props: Partial<CustomIconComponentProps>) => (
+    <Icon component={() => <AreaChartColorfulSvg />} {...props} />
 );
 
 const AreaChartNavyIcon = (props: Partial<CustomIconComponentProps>) => (
@@ -50,6 +59,10 @@ const BasicBarChartIcon = (props: Partial<CustomIconComponentProps>) => (
     <Icon component={() => <BasicBarChartSvg />} {...props} />
 );
 
+const BasicBarChartColorfulIcon = (props: Partial<CustomIconComponentProps>) => (
+    <Icon component={() => <BasicBarChartColorfulSvg />} {...props} />
+);
+
 const BasicBarChartNavyIcon = (props: Partial<CustomIconComponentProps>) => (
     <Icon component={() => <BasicBarChartNavySvg />} {...props} />
 );
@@ -58,12 +71,28 @@ const BasicHorizontalBarChartIcon = (props: Partial<CustomIconComponentProps>) =
     <Icon component={() => <BasicHorizontalBarChartSvg />} {...props} />
 );
 
+const BasicHorizontalBarChartColorfulIcon = (props: Partial<CustomIconComponentProps>) => {
+    const { style = {}, ...resetProps } = props;
+
+    return (
+        <Icon
+            component={() => <BasicBarChartColorfulSvg />}
+            {...resetProps}
+            style={{ ...style, transform: 'rotate(90deg)' }}
+        />
+    );
+};
+
 const BasicHorizontalBarChartNavyIcon = (props: Partial<CustomIconComponentProps>) => (
     <Icon component={() => <BasicHorizontalBarCharNavytSvg />} {...props} />
 );
 
 const BasicLineChartIcon = (props: Partial<CustomIconComponentProps>) => (
     <Icon component={() => <BasicLineChartSvg />} {...props} />
+);
+
+const BasicLineChartColorfulIcon = (props: Partial<CustomIconComponentProps>) => (
+    <Icon component={() => <BasicLineChartColorfulSvg />} {...props} />
 );
 
 const BasicLineChartNavyIcon = (props: Partial<CustomIconComponentProps>) => (
@@ -100,6 +129,10 @@ const PercentStackHorizontalBarChartNavyIcon = (props: Partial<CustomIconCompone
 
 const PieChartIcon = (props: Partial<CustomIconComponentProps>) => (
     <Icon component={() => <PieChartSvg />} {...props} />
+);
+
+const PieChartColorfulIcon = (props: Partial<CustomIconComponentProps>) => (
+    <Icon component={() => <PieChartColorfulSvg />} {...props} />
 );
 
 const PieChartNavyIcon = (props: Partial<CustomIconComponentProps>) => (
@@ -154,6 +187,10 @@ const TableViewNavyIcon = (props: Partial<CustomIconComponentProps>) => (
     <Icon component={() => <TableViewNavySvg />} {...props} />
 );
 
+const TableViewColorIcon = (props: Partial<CustomIconComponentProps>) => (
+    <Icon component={() => <TableViewColorfulSvg />} {...props} />
+);
+
 const PolylineIcon = (props: Partial<CustomIconComponentProps>) => <Icon component={PolylineSvg} {...props} />;
 
 const SmoothlineIcon = (props: Partial<CustomIconComponentProps>) => <Icon component={SmoothlineSvg} {...props} />;
@@ -161,12 +198,16 @@ const SmoothlineIcon = (props: Partial<CustomIconComponentProps>) => <Icon compo
 const SteplineIcon = (props: Partial<CustomIconComponentProps>) => <Icon component={SteplineSvg} {...props} />;
 
 export {
+    AreaChartColorfulIcon,
     AreaChartIcon,
     AreaChartNavyIcon,
+    BasicBarChartColorfulIcon,
     BasicBarChartIcon,
     BasicBarChartNavyIcon,
+    BasicHorizontalBarChartColorfulIcon,
     BasicHorizontalBarChartIcon,
     BasicHorizontalBarChartNavyIcon,
+    BasicLineChartColorfulIcon,
     BasicLineChartIcon,
     BasicLineChartNavyIcon,
     DonutChartIcon,
@@ -176,6 +217,7 @@ export {
     PercentStackBarChartNavyIcon,
     PercentStackHorizontalBarChartIcon,
     PercentStackHorizontalBarChartNavyIcon,
+    PieChartColorfulIcon,
     PieChartIcon,
     PieChartNavyIcon,
     PolylineIcon,
@@ -191,6 +233,7 @@ export {
     StatisticCardNavyIcon,
     StepLineChartIcon,
     SteplineIcon,
+    TableViewColorIcon,
     TableViewIcon,
     TableViewNavyIcon,
 };
