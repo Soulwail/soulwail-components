@@ -14,6 +14,7 @@ import {
     getDrawerChartTypes,
     IntervalChartTypes,
     OtherTypes,
+    PieChartTypes,
     TableVisibleAllFieldsValue,
     ViewTypes,
 } from './utils';
@@ -131,8 +132,8 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
 
     useLayoutEffect(() => {
         // 设置初始图表类型
-        let type = ChartTypes.INTERVAL;
-        let subType = IntervalChartTypes.BASE;
+        let type = layout === 'feishu' ? ChartTypes.INTERVAL : ChartTypes.PIE;
+        let subType = layout === 'feishu' ? IntervalChartTypes.BASE : PieChartTypes.BASE;
 
         // 如果组件传入了图表类型，则使用传入的
         if (initialValues.chartType) {
