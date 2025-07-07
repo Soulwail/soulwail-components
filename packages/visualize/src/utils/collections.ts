@@ -247,6 +247,21 @@ const getChartTypes = () => [
 
 const getDrawerChartTypes = () => [
     {
+        label: '饼图',
+        value: ChartTypes.PIE,
+        icon: PieChartColorfulIcon,
+        children: [
+            {
+                label: '饼图',
+                value: PieChartTypes.BASE,
+            },
+            {
+                label: '环形图',
+                value: PieChartTypes.RING,
+            },
+        ],
+    },
+    {
         label: '柱状图',
         value: ChartTypes.INTERVAL,
         icon: BasicBarChartColorfulIcon,
@@ -319,21 +334,6 @@ const getDrawerChartTypes = () => [
             {
                 label: '百分比堆积条形图',
                 value: HorizontalChartTypes.PERCENT_STACK,
-            },
-        ],
-    },
-    {
-        label: '饼图',
-        value: ChartTypes.PIE,
-        icon: PieChartColorfulIcon,
-        children: [
-            {
-                label: '饼图',
-                value: PieChartTypes.BASE,
-            },
-            {
-                label: '环形图',
-                value: PieChartTypes.RING,
             },
         ],
     },
