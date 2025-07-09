@@ -31,6 +31,8 @@ export interface ResponsiveGridProps {
     breakpoint: string;
     /** 不同断点对应的 layout */
     layouts: Layouts;
+    /** 是否显示背景网格 */
+    isBackGrid?: boolean;
     /** 是否能拖放 */
     isDraggable?: boolean;
     /** 是否能调整大小 */
@@ -64,6 +66,7 @@ const ResponsiveGridLayout: React.FC<ResponsiveGridProps> = (props) => {
         rowHeight,
         breakpoint,
         layouts,
+        isBackGrid = true,
         isDraggable = true,
         isResizable = true,
         titleKey = 'title',
@@ -90,14 +93,14 @@ const ResponsiveGridLayout: React.FC<ResponsiveGridProps> = (props) => {
 
     /** - 背景网格样式 */
     const backgroundGridStyles = useMemo(() => {
-        return isShowBackgroundGrid
+        return isBackGrid && isShowBackgroundGrid
             ? {
                   backgroundImage: `url(${backgroundImage})`,
                   backgroundPosition: `${containerPadding[0]}px ${containerPadding[1]}px`,
                   backgroundSize: `${gridWidth.toFixed(3)}px ${rowHeight + 11 + 0.667}px`,
               }
             : {};
-    }, [isShowBackgroundGrid, gridWidth, backgroundImage]);
+    }, [isBackGrid, isShowBackgroundGrid, gridWidth, backgroundImage]);
 
     const handleDragStart: RGL.CoreProps['onDragStart'] = () => {
         setIsShowBackgroundGrid(true);
@@ -162,7 +165,15 @@ const ResponsiveGridLayout: React.FC<ResponsiveGridProps> = (props) => {
 
     return (
         <div className={styles['dashboard-content']}>
-            <BackgroundGrid width={gridWidth} height={rowHeight} right={8} bottom={11} onGridChange={onGridChange} />
+            {isBackGrid ? (
+                <BackgroundGrid
+                    width={gridWidth}
+                    height={rowHeight}
+                    right={8}
+                    bottom={11}
+                    onGridChange={onGridChange}
+                />
+            ) : null}
 
             <ReactResponsiveGridLayout
                 className={styles['grid-layout']}
