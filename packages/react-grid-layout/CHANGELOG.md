@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.4](http://192.168.1.221:180/wangweiwei/safety-components/tree/main/packages/react-grid-layout/compare/@safety/react-grid-layout@1.4.3...@safety/react-grid-layout@1.4.4) (2025-07-09)
+
+### Performance Improvements
+
+-   **react-grid-layout:** 增加背景网格隐藏功能 ([4309a32](http://192.168.1.221:180/wangweiwei/safety-components/tree/main/packages/react-grid-layout/commits/4309a32415baf834a365bd5d0659722dfb1b6891))
+
 ## [1.4.3](http://192.168.1.221:180/wangweiwei/safety-components/tree/main/packages/react-grid-layout/compare/@safety/react-grid-layout@1.4.2...@safety/react-grid-layout@1.4.3) (2025-06-17)
 
 ### Bug Fixes
