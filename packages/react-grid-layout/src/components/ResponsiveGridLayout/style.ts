@@ -21,7 +21,7 @@ export default createStyles(({ css }, props: { isDraggable: boolean; lineType: '
             padding-bottom: 56px;
 
             .react-grid-item {
-                border: 1px ${lineType} ${isDraggable || lineType !== 'none' ? '#98a2b3' : 'rgba(0, 0, 0, 0)'};
+                border: 1px ${lineType} ${isDraggable && lineType !== 'none' ? '#98a2b3' : 'rgba(0, 0, 0, 0)'};
             }
 
             .react-grid-item.cssTransforms {
