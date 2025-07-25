@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.5.0](http://192.168.1.221:180/wangweiwei/safety-components/tree/main/packages/react-grid-layout/compare/@safety/react-grid-layout@1.4.4...@safety/react-grid-layout@1.5.0) (2025-07-25)
+
+### Features
+
+-   **react-grid-layout:** 增加编辑状态下边框类型 ([4cf62e4](http://192.168.1.221:180/wangweiwei/safety-components/tree/main/packages/react-grid-layout/commits/4cf62e44c1db179e7e138a840d72ce3cdaa5b9fc))
+
 ## [1.4.4](http://192.168.1.221:180/wangweiwei/safety-components/tree/main/packages/react-grid-layout/compare/@safety/react-grid-layout@1.4.3...@safety/react-grid-layout@1.4.4) (2025-07-09)
 
 ### Performance Improvements
