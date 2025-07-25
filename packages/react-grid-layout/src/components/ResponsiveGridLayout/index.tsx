@@ -37,6 +37,8 @@ export interface ResponsiveGridProps {
     isDraggable?: boolean;
     /** 是否能调整大小 */
     isResizable?: boolean;
+    /*编辑状态下，边框线条类型*/
+    lineType?: 'dashed' | 'none';
     /** - layout item 取值属性 */
     titleKey?: string;
     /** - 右上角自定义区域 */
@@ -69,6 +71,7 @@ const ResponsiveGridLayout: React.FC<ResponsiveGridProps> = (props) => {
         isBackGrid = true,
         isDraggable = true,
         isResizable = true,
+        lineType = 'dashed',
         titleKey = 'title',
         onLayoutChange = () => void 0,
         onBreakpointChange = () => void 0,
@@ -77,7 +80,7 @@ const ResponsiveGridLayout: React.FC<ResponsiveGridProps> = (props) => {
         childrenRender,
     } = props;
 
-    const { styles } = useStyles({ isDraggable });
+    const { styles } = useStyles({ isDraggable, lineType });
 
     const [isShowBackgroundGrid, setIsShowBackgroundGrid] = useState(false); // 是否显示背景网格
     const [gridWidth, setGridWidth] = useState(0); // 网格宽度

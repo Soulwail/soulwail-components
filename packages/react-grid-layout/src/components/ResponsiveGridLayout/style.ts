@@ -2,8 +2,8 @@ import { createStyles } from 'antd-style';
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 
-export default createStyles(({ css }, props: { isDraggable: boolean }) => {
-    const { isDraggable } = props;
+export default createStyles(({ css }, props: { isDraggable: boolean; lineType: 'dashed' | 'none' }) => {
+    const { isDraggable, lineType } = props;
 
     return {
         'dashboard-content': css`
@@ -21,7 +21,7 @@ export default createStyles(({ css }, props: { isDraggable: boolean }) => {
             padding-bottom: 56px;
 
             .react-grid-item {
-                border: 1px dashed ${isDraggable ? '#98a2b3' : 'rgba(0, 0, 0, 0)'};
+                border: 1px ${lineType} ${isDraggable || lineType !== 'none' ? '#98a2b3' : 'rgba(0, 0, 0, 0)'};
             }
 
             .react-grid-item.cssTransforms {
