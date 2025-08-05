@@ -24,10 +24,6 @@ export default createStyles(({ css }, props: { height?: number }) => ({
         display: flex;
         flex-direction: column;
     `,
-    'drawer-config-title': css`
-        margin-block: 8px;
-        padding-inline: 16px;
-    `,
     'drawer-config-group-title': css`
         margin-bottom: 8px;
     `,

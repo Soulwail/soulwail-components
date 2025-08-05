@@ -1,4 +1,4 @@
-import Visualize from './Visualize';
+import { Visualize } from './Visualize';
 import { ChartRender, type ChartRenderRef, StatisticCard, TableCard } from './components';
 
 export * from './Visualize';

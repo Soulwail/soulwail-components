@@ -171,8 +171,19 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
             console.log('图表类型切换', chartVisType);
 
             const allValues = form.getFieldsValue(true);
+            // 获取图表类型的默认配置
+            const definition = visualizations.find((item) => item.name === chartVisType);
 
             // console.log('allValues', allValues);
+
+            // 初始化 newFormValue 对象，确保嵌套属性结构存在
+            const newFormValue: Record<string, any> = {
+                encode: {},
+                transform: {
+                    sortX: {},
+                },
+                style: {},
+            };
 
             // 切换到柱状图或条形图
             if (
@@ -187,29 +198,29 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
                     prevChartVisType === ViewTypes.TABLE
                 ) {
                     // 将横轴的时间转为字段选项
-                    form.setFieldValue(['encode', 'x'], categoryList[0]?.value);
+                    newFormValue.encode.x = categoryList[0]?.value;
                 }
 
                 // 设置排序默认值
                 if (prevChartVisType === ChartTypes.PIE) {
                     if (allValues.transform.sortX.by === 'color') {
-                        form.setFieldValue(['transform', 'sortX', 'by'], 'x');
+                        newFormValue.transform.sortX.by = 'x';
                     }
                 }
             } else if (chartVisType === ChartTypes.LINE || chartVisType === ChartTypes.AREA) {
                 // 如果切换到折线图或面积图
                 // 设置横轴固定为时间
-                form.setFieldValue(['encode', 'x'], 'time');
+                newFormValue.encode.x = 'time';
 
                 // 设置面积图的折线类型
                 if (chartVisType === ChartTypes.AREA) {
-                    form.setFieldValue(['style', 'shape'], 'area');
+                    newFormValue.style.shape = 'area';
                 }
 
                 // 设置排序默认值
                 if (prevChartVisType === ChartTypes.PIE) {
                     if (allValues.transform.sortX.by === 'color') {
-                        form.setFieldValue(['transform', 'sortX', 'by'], 'x');
+                        newFormValue.transform.sortX.by = 'x';
                     }
                 }
             } else if (chartVisType === ChartTypes.PIE) {
@@ -220,21 +231,32 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
                     prevChartVisType === ViewTypes.TABLE
                 ) {
                     console.log('prevChartVisType', prevChartVisType, categoryList[0]?.value);
-                    form.setFieldValue(['encode', 'x'], categoryList[0]?.value);
+                    newFormValue.encode.x = categoryList[0]?.value;
                 } else {
-                    form.setFieldValue(['encode', 'x'], allValues.encode.x);
+                    newFormValue.encode.x = allValues.encode.x;
                 }
 
                 // 设置排序默认值
                 if (allValues.transform.sortX.by === 'x') {
-                    form.setFieldValue(['transform', 'sortX', 'by'], 'color');
+                    newFormValue.transform.sortX.by = 'color';
                 }
             } else if (chartVisType === ViewTypes.TABLE) {
                 // 如果切换到表格
                 // 设置可见字段为全部字段
-                form.setFieldValue(['encode', 'x'], [TableVisibleAllFieldsValue]);
+                newFormValue.encode.x = [TableVisibleAllFieldsValue];
             }
 
+            // 如果上一次是面积图，需要移除 style: { shape: 'area' } 属性，否则会影响其它图表的渲染
+            if (prevChartVisType === ChartTypes.AREA && Reflect.has(allValues, 'style')) {
+                Reflect.deleteProperty(allValues.style, 'shape');
+            }
+
+            // 使用默认值，将图表缺失的默认属性补齐
+            const newValues = defaultsDeep(newFormValue, allValues, definition.visConfig.defaults);
+
+            console.log(newValues);
+
+            form.setFieldsValue(newValues);
             setPrevChartVisType(chartVisType);
         }
     }, [chartVisType]);
@@ -344,7 +366,9 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
 
             // 触发保存函数
             await onSave?.(values, options, data);
-        } catch (err) {}
+        } catch (err) {
+            console.error(err);
+        }
 
         setSaveLoading(false);
     };
@@ -425,4 +449,4 @@ const Visualize = forwardRef<VisualizeRef, VisualizeProps>((props, ref) => {
     );
 });
 
-export default Visualize;
+export { Visualize };

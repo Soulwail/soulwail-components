@@ -15,10 +15,6 @@ const VisDrawerConfig: React.FC<PropsWithChildren> = (props) => {
 
     return (
         <div className={styles['drawer-config-box']}>
-            <div className={styles['drawer-config-title']}>
-                <Text strong>图表配置</Text>
-            </div>
-
             <div className={styles['drawer-config-body']}>
                 <Row wrap={false} gutter={16}>
                     <Col span={12}>
