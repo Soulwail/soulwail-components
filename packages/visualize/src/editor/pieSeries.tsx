@@ -29,8 +29,8 @@ const PieSeries: React.FC = () => {
                         >
                             {(fields) => (
                                 <>
-                                    {fields.map(({ name, ...restField }) => (
-                                        <>
+                                    {fields.map(({ key, name, ...restField }) => (
+                                        <div key={key}>
                                             <Form.Item
                                                 {...restField}
                                                 name={[name, 'position']}
@@ -63,7 +63,7 @@ const PieSeries: React.FC = () => {
                                                     </Row>
                                                 </Checkbox.Group>
                                             </Form.Item>
-                                        </>
+                                        </div>
                                     ))}
                                 </>
                             )}
