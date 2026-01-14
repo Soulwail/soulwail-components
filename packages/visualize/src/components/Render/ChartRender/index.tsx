@@ -42,7 +42,7 @@ const CUSTOM_CATEGORY_10 = [
 ];
 
 const ChartRender: React.FC<ChartRenderProps> = (props) => {
-    const { contentHeight, debounceTime = 500, loading, size = 'medium', onAfterPaint } = props;
+    const { contentHeight, debounceTime = 500, loading = false, size = 'medium', onAfterPaint } = props;
 
     const chartRef = useRef<HTMLDivElement>(null);
     const chart = useRef<Chart>();
