@@ -1,17 +1,17 @@
-# @safety/components
+# @soulwail/components
 
 ## Install
 
 ```bash
-$ npm install @safety/components --registry http://192.168.1.135:4873
+$ npm install @soulwail/components
 ```
 
 ```bash
-$ yarn add @safety/components --registry http://192.168.1.135:4873
+$ yarn add @soulwail/components
 ```
 
 ```bash
-$ pnpm add @safety/components --registry http://192.168.1.135:4873
+$ pnpm add @soulwail/components
 ```
 
 ## Options

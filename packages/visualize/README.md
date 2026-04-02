@@ -1,17 +1,17 @@
-# @safety/visualize
+# @soulwail/visualize
 
 ## Install
 
 ```bash
-$ npm install @safety/visualize --registry http://192.168.1.135:4873
+$ npm install @soulwail/visualize
 ```
 
 ```bash
-$ yarn add @safety/visualize --registry http://192.168.1.135:4873
+$ yarn add @soulwail/visualize
 ```
 
 ```bash
-$ pnpm add @safety/visualize --registry http://192.168.1.135:4873
+$ pnpm add @soulwail/visualize
 ```
 
 ## Options

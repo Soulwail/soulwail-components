@@ -1,17 +1,17 @@
-# @safety/react-grid-layout
+# @soulwail/react-grid-layout
 
 ## Install
 
 ```bash
-$ npm install @safety/react-grid-layout --registry http://192.168.1.135:4873
+$ npm install @soulwail/react-grid-layout
 ```
 
 ```bash
-$ yarn add @safety/react-grid-layout --registry http://192.168.1.135:4873
+$ yarn add @soulwail/react-grid-layout
 ```
 
 ```bash
-$ pnpm add @safety/react-grid-layout --registry http://192.168.1.135:4873
+$ pnpm add @soulwail/react-grid-layout
 ```
 
 ## Options
