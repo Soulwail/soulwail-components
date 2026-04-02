@@ -48,11 +48,8 @@ async function release() {
             type: 'list',
             name: 'registry',
             message: '请选择要使用的 npm registry',
-            default: 'http://192.168.1.135:4873/',
-            choices: [
-                { name: '本地私有源 (http://192.168.1.135:4873/)', value: 'http://192.168.1.135:4873/' },
-                { name: '官方源 (https://registry.npmjs.org/)', value: 'https://registry.npmjs.org/' },
-            ],
+            default: 'https://registry.npmjs.org/',
+            choices: [{ name: '官方源 (https://registry.npmjs.org/)', value: 'https://registry.npmjs.org/' }],
         },
     ]);
 

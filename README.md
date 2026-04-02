@@ -1,6 +1,6 @@
-# safety-components
+# soulwail-components
 
-自定义封装组件库
+This is a personal component library for my own use, including react-grid-layout, visualize, and components.
 
 ## Development
 
@@ -57,7 +57,3 @@ pnpm run publish
 | fix             | 修复 BUG     | patch 版本 (x.y.**Z**)   |
 | feat            | 新增功能     | minor 版本 (x.**Y**.z)   |
 | BREAKING CHANGE | 有破坏性变更 | major 版本 (**X**.y.z)   |
-
-## LICENSE
-
-MIT

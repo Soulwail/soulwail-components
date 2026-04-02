@@ -1,5 +1,5 @@
 {
-    "name": "safety-components",
+    "name": "soulwail-components",
     "version": "0.0.1",
     "description": "自建组件库",
     "module": "dist/index.js",
@@ -8,7 +8,7 @@
         "start": "npm run dev",
         "dev": "npm run version && dumi dev",
         "build": "npm run version && npm run build-components",
-        "build-components": "pnpm --filter \"@safety/**\" build",
+        "build-components": "pnpm --filter \"@soulwail/**\" build",
         "docs:build": "dumi build",
         "docs:preview": "dumi preview",
         "prepare": "husky install && dumi setup",

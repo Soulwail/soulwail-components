@@ -1,12 +1,12 @@
 {
-    "name": "@safety/visualize",
+    "name": "@soulwail/visualize",
     "version": "1.6.4",
     "description": "",
     "license": "MIT",
-    "homepage": "http://192.168.1.221:180/wangweiwei/safety-components/tree/main/packages/visualize",
+    "homepage": "https://github.com/Soulwail/soulwail-components/tree/main/packages/visualize",
     "repository": {
         "type": "git",
-        "url": "http://192.168.1.221:180/wangweiwei/safety-components/tree/main/packages/visualize"
+        "url": "https://github.com/Soulwail/soulwail-components/tree/main/packages/visualize"
     },
     "scripts": {
         "build": "father build"

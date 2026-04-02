@@ -1,12 +1,12 @@
 {
-    "name": "@safety/react-grid-layout",
+    "name": "@soulwail/react-grid-layout",
     "version": "1.5.1",
     "description": "",
     "license": "MIT",
-    "homepage": "http://192.168.1.221:180/wangweiwei/safety-components/tree/main/packages/react-grid-layout",
+    "homepage": "https://github.com/Soulwail/soulwail-components/tree/main/packages/react-grid-layout",
     "repository": {
         "type": "git",
-        "url": "http://192.168.1.221:180/wangweiwei/safety-components/tree/main/packages/react-grid-layout"
+        "url": "https://github.com/Soulwail/soulwail-components/tree/main/packages/react-grid-layout"
     },
     "scripts": {
         "build": "father build"

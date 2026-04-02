@@ -1,12 +1,12 @@
 {
-    "name": "@safety/components",
+    "name": "@soulwail/components",
     "version": "0.1.1",
     "description": "自定义通用组件",
     "license": "MIT",
-    "homepage": "http://192.168.1.221:180/wangweiwei/safety-components/tree/main/packages/components",
+    "homepage": "https://github.com/Soulwail/soulwail-components/tree/main/packages/components",
     "repository": {
         "type": "git",
-        "url": "http://192.168.1.221:180/wangweiwei/safety-components/tree/main/packages/components"
+        "url": "https://github.com/Soulwail/soulwail-components/tree/main/packages/components"
     },
     "scripts": {
         "build": "father build"
