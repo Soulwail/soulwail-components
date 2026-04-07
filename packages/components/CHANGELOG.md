@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.1](https://github.com/Soulwail/soulwail-components/compare/@soulwail/components@0.2.0...@soulwail/components@0.2.1) (2026-04-07)
+
+**Note:** Version bump only for package @soulwail/components
+
 # 0.2.0 (2026-04-02)
 
 ### Features
