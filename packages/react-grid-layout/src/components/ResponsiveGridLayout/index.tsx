@@ -1,30 +1,31 @@
 import { cloneDeep } from 'lodash';
 import React, { useMemo, useState } from 'react';
-import RGL, { Responsive, WidthProvider } from 'react-grid-layout';
+import type { CoreProps, Layout as RGLLayout, ResponsiveProps } from 'react-grid-layout';
+import { Responsive, WidthProvider } from 'react-grid-layout';
 import BackgroundGrid from '../BackgroundGrid';
 import LayoutItem, { ItemProps } from '../LayoutItem';
 import useStyles from './style';
 
-export type Layout = ItemProps & RGL.Layout;
-export type Layouts = {
-    [P: string]: (ItemProps & RGL.Layout)[];
+type Layout = ItemProps & RGLLayout;
+type Layouts = {
+    [P: string]: (ItemProps & RGLLayout)[];
 };
 
-export interface ResponsiveGridProps {
+interface ResponsiveGridProps {
     /**
      * Number of margin. This is a breakpoint -> margin map
      * e.g. { lg: [5, 5], md: [10, 10], sm: [15, 15] }
      * Margin between items [x, y] in px
      * e.g. [10, 10]
      */
-    margin?: RGL.ResponsiveProps['margin'];
+    margin?: ResponsiveProps['margin'];
     /**
      * Number of containerPadding. This is a breakpoint -> containerPadding map
      * e.g. { lg: [5, 5], md: [10, 10], sm: [15, 15] }
      * Padding inside the container [x, y] in px
      * e.g. [10, 10]
      */
-    containerPadding?: RGL.ResponsiveProps['containerPadding'];
+    containerPadding?: ResponsiveProps['containerPadding'];
     /** 单个 grid 高度 */
     rowHeight: number;
     /** 当前断点 */
@@ -46,9 +47,9 @@ export interface ResponsiveGridProps {
     /** - 内容区域 */
     childrenRender?: (items: Layout) => React.ReactNode;
     /** - 布局改变回调 */
-    onLayoutChange?: RGL.ResponsiveProps['onLayoutChange'];
+    onLayoutChange?: ResponsiveProps['onLayoutChange'];
     /** - 断点改变回调 */
-    onBreakpointChange?: RGL.ResponsiveProps['onBreakpointChange'];
+    onBreakpointChange?: ResponsiveProps['onBreakpointChange'];
     /** - item 尺寸调整 */
     onResizeStop?: () => void;
 }
@@ -61,7 +62,7 @@ const breakpoints: { [P: string]: number } = {
     xs: 599,
 };
 
-const ResponsiveGridLayout: React.FC<ResponsiveGridProps> = (props) => {
+const ResponsiveGridLayout = (props: ResponsiveGridProps) => {
     const {
         margin = [8, 11],
         containerPadding = [8, 0],
@@ -105,11 +106,11 @@ const ResponsiveGridLayout: React.FC<ResponsiveGridProps> = (props) => {
             : {};
     }, [isBackGrid, isShowBackgroundGrid, gridWidth, backgroundImage]);
 
-    const handleDragStart: RGL.CoreProps['onDragStart'] = () => {
+    const handleDragStart: CoreProps['onDragStart'] = () => {
         setIsShowBackgroundGrid(true);
     };
 
-    const handleDragStop: RGL.CoreProps['onDragStop'] = () => {
+    const handleDragStop: CoreProps['onDragStop'] = () => {
         setIsShowBackgroundGrid(false);
     };
 
@@ -130,18 +131,13 @@ const ResponsiveGridLayout: React.FC<ResponsiveGridProps> = (props) => {
      * @param containerPadding
      * @description 计算单个 grid 的宽度
      */
-    const handleWidthChange: RGL.ResponsiveProps['onWidthChange'] = (
-        containerWidth,
-        _margin,
-        cols,
-        containerPadding,
-    ) => {
+    const handleWidthChange: ResponsiveProps['onWidthChange'] = (containerWidth, _margin, cols, containerPadding) => {
         const gridWidthVal = (containerWidth - containerPadding[0]) / cols;
 
         setGridWidth(gridWidthVal);
     };
 
-    const handleLayoutChange: RGL.ResponsiveProps['onLayoutChange'] = (currentLayout, allLayouts) => {
+    const handleLayoutChange: ResponsiveProps['onLayoutChange'] = (currentLayout, allLayouts) => {
         const newAllLayouts = cloneDeep(allLayouts);
 
         for (let [key, value] of Object.entries(allLayouts)) {
@@ -250,3 +246,4 @@ const ResponsiveGridLayout: React.FC<ResponsiveGridProps> = (props) => {
 };
 
 export { ResponsiveGridLayout };
+export type { Layout, Layouts, ResponsiveGridProps };
